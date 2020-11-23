@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Router from "./router";
-import 'antd/dist/antd.css';// ant design stylesheet
+import "antd/dist/antd.css"; // ant design stylesheet
 import "./assets/scss/style.scss";
 import GlobalStyle from "./assets/globalStyle";
+import { Provider } from "react-redux";
+import store from "./store";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <GlobalStyle />
     <Router />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById("root")
 );

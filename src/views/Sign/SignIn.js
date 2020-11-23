@@ -1,8 +1,16 @@
 import { Layout, Col, Form, Input, Button } from "antd";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import imgSignIn from '../../assets/img/signIn.jpg'
+import imgSignIn from "../../assets/img/signIn.jpg";
+
+import { signIn } from "../../store/Sign/action.sign";
 const { Content } = Layout;
 const SignIn = () => {
+  const dispatch = useDispatch();
+
+  const submitForm = () => {
+    dispatch(signIn());
+  };
   return (
     <Layout className="layout">
       <Main>
@@ -46,7 +54,7 @@ const SignIn = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button onClick={submitForm} type="primary" htmlType="submit">
                   Enviar
                 </Button>
               </Form.Item>
@@ -99,7 +107,6 @@ const BgImg = styled.div`
   background-size: auto 100%;
   background-position: center;
   opacity: 0.4;
-
 `;
 
 // form
