@@ -49,7 +49,9 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
         </BreadcrumbStyled>
         <div className="site-layout-content">
           <TopBar>
-            <Title>{title ? (<GoChevronRight />)`${title}` : ""}</Title>
+            <Title>
+              <GoChevronRight /> {title}
+            </Title>
             <Actions>{actions}</Actions>
           </TopBar>
           {children}
