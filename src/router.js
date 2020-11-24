@@ -4,14 +4,21 @@ import history from "./config/history";
 // views
 
 import Post from "./views/Post";
-import Contato from "./views/Contato";
+import Networking from "./views/Networking";
+import Panel from "./views/Panel";
+import Profile from "./views/Profile";
+
 import SignIn from "./views/Sign/SignIn";
 
 const Routers = () => (
   <Router history={history}>
     <Switch>
       <Route exact path="/" component={Post} />
-      <Route exact path="/contato" component={Contato} />
+      <Route exact path="/minharede" component={Networking} />
+      <Route exact path="/painel" component={Panel} />
+      <Route exact path="/perfil" component={Profile} />
+
+      {/* --------------Sign --------------*/}
       <Route exact path="/signin" component={SignIn} />
     </Switch>
   </Router>
