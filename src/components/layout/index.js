@@ -26,10 +26,7 @@ const MenuList = [
 ];
 
 const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
-  const getCurrent = MenuList.filter(
-    (m) => m.link === history.location.pathname
-  );
-
+  const getCurrent = MenuList.filter((m) => m.link === history.location.pathname);
 
   return (
     <Layout className="layout">

@@ -1,4 +1,4 @@
-import { SIGN, SIGN_LOADING } from "./action.sign";
+import { SIGN, SIGN_LOADING } from "./sign.action";
 
 const INITIAL_STATE = {
   login: {

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
 
-import { signIn } from "../../store/Sign/action.sign";
+import { signIn } from "../../store/Sign/sign.action";
 const { Content } = Layout;
 const SignIn = () => {
   const dispatch = useDispatch();

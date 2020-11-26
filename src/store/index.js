@@ -3,11 +3,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import multi from "redux-multi";
 
-import SignReducer from "./Sign/reducer.sign";
+// importação dos reducers
+import SignReducer from "./Sign/sign.reducer";
+import PostReducer from "./Post/post.reducer";
 
 // modularizações dos reduces
 const reducers = combineReducers({
   auth: SignReducer,
+  post: PostReducer,
 });
 
 // middlewares de confifurações do projeto
