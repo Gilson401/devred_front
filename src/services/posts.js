@@ -9,4 +9,8 @@ const getCountPostsService = async (page = 1) => {
   return data.length;
 };
 
-export { getPostsService, getCountPostsService };
+const createPostService = (data) => {
+  return http.post(`/posts`, data);
+};
+
+export { getPostsService, getCountPostsService, createPostService };

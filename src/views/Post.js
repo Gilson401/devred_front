@@ -3,16 +3,18 @@ import LayoutBase from "../components/layout";
 import PostItem from "../components/post/item";
 import Loading from "../components/loading/index";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostAll } from "../store/Post/post.action";
-import { Button } from "antd";
+import { createPost, getPostAll } from "../store/Post/post.action";
+import { Button, Modal } from "antd";
 import styled from "styled-components";
+import FormPost from "../components/post/form";
 const BreadCrumb = ["Home", "Post"];
 
 const limitPerPage = 7;
 
 const PostView = () => {
-  const Actions = "";
+  const Actions = <Button onClick={() => setModal(true)}>Novo</Button>;
   const [page, setPage] = useState(1);
+  const [modal, setModal] = useState(false);
   // Estado do redux -----------------------------------
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.post.loading);
@@ -68,8 +70,28 @@ const PostView = () => {
     );
   };
 
+  const handleCancel = () => setModal(false);
+
+  const submitPost = (event, data) => {
+    event.preventDefault();
+    dispatch(createPost(data));
+    handleCancel();
+  };
+
+  const ModalForm = () => (
+    <Modal
+      title="Nova Postagem"
+      visible={modal}
+      footer={false}
+      onCancel={handleCancel}
+    >
+      <FormPost submit={submitPost} />
+    </Modal>
+  );
+
   return (
     <LayoutBase breadcrumb={BreadCrumb} title="Postagens" actions={Actions}>
+      <ModalForm />
       {loading ? <Loading /> : mountPosts()}
       {Paginator()}
     </LayoutBase>
