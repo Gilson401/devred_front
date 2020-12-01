@@ -1,5 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { reducer as toastrReducer } from "react-redux-toastr";
+
 import thunk from "redux-thunk";
 import multi from "redux-multi";
 
@@ -11,6 +13,7 @@ import PostReducer from "./Post/post.reducer";
 const reducers = combineReducers({
   auth: SignReducer,
   post: PostReducer,
+  toastr: toastrReducer,
 });
 
 // middlewares de confifurações do projeto

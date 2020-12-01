@@ -6,11 +6,13 @@ import "./assets/scss/style.scss";
 import GlobalStyle from "./assets/globalStyle";
 import { Provider } from "react-redux";
 import store from "./store";
+import ToastrComponent from "./config/toastr";
 
 ReactDOM.render(
   <Provider store={store}>
     <GlobalStyle />
     <Router />
+    <ToastrComponent />
   </Provider>,
   document.getElementById("root")
 );

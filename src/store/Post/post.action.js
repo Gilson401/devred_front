@@ -3,6 +3,7 @@ import {
   getCountPostsService,
   createPostService,
 } from "../../services/posts";
+import { toastr } from "react-redux-toastr";
 
 export const POST_LOADING = "POST_LOADING";
 export const GET_POSTS = "GET_POSTS";
@@ -27,11 +28,14 @@ export const createPost = (form) => {
       avatar: "http://placehold.it/300x300",
     };
     dispatch({ type: POST_LOADING, status: true });
-    const res = await createPostService(post);
-    if (res) {
-      dispatch({ type: CREATE_POST, post });
+    try {
+      await createPostService(post);
 
+      dispatch({ type: CREATE_POST, post });
+      toastr.success("SUCESSO !", "Cadastro de postagem feito com sucesso.");
       getPostAll(1, 7);
+    } catch (error) {
+      toastr.error("Cadastro de postagem feito com sucesso.");
     }
   };
 };
