@@ -1,4 +1,4 @@
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import history from "./config/history";
 // views
@@ -9,19 +9,44 @@ import Panel from "./views/Panel";
 import Profile from "./views/Profile";
 
 import SignIn from "./views/Sign/SignIn";
+import { isAuthenticated } from "./config/auth";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getProfile } from "./store/User/user.action";
+// import { useSelector } from "react-redux";
 
-const Routers = () => (
-  <Router history={history}>
-    <Switch>
-      <Route exact path="/" component={Post} />
-      <Route exact path="/minharede" component={Networking} />
-      <Route exact path="/painel" component={Panel} />
-      <Route exact path="/perfil" component={Profile} />
+const AdminRoute = ({ ...rest }) => {
+    //TODO
+//   if (!isAuthenticated()) {
+//     return <Redirect to="/signin" />;
+//   }
+  return <Route {...rest} />;
+};
 
-      {/* --------------Sign --------------*/}
-      <Route exact path="/signin" component={SignIn} />
-    </Switch>
-  </Router>
-);
+const Routers = () => {
+  const dispatch = useDispatch();
+  // Autenticação através de REDUX com REHYDRATE PERSIST
+  // const isAutheticated = useSelector((state) => !!state.auth.token);
+  // console.log("isAutheticated", isAutheticated);
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
+
+  return (
+    <Router history={history}>
+      <Switch>
+        <AdminRoute exact path="/" component={Post} />
+        <AdminRoute exact path="/minharede" component={Networking} />
+        <AdminRoute exact path="/painel" component={Panel} />
+        <AdminRoute exact path="/perfil" component={Profile} />
+
+        {/* --------------Sign --------------*/}
+
+        <Route exact path="/signin" component={SignIn} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default Routers;

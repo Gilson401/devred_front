@@ -8,11 +8,13 @@ import multi from "redux-multi";
 // importação dos reducers
 import SignReducer from "./Sign/sign.reducer";
 import PostReducer from "./Post/post.reducer";
+import UserReducer from "./User/user.reducer";
 
 // modularizações dos reduces
 const reducers = combineReducers({
   auth: SignReducer,
   post: PostReducer,
+  user: UserReducer,
   toastr: toastrReducer,
 });
 

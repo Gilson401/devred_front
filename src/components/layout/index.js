@@ -10,69 +10,84 @@ import { CgProfile } from "react-icons/cg";
 import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 import history from "../../config/history";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../store/User/user.action";
+import { useEffect } from "react";
 
 const { Header, Content, Footer } = Layout;
 
 const MenuList = [
-  { order: "1", link: "/", title: "Postagens", icon: <BiComment /> },
-  {
-    order: "2",
-    link: "/minharede",
-    title: "Minha Rede",
-    icon: <IoIosGitNetwork />,
-  },
-  { order: "3", link: "/painel", title: "Painel", icon: <RiProfileLine /> },
-  { order: "4", link: "/perfil", title: "Perfil", icon: <CgProfile /> },
+    { order: "1", link: "/", title: "Postagens", icon: <BiComment /> },
+    {
+        order: "2",
+        link: "/minharede",
+        title: "Minha Rede",
+        icon: <IoIosGitNetwork />,
+    },
+    { order: "3", link: "/painel", title: "Painel", icon: <RiProfileLine /> },
+    { order: "4", link: "/perfil", title: "Perfil", icon: <CgProfile /> },
 ];
 
-const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
-  const getCurrent = MenuList.filter((m) => m.link === history.location.pathname);
 
-  return (
-    <Layout className="layout">
-      <HeaderStyled>
-        <Logo>
-          <FaLaptopCode /> Dev Connector{" "}
-        </Logo>
-        <MenuStyled
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["1"]}
-          selectedKeys={[getCurrent[0].order]}
-        >
-          {MenuList.map((m) => (
-            <Menu.Item key={m.order}>
-              <Link to={m.link}>
-                {m.icon} {m.title}
-              </Link>
-            </Menu.Item>
-          ))}
-          <Menu.Item key={10}>
-            <FiPower /> Sair
+const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
+
+    const dispatch = useDispatch()
+    const profile = useSelector(state => state.user.profile)
+
+    useEffect(() => {
+        console.log("LayoutBase useefect")
+        dispatch(getProfile())
+    }, [dispatch])
+
+
+
+    const getCurrent = MenuList.filter((m) => m.link === history.location.pathname);
+
+    return (
+        <Layout className="layout">
+            <HeaderStyled>
+                <Logo>
+                    <FaLaptopCode /> Dev Connector{" "}
+                </Logo>
+                <MenuStyled
+                    theme="dark"
+                    mode="horizontal"
+                    defaultSelectedKeys={["1"]}
+                    selectedKeys={[getCurrent[0].order]}
+                >
+                    {MenuList.map((m) => (
+                        <Menu.Item key={m.order}>
+                            <Link to={m.link}>
+                                {m.icon} {m.title}
+                            </Link>
+                        </Menu.Item>
+                    ))}
+                    <Menu.Item key={10}>
+                        <FiPower /> Sair
           </Menu.Item>
-        </MenuStyled>
-      </HeaderStyled>
-      <ContentStyled>
-        <BreadcrumbStyled>
-          {breadcrumb.map((b, i) => (
-            <Breadcrumb.Item key={i}>{b}</Breadcrumb.Item>
-          ))}
-        </BreadcrumbStyled>
-        <div className="site-layout-content">
-          <TopBar>
-            <Title>
-              <GoChevronRight /> {title}
-            </Title>
-            <Actions>{actions}</Actions>
-          </TopBar>
-          {children}
-        </div>
-      </ContentStyled>
-      <Footer style={{ textAlign: "center" }}>
-        Todos os Direitos Reservados Dev Connector | 2020
+                </MenuStyled>
+            </HeaderStyled>
+            <ContentStyled>
+                <BreadcrumbStyled>
+                    {breadcrumb.map((b, i) => (
+                        <Breadcrumb.Item key={i}>{b}</Breadcrumb.Item>
+                    ))}
+                </BreadcrumbStyled>
+                <div className="site-layout-content">
+                    <TopBar>
+                        <Title>
+                            <GoChevronRight /> {title}
+                        </Title>
+                        <Actions>{actions}</Actions>
+                    </TopBar>
+                    {children}
+                </div>
+            </ContentStyled>
+            <Footer style={{ textAlign: "center" }}>
+                Todos os Direitos Reservados Dev Connector | 2020
       </Footer>
-    </Layout>
-  );
+        </Layout>
+    );
 };
 
 export default LayoutBase;

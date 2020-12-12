@@ -1,16 +1,36 @@
+import { useState } from "react";
 import { Layout, Col, Form, Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
 
 import { signIn } from "../../store/Sign/sign.action";
-const { Content } = Layout;
-const SignIn = () => {
-  const dispatch = useDispatch();
 
-  const submitForm = () => {
-    dispatch(signIn());
+const { Content } = Layout;
+
+const LogIn = () => {
+    
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    password: "a123456",
+    email: "auth@auth.com",
+  });
+
+  const handleChange = (props) => {
+    const { value, name } = props.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
   };
+
+  
+  /** chama dispatch(signIn(form)) */
+  const submitForm = () => {
+    dispatch(signIn(form));
+  };
+
+
   return (
     <Layout className="layout">
       <Main>
@@ -22,33 +42,24 @@ const SignIn = () => {
         <SliceForm span={8}>
           <FormLogin>
             <Form
-              name="basic"
               initialValues={{
-                remember: true,
+                ...form,
               }}
-              onFinish={() => console.log("")}
-              onFinishFailed={() => console.log("")}
             >
-              <Form.Item
-                name="username"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your username!",
-                  },
-                ]}
-              >
-                <Input placeholder="Entre com seu e-mail" />
+              <Form.Item name="email">
+                <Input
+                  name="email"
+                  value={form.email || ""}
+                  onChange={handleChange}
+                  placeholder="Entre com seu e-mail"
+                />
               </Form.Item>
 
               <Form.Item
+                value={form.password || ""}
                 name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
+                onChange={handleChange}
+                placeholder="Entre com sua senha"
               >
                 <Input.Password placeholder="Entre com sua senha" />
               </Form.Item>
@@ -66,7 +77,7 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default LogIn;
 
 const Main = styled(Content)`
   display: flex;

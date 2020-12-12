@@ -1,18 +1,23 @@
+import { getToken, getUser } from "../../config/auth";
 import { SIGN, SIGN_LOADING } from "./sign.action";
 
 const INITIAL_STATE = {
-  login: {
-    email: "contato@liniker.com.br",
-  },
+  loading: false,
+  token: getToken() || "",
+  user: getUser() || {},
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
+    // debugger
   switch (action.type) {
     case SIGN_LOADING:
-      console.log(">> SIGN");
+      state.loading = action.loading;
       return state;
     case SIGN:
-      console.log(">> SIGN_LOADING");
+      state.token = action.data.token;
+      state.user = action.data.user;
+      state.loading = false;
+
       return state;
     default:
       return state;

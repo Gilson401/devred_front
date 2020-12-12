@@ -13,32 +13,36 @@ const limitPerPage = 7;
 
 const PostView = () => {
   const Actions = <Button onClick={() => setModal(true)}>Novo</Button>;
-  const [page, setPage] = useState(1);
   const [modal, setModal] = useState(false);
+  const [update, setUpdate] = useState(false);
   // Estado do redux -----------------------------------
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.post.loading);
   const postAll = useSelector((state) => state.post.all);
   const total = useSelector((state) => state.post.total);
   // -----------------------------------
+  
   useEffect(() => {
-    dispatch(getPostAll(page, limitPerPage));
-  }, [dispatch, page]);
+    dispatch(getPostAll());
+    if (update) {
+      setUpdate(false);
+    }
+  }, [dispatch, update]);
 
-  const isFinalPage = () => {
-    const totalPage = Math.ceil(total / limitPerPage);
-    return page === totalPage;
-    // return total % limitPerPage === 0;
-  };
+  // const isFinalPage = () => {
+  //   const totalPage = Math.ceil(total / limitPerPage);
+  //   return page === totalPage;
+  //   // return total % limitPerPage === 0;
+  // };
 
   const mountPosts = () => {
     if (postAll) {
       return postAll.map((post, i) => (
         <PostItem
           key={i}
-          author={post.author}
+          author={"esse deve ser o autor"}
           title={post.title}
-          description={post.description}
+          description={"Essa é a descriçao"}
           created_at={post.created_at}
         />
       ));
@@ -46,29 +50,29 @@ const PostView = () => {
     return;
   };
 
-  const changePage = (page) => (page >= 1 ? setPage(page) : false);
-  const Paginator = () => {
-    return !loading && total > limitPerPage ? (
-      <PaginatorStyled>
-        <Button
-          onClick={() => changePage(page - 1)}
-          disabled={page === 1}
-          type="primary"
-        >
-          Anterior
-        </Button>
-        <Button
-          disabled={isFinalPage()}
-          onClick={() => changePage(page + 1)}
-          type="primary"
-        >
-          Próximo
-        </Button>
-      </PaginatorStyled>
-    ) : (
-      ""
-    );
-  };
+  // const changePage = (page) => (page >= 1 ? setPage(page) : false);
+  // const Paginator = () => {
+  //   return !loading && total > limitPerPage ? (
+  //     <PaginatorStyled>
+  //       <Button
+  //         onClick={() => changePage(page - 1)}
+  //         disabled={page === 1}
+  //         type="primary"
+  //       >
+  //         Anterior
+  //       </Button>
+  //       <Button
+  //         disabled={isFinalPage()}
+  //         onClick={() => changePage(page + 1)}
+  //         type="primary"
+  //       >
+  //         Próximo
+  //       </Button>
+  //     </PaginatorStyled>
+  //   ) : (
+  //     ""
+  //   );
+  // };
 
   const handleCancel = () => setModal(false);
 
@@ -76,6 +80,7 @@ const PostView = () => {
     event.preventDefault();
     dispatch(createPost(data));
     handleCancel();
+    setUpdate(true);
   };
 
   const ModalForm = () => (
@@ -93,7 +98,7 @@ const PostView = () => {
     <LayoutBase breadcrumb={BreadCrumb} title="Postagens" actions={Actions}>
       <ModalForm />
       {loading ? <Loading /> : mountPosts()}
-      {Paginator()}
+      {/* {Paginator()} */}
     </LayoutBase>
   );
 };
