@@ -3,6 +3,11 @@ import { Comment } from "antd";
 import styled from "styled-components";
 import AvatarNeutro from "../../assets/img/avatar.png";
 
+/**props: author,
+  title,
+  description,
+  created_at,
+  avatar */
 const PostItem = ({
   author,
   title,

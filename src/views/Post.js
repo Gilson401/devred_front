@@ -48,6 +48,7 @@ const BreadCrumb = ["Home", "Post"];
       return postAll.map((post, i) => (
         <PostItem
           key={i}
+          avatar={post.author.picture}
           author={post.author.username}
           title={post.title}
           description={post.content}
