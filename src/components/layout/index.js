@@ -35,7 +35,7 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
     const profile = useSelector(state => state.user.profile)
 
     useEffect(() => {
-        console.log("LayoutBase useefect")
+      
         dispatch(getProfile())
     }, [dispatch])
 

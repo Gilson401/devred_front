@@ -15,7 +15,7 @@ import { Button, Modal } from "antd";
 import styled from "styled-components";
 
 
-
+/**View de post (lista de posts e modal de cadastro de post) */
 const PostView = () => {
 const limitPerPage = 7;
 const BreadCrumb = ["Home", "Post"];
@@ -48,10 +48,10 @@ const BreadCrumb = ["Home", "Post"];
       return postAll.map((post, i) => (
         <PostItem
           key={i}
-          author={"esse deve ser o autor"}
+          author={post.author.username}
           title={post.title}
-          description={"Essa é a descriçao"}
-          created_at={post.created_at}
+          description={post.content}
+          created_at={post.createdAt}
         />
       ));
     }
