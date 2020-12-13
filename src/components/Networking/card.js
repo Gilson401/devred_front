@@ -8,33 +8,40 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import DevAvatar from "../../assets/img/dev.jpg";
-toastr.error("Cadastro de postagem feito com sucesso.");
+
+import DevAvatar from "../../assets/img/alfredo.png";
+
+// toastr.error("Cadastro de postagem feito com sucesso.");
 
 const key = "updatable";
+/**Card com fotos dos amigos e sugestões de amigos
+ * props: cover(imagem), username, id
+ */
+const CardNetworking = (props) => {
 
-const CardNetworking = () => {
-  const openNotification = () => {
-    toastr.info("Cadastro de postagem feito com sucesso.");
+  const openNotification = (msg) => {
+    toastr.info(msg);
   };
 
   return (
     <CardStyled
-      cover={<img alt="example" src={DevAvatar} />}
+      cover={<img alt="example" src={props.picture } />}
+    //   cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
       actions={[
         <Tooltip placement="top" title="Curtir">
-          <LikeOutlined onClick={openNotification} />
+          <LikeOutlined onClick={()=>openNotification("Curtiu")} />
         </Tooltip>,
         <Tooltip placement="top" title="Adicionar">
-          <UserAddOutlined onClick={openNotification} />
+          <UserAddOutlined onClick={()=>openNotification("Adicionou")} />
         </Tooltip>,
         <Tooltip placement="top" title="Favoritar">
-          <HeartOutlined onClick={openNotification} />
+          <HeartOutlined onClick={()=>openNotification("Favoritou")} />
         </Tooltip>,
       ]}
     >
-      <Title size="18">Kabir Moareb</Title>
-      <Title size="12">Desenvolvedor</Title>
+      <Title size="18">{props.username}</Title>
+      {/* TODO: confirmar o campo que vai puxar abaixo */}
+      <Title size="12">{props.id}</Title>
     </CardStyled>
   );
 };

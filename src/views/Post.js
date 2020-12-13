@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
+
 import LayoutBase from "../components/layout";
+
 import PostItem from "../components/post/item";
+
 import Loading from "../components/loading/index";
+
+import FormPost from "../components/post/form";
+
+
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, getPostAll } from "../store/Post/post.action";
 import { Button, Modal } from "antd";
 import styled from "styled-components";
-import FormPost from "../components/post/form";
-const BreadCrumb = ["Home", "Post"];
 
-const limitPerPage = 7;
+
 
 const PostView = () => {
+const limitPerPage = 7;
+const BreadCrumb = ["Home", "Post"];
+
   const Actions = <Button onClick={() => setModal(true)}>Novo</Button>;
   const [modal, setModal] = useState(false);
   const [update, setUpdate] = useState(false);

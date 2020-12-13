@@ -2,6 +2,7 @@ import { Button, Table, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEducation, getProfile } from "../../store/User/user.action";
+import { AntdConfirmation } from "../../util/util";
 
 
 export default function TableEducation() {
@@ -83,6 +84,12 @@ const [todelete, setTodelete] = useState(null)
                 <p>Deseja deletar o registro de Education?</p>
 
             </Modal>
+
+
+
+
+
+
 
 
             <Table pagination={false} dataSource={UserEducation} columns={columns} />

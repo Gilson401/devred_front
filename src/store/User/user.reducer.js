@@ -3,7 +3,7 @@ const INITIAL_STATE = {
     }
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "SET_PROFILE":
             state.profile = action.profile;
@@ -13,29 +13,4 @@ const reducer = (state = INITIAL_STATE, action) => {
     }
 };
 
-export default reducer;
-
-// friendships: [
-//     "5fca474235bd547bd8d6f9bd"
-// ],
-// topics_of_interest: [],
-// skills: [],
-// _id: "5fca2364d0e85e4084275146",
-// email: "auth@auth.com",
-// name: "Gilson",
-// username: "Gil",
-// education: [
-//     {
-//         current: false,
-//         _id: "",
-//         school: "",
-//         degree: "",
-//         fieldofstudy: "",
-//         from: "",
-//         to: "",
-//         description: "",
-//     },
-// ],
-// picture: "",
-// __v: 7,
-// }
+export default userReducer;

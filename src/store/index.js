@@ -9,6 +9,7 @@ import multi from "redux-multi";
 import SignReducer from "./Sign/sign.reducer";
 import PostReducer from "./Post/post.reducer";
 import UserReducer from "./User/user.reducer";
+import friendshipsReducer from "./Friendship/friendships.reducer";
 
 // modularizações dos reduces
 const reducers = combineReducers({
@@ -16,6 +17,7 @@ const reducers = combineReducers({
   post: PostReducer,
   user: UserReducer,
   toastr: toastrReducer,
+  friends: friendshipsReducer
 });
 
 // middlewares de confifurações do projeto
