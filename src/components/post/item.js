@@ -5,10 +5,11 @@ import AvatarNeutro from "../../assets/img/avatar.png";
 import { Tooltip } from "antd";
 import { Button, Modal } from "antd";
 import { toastr } from "react-redux-toastr";
-import FormPost from "../../components/post/form";
+import {FormPost} from "../../components/post/form";
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { createPost, getPostAll } from '../../store/Post/post.action';
+import { actionCreateComment } from '../../store/Comments/comments.action';
 
 /**props: author,
   title,
@@ -30,7 +31,8 @@ const PostItem = ({
     const [dislikes, setDislikes] = useState(0);
     const [action, setAction] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const handleCancel = () => setShowModal(false);
+    /**Fecha o modal */
+    const closeModalForm = () => setShowModal(false);
     const [update, setUpdate] = useState(false);
 
     const like = () => {
@@ -47,11 +49,14 @@ const PostItem = ({
         }
     }, [dispatch, update]);
 
-    const submitPost = (event, data) => {
+    /**Aqui estou dentro de um POST. 
+     * Logo aqui é uma resposta de um post, ou seja um comment */
+    const submitComment = (event, data) => {
         event.preventDefault();
+
         openNotification("//TODO: Post de comentário")
-        console.log("dispatch(createPost(data))");
-        handleCancel();
+        dispatch(actionCreateComment(data))
+        closeModalForm();
         setUpdate(true);
     };
 
@@ -66,15 +71,15 @@ const PostItem = ({
     };
 
 
-    /**<ModalForm /> */
+    /** É um encapsulador de forms.  Chama createComment  */
     const ModalForm = () => (
         <Modal
             title= {`Responder post. ${id}`}
             visible={showModal}
             footer={false}
-            onCancel={handleCancel}
+            onCancel={closeModalForm}
         >
-            <FormPost submit={submitPost} />
+            <FormPost post={id} submit={submitComment} />
         </Modal>
     );
 

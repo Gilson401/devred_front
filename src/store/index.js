@@ -10,7 +10,7 @@ import SignReducer from "./Sign/sign.reducer";
 import PostReducer from "./Post/post.reducer";
 import UserReducer from "./User/user.reducer";
 import friendshipsReducer from "./Friendship/friendships.reducer";
-
+import commentsReducer from './Comments/comments.reducer'
 // modularizações dos reduces
 const reducers = combineReducers({
   auth: SignReducer,

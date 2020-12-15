@@ -6,7 +6,7 @@ import PostItem from "../components/post/item";
 
 import Loading from "../components/loading/index";
 
-import FormPost from "../components/post/form";
+import {FormPost} from "../components/post/form";
 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -53,7 +53,7 @@ const BreadCrumb = ["Home", "Post"];
         <PostItem
           key={i}
           avatar={post.author.picture}
-          author={post.author.username}
+          author= {post._id} //{post.author.username}
           title={post.title}
           description={post.content}
           created_at={post.createdAt}
@@ -81,6 +81,7 @@ const BreadCrumb = ["Home", "Post"];
           description={post.content}
           created_at={post.createdAt}
           children = {post.comments || ""}
+          id={post._id}
         />
         
       ));

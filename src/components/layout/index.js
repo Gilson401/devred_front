@@ -47,7 +47,7 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
         <Layout className="layout">
             <HeaderStyled>
                 <Logo>
-                    <FaLaptopCode /> Dev Connector{" "}
+                    <FaLaptopCode /> Coders{" "}
                 </Logo>
                 <MenuStyled
                     theme="dark"

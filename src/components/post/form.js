@@ -5,10 +5,9 @@ const { TextArea } = Input;
 
 
 
-/**Form de cadastro de post, topic.  
- * content - string
- * author - fkuser
- * topic - fk topic
+/** Form de cadastro de post,  comment e topic(not implemented).  
+ * content - string  author - fkuser  topic - fk topic
+ * RECEBE A FUNÇÃO DE SUBMIT DE SEU PAI
  */
 const FormPost = (props) => {
 
@@ -23,7 +22,8 @@ const FormPost = (props) => {
             ...form,
             [name]: value,
             author: user._id,
-            topic: props.contexto || "5fca4990658d23426c92e240"
+            topic: props.contexto,
+            post: props.post //|| "5fca4990658d23426c92e240"
         });
     };
 
@@ -72,4 +72,4 @@ const FormPost = (props) => {
     );
 };
 
-export default FormPost;
+export { FormPost};

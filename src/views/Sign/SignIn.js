@@ -35,8 +35,8 @@ const LogIn = () => {
     <Layout className="layout">
       <Main>
         <SliceBg span={16}>
-          DEV CONNECTOR
-          <span>Conectando Desenvolvedores</span>
+          Coders
+          <span>The Coders Network</span>
           <BgImg />
         </SliceBg>
         <SliceForm span={8}>

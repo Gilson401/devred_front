@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutBase from "../components/layout";
-
+import {objetao} from './c'
 const BreadCrumb = ["Home", "Perfil"];
 
 const Profile = () => {
@@ -13,19 +13,54 @@ const Profile = () => {
     const [update, setUpdate] = useState(false)
 
     function handleMouseMove(event) {
-        var add =  -40
-        var mousePosi = {
-            x: event.pageX +add,
-            y: event.pageY +add 
-        };
+
+        var b = deepSearch()
+
+        console.log(b)
+        // var add =  -40
+        // var mousePosi = {
+        //     x: event.pageX +add,
+        //     y: event.pageY +add 
+        // };
 
         
-        mousePos.push(mousePosi)
-        setUpdate(!update)
-        event = event || window.event; // IE-ism
+        // mousePos.push(mousePosi)
+        // setUpdate(!update)
+        // event = event || window.event; // IE-ism
     }
 
 
+
+    function deepSearch(objeto = objetao, keyProcurada= "picture", addValue = "ADD_VALUE") {
+        // console.log(objeto)
+        //  let objetoInterior = {}   
+        //  objetoInterior = objeto
+        //  console.log(Object.keys(objeto._doc))
+        
+        Object.keys(objeto).forEach(key => {
+            // debugger
+            if (key === keyProcurada) { 
+                if(!objeto[key].includes(addValue)){           
+                    objeto[key] = `${addValue}${objeto[key]}`
+                }
+            }
+    
+            if(typeof objeto[key] === "object" ){
+                try {
+                    deepSearch(objeto[key])
+                } catch (error) {
+                    
+                }
+                            
+            }         
+    
+        }
+        )
+        
+        return objeto
+    
+    }
+    
     useEffect(() => {
         console.log("mousePos")
     }, [update])
@@ -36,6 +71,7 @@ const Profile = () => {
 
             <Div onClick={handleMouseMove}>
                 <h1> TODO: Avaliar conteúdo deste componetne. Parece redundar com painel</h1>
+
 
 
                 {mousePos.map((item) => (
