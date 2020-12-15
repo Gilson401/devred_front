@@ -11,7 +11,7 @@ import FormPost from "../components/post/form";
 
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, getPostAll } from "../store/Post/post.action";
-import { Button, Modal } from "antd";
+import { Button, Modal  } from "antd";
 import styled from "styled-components";
 
 
@@ -44,8 +44,12 @@ const BreadCrumb = ["Home", "Post"];
   // };
 
   const mountPosts = () => {
+
+    
+
     if (postAll) {
       return postAll.map((post, i) => (
+
         <PostItem
           key={i}
           avatar={post.author.picture}
@@ -53,7 +57,32 @@ const BreadCrumb = ["Home", "Post"];
           title={post.title}
           description={post.content}
           created_at={post.createdAt}
+          children = {mountPosts2(post.comments)}
+          id={post._id}
         />
+
+      ));
+    }
+    return;
+  };
+
+
+
+  /**Criei este para colocar os comentários */
+  const mountPosts2 = (postAll) => {
+    if (postAll) {
+      return postAll.map((post, i) => (
+
+        <PostItem
+          key={i}
+          avatar={post.author.picture}
+          author={post.author.username}
+          title={post.title}
+          description={post.content}
+          created_at={post.createdAt}
+          children = {post.comments || ""}
+        />
+        
       ));
     }
     return;

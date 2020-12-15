@@ -9,8 +9,6 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 
-import DevAvatar from "../../assets/img/alfredo.png";
-
 // toastr.error("Cadastro de postagem feito com sucesso.");
 
 const key = "updatable";
@@ -40,7 +38,8 @@ const CardNetworking = (props) => {
       ]}
     >
       <Title size="18">{props.username}</Title>
-      {/* TODO: confirmar o campo que vai puxar abaixo */}
+      {/* TODO: confirmar o campo que vai puxar abaixo 
+      em tese seia o "cargo do usuário" mas este campoi não existe no schema*/}
       <Title size="12">{props.id}</Title>
     </CardStyled>
   );

@@ -11,18 +11,19 @@ const { TextArea } = Input;
  * topic - fk topic
  */
 const FormPost = (props) => {
-    const [form, setform] = useState({});
-//TODO: Este setform precisa receber um topic não mockado
 
-const user = useSelector(state => state.user.profile)
+    const [form, setform] = useState({});
+
+    const user = useSelector(state => state.user.profile)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        //TODO: Este setform precisa receber um topic não mockado, mas ainda não foi criado pelo front 13/12/2020
         setform({
             ...form,
             [name]: value,
             author: user._id,
-            topic: "5fca4990658d23426c92e240"
+            topic: props.contexto || "5fca4990658d23426c92e240"
         });
     };
 

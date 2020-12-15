@@ -47,7 +47,7 @@ http.interceptors.response.use(
             default:
                 console.log(status, `aconteceu um erro ${status}`)
                 console.log('aconteceu um erro...', getToken())
-                // alert(`TODO: Remover. Erro na resposta  ${status}`)
+                alert(`Erro na resposta da requisição  ${status}`)
                 break;
         }
 

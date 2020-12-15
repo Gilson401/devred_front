@@ -44,8 +44,8 @@ const PanelAdmin = () => {
   };
 
   return (
-    <LayoutBase breadcrumb={BreadCrumb} title="Minha Rede" actions={Actions}>
-      <Info>
+    <LayoutBase breadcrumb={BreadCrumb} title="Painel" actions={Actions}>
+      <Info onmouse>
         <FaUserAlt /> Bem vindo, <strong> Liniker Silva</strong>
         <br />
         <Button size="medium" onClick={() => changeViewPanel(0)}>

@@ -9,6 +9,8 @@ export const POST_LOADING = "POST_LOADING";
 export const GET_POSTS = "GET_POSTS";
 export const CREATE_POST = "CREATE_POST";
 
+
+/**Action que pega os posts */
 export const getPostAll = (page, limit) => {
   return async (dispatch) => {
     dispatch({ type: POST_LOADING, status: true });

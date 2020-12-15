@@ -13,7 +13,7 @@ const BreadCrumb = ["Home", "Minha Rede"];
 const Networking = () => {
 
 
-//TODO: pegar a lista de de amigos do user logado
+
 
     const amigos = useSelector(state => state.friends.friendship)
     const Actions = "";
@@ -25,7 +25,7 @@ const Networking = () => {
     }, [])
 
 
-//TODO: Pegar a lista de amigos sugeridos pata o amigo logado
+//TODO: Pegar a lista de amigos sugeridos pata o amigo logado - 13/12/2020 ainda não implementado
 
   return (
     <LayoutBase breadcrumb={BreadCrumb} title="Minha Rede" actions={Actions}>
