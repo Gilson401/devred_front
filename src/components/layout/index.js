@@ -13,6 +13,8 @@ import history from "../../config/history";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../store/User/user.action";
 import { useEffect } from "react";
+import { removeToken } from "../../config/auth";
+
 
 const { Header, Content, Footer } = Layout;
 
@@ -35,10 +37,16 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
     const profile = useSelector(state => state.user.profile)
 
     useEffect(() => {
-      
+
         dispatch(getProfile())
     }, [dispatch])
 
+/**Removetoken e vai pra tela de login */
+const logout =() =>{
+    removeToken()
+    history.push('/signin')
+    console.log("vc quer sair")
+}
 
 
     const getCurrent = MenuList.filter((m) => m.link === history.location.pathname);
@@ -62,7 +70,7 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
                             </Link>
                         </Menu.Item>
                     ))}
-                    <Menu.Item key={10}>
+                    <Menu.Item onClick={logout} key={10}>
                         <FiPower /> Sair
           </Menu.Item>
                 </MenuStyled>

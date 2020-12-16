@@ -34,6 +34,8 @@ export const actionCreateComment = (form) => {
       dispatch({ type: CREATE_COMMENTS, form });
       toastr.success("SUCESSO !", "Cadastro de comments feito com sucesso.");
       getPostAll(1, 7);
+      dispatch({ type: COMMENTS_LOADING, status: false });
+
     } catch (error) {
       toastr.error(`Erro no cadastro: ${error.message}`);
     }
