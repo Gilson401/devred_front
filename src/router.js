@@ -11,27 +11,30 @@ import Profile from "./views/Profile";
 import SignIn from "./views/Sign/SignIn";
 import { isAuthenticated } from "./config/auth";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "./store/User/user.action";
 // import { useSelector } from "react-redux";
 
-const AdminRoute = ({ ...rest }) => {
-    //TODO
-//   if (!isAuthenticated()) {
-//     return <Redirect to="/signin" />;
-//   }
-  return <Route {...rest} />;
-};
+
 
 const Routers = () => {
   const dispatch = useDispatch();
   // Autenticação através de REDUX com REHYDRATE PERSIST
-  // const isAutheticated = useSelector((state) => !!state.auth.token);
+   const isAutheticated_redux  = useSelector((state) => !!state.auth.token);
   // console.log("isAutheticated", isAutheticated);
 
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
+
+
+  const AdminRoute = ({ ...rest }) => {
+    //TODO
+  if (!isAuthenticated() || !isAutheticated_redux) {
+    return <Redirect to="/signin" />;
+  }
+  return <Route {...rest} />;
+};
 
   return (
     <Router history={history}>

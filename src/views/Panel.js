@@ -28,6 +28,8 @@ const PanelAdmin = () => {
     dispatch(getProfile())
 }, [dispatch])
 
+   const username = useSelector(state => state.user.profile.username)
+
   const ViewPanel = () => {
     switch (viewPanel) {
       case 0:
@@ -46,7 +48,7 @@ const PanelAdmin = () => {
   return (
     <LayoutBase breadcrumb={BreadCrumb} title="Painel" actions={Actions}>
       <Info onmouse>
-        <FaUserAlt /> Bem vindo, <strong> Liniker Silva</strong>
+        <FaUserAlt /> Bem vindo, <strong> {username}</strong>
         <br />
         <Button size="medium" onClick={() => changeViewPanel(0)}>
           <MdDashboard /> DashBoard

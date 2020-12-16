@@ -41,13 +41,16 @@ http.interceptors.response.use(
             case 401:
                 console.log('Token inválido...', getToken())
 
-                // removeToken()
-                // history.push('/signin')
+                removeToken()
+                history.push('/signin')
                 break;
             default:
                 console.log(status, `aconteceu um erro ${status}`)
                 console.log('aconteceu um erro...', getToken())
-                alert(`Erro na resposta da requisição  ${status}`)
+
+                removeToken()
+                history.push('/signin') 
+              
                 break;
         }
 

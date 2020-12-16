@@ -12,9 +12,11 @@ const getProfile = (props) => {
     return async (dispatch, getState) => {
         //   const { auth } = getState();
         const user = getUser()
+        if(user){
         const data = await getProfileUser(user.id);
         const prof = data.data
         dispatch({ type: "SET_PROFILE", profile: prof });
+        }
     };
 };
 
