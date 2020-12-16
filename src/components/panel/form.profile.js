@@ -1,19 +1,22 @@
-import { Button, Form, Input, Row, Col, Select } from "antd";
+import { Button, Form, Input, Row, Col, Select, Upload, Progress } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
 import { getProfile } from "../../store/User/user.action";
 import { AntdConfirmation } from "../../util/util";
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { updateUserService } from "../../services/userService";
+
 const { Option } = Select;
 
-const FormEducation = () => {
+const FormProfile = () => {
     const [form, setForm] = useState({
     });
-
+    const [progress, setProgress] = useState(0)
     //No Componente que vai demandar o state
     const dispatch = useDispatch()
-    const profile = useSelector(state => state.user.profile)   
+    const profile = useSelector(state => state.user.profile)
 
     useEffect(() => {
         dispatch(getProfile())
@@ -26,20 +29,71 @@ const FormEducation = () => {
             [name]: value,
         });
     };
-    const handleSelect = (value) => {
+
+    /**Handlers específico para gender. */
+    const handleSelectGender = (value) => {
         setForm({
             ...form,
             gender: value,
         });
     }
 
-    const submitForm = () => {
-        console.log("idofgjpdfi,")
-    };
+
+    /**Handlers específico para picture. */
+    const handleSelectPicture = (attr) => {
+        const { value, name } = attr.target
+        console.log("value, name", value, name)
+        console.log("attr.target,", attr.target)
+        if (name === 'picture') {
+            setForm({
+                ...form,
+                'picture': attr.target.files[0]
+            })
+        }
+
+    }
+
+    const submitForm = async () => {
+
+
+        let data = new FormData()
+        Object.keys(form).forEach(key => data.append(key, form[key]))
+        
+        const config = {
+            onUploadProgress: function (progressEvent) {
+                let successPercent = Math.round(progressEvent.loaded * 100 / progressEvent.total)
+                // 
+                setProgress(successPercent)
+            },
+            headers: {
+                'Content-type': 'multipart/form-data'
+            }
+        }
+
+        const content = await  updateUserService(profile._id, data, config)
+               .then((res) => {
+                // clearForm()
+                toastr.success("Sucesso.", "Cadastro feito com sucesso.");
+                // setisProcessando(false)  
+                // window.location.reload()  
+            })
+            .catch((err) => toastr.error(`Erro no cadastro: ${err.message}`))
+            .finally(()=>setProgress(0))
+        
+    }
 
     const submitForm2 = () => {
         console.log("form")
     };
+
+    const normFile = e => {
+        console.log('Upload event:', e);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    };
+
 
     return (
         <Row>
@@ -61,7 +115,7 @@ const FormEducation = () => {
                     <Form.Item name="email">
                         <Input
                             name="email"
-                            value={form.name || ""}
+                            value={form.email || ""}
                             onChange={handleChange}
                             placeholder="Entre com seu e-mail"
                         />
@@ -84,13 +138,24 @@ const FormEducation = () => {
                         />
                     </Form.Item>
                     <Form.Item name="gender" >
-                        <Select style={{ width: 120 }} name="gender" onChange={handleSelect} placeholder="Sexo">
-                            <Option value="masculino">Masculino</Option>
-                            <Option value="feminino">Feminino</Option>
+                        <Select style={{ width: 120 }} name="gender" onChange={handleSelectGender} placeholder="Sexo">
+                            <Option value="Male">Masculino</Option>
+                            <Option value="Female">Feminino</Option>
                             <Option value="NaN">NaN</Option>
+                            <Option value="No coments">No coments</Option>
                         </Select>
 
                     </Form.Item>
+
+
+
+                    
+                    <Inputf>
+                        <input name="picture" type="file" onChange={handleSelectPicture} />
+                       {progress > 0 ? <Progress strokeLinecap="square" percent={progress} />:""}
+                        <br /><br />
+                    </Inputf>
+
                     <Form.Item
                         value={form.password || ""}
                         name="password"
@@ -103,7 +168,7 @@ const FormEducation = () => {
                     <Form.Item>
                         <Button onClick={submitForm} type="primary" htmlType="submit">
                             Atualizar
-          </Button>
+                        </Button>
                     </Form.Item>
                 </Form>
             </ColStyled>
@@ -112,9 +177,15 @@ const FormEducation = () => {
 }
 
 
-export default FormEducation
+export default FormProfile
 
 const ColStyled = styled(Col)`
     margin: 20px;
     min-width: 500px !important;
+`
+
+const Inputf = styled.div`
+
+
+
 `

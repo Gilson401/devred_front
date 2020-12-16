@@ -14,8 +14,7 @@ export const signIn = (props) => {
     dispatch({ type: SIGN_LOADING, loading: true });
 
     const { data } = await authService(props);
-    console.log("data", data);
-
+ 
     dispatch({ type: SIGN, data: data });
     
     saveLocalStorage(data);
