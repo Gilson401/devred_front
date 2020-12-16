@@ -12,8 +12,7 @@ const LogIn = () => {
     
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    password: "a123456",
-    email: "auth@auth.com",
+  
   });
 
   const handleChange = (props) => {
@@ -27,6 +26,7 @@ const LogIn = () => {
   
   /** chama dispatch(signIn(form)) */
   const submitForm = () => {
+      
     dispatch(signIn(form));
   };
 
@@ -55,13 +55,12 @@ const LogIn = () => {
                 />
               </Form.Item>
 
-              <Form.Item
-                value={form.password || ""}
-                name="password"
-                onChange={handleChange}
-                placeholder="Entre com sua senha"
-              >
-                <Input.Password placeholder="Entre com sua senha" />
+              <Form.Item  name="password">
+                <Input.Password
+                    value={form.password || ""}
+                    name="password"
+                    onChange={handleChange}
+                    placeholder="Entre com sua senha" />
               </Form.Item>
 
               <Form.Item>
@@ -94,9 +93,9 @@ const SliceBg = styled(Col)`
   align-items: center;
   font-size: 5rem;
   font-weight: 700;
-  font-family: "Goldman", cursive;
+  font-family: Arial, Helvetica, sans-serif, "Goldman", cursive;
 
-  color: #061b35;
+  color: black;
   text-shadow: 4px 4px 2px #43949e;
   line-height: 1;
   span {
@@ -124,7 +123,7 @@ const BgImg = styled.div`
 const SliceForm = styled(Col)`
   height: 100vh;
   display: flex;
-  background-image: linear-gradient(180deg, #1c516a, #061b35);
+  background-image: linear-gradient(90deg, grey, black);
   padding: 20px;
 `;
 const FormLogin = styled.div`
