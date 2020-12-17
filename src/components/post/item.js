@@ -127,7 +127,7 @@ const PostItem = ({
 export default PostItem;
 
 const Post = styled(Comment)`
-  background-image: linear-gradient(360deg, #fff, #eee);
+  background-image: linear-gradient(180deg, #fff, #eee);
   border: thin solid #eee;
   margin-bottom: 10px;
   .ant-comment-avatar img {

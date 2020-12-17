@@ -53,14 +53,13 @@ const BreadCrumb = ["Home", "Post"];
         <PostItem
           key={i}
           avatar={post.author.picture}
-          author= {post._id} //{post.author.username}
+          author= {post.author.username}
           title={post.title}
           description={post.content}
-          created_at={post.createdAt}
+          created_at={post.created_at}
           children = {mountPosts2(post.comments)}
           id={post._id}
         />
-
       ));
     }
     return;
@@ -79,7 +78,7 @@ const BreadCrumb = ["Home", "Post"];
           author={post.author.username}
           title={post.title}
           description={post.content}
-          created_at={post.createdAt}
+          created_at={post.created_at}
           children = {post.comments || ""}
           id={post._id}
         />

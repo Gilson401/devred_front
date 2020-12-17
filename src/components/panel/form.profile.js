@@ -70,6 +70,7 @@ const FormProfile = () => {
             }
         }
 
+        //todo: colocar em redux
         const content = await  updateUserService(profile._id, data, config)
                .then((res) => {
                 // clearForm()
@@ -146,9 +147,6 @@ const FormProfile = () => {
                         </Select>
 
                     </Form.Item>
-
-
-
                     
                     <Inputf>
                         <input name="picture" type="file" onChange={handleSelectPicture} />
@@ -156,14 +154,15 @@ const FormProfile = () => {
                         <br /><br />
                     </Inputf>
 
-                    <Form.Item
+                    <Form.Item name="password">
+                        <Input.Password 
                         value={form.password || ""}
-                        name="password"
+                        name="password" 
                         onChange={handleChange}
-                        placeholder="Entre com sua senha"
-                    >
-                        <Input.Password placeholder="Entre com sua senha" />
+                        placeholder="Entre com sua senha" 
+                        />
                     </Form.Item>
+
 
                     <Form.Item>
                         <Button onClick={submitForm} type="primary" htmlType="submit">
