@@ -7,10 +7,11 @@ import { Button, Modal } from "antd";
 import { toastr } from "react-redux-toastr";
 import {FormPost} from "../../components/post/form";
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost, getPostAll } from '../../store/Post/post.action';
 import { actionCreateComment } from '../../store/Comments/comments.action';
 import { dislikeInPost, likeInPost, remove_likeInPost, remove_dislikeInPost } from '../../services/posts';
+import { reloaderAction } from '../../store/Reloader/reloader.action';
 
 /**props: author,
   title,
@@ -40,20 +41,28 @@ const PostItem = ({
     const closeModalForm = () => setShowModal(false);
     const [update, setUpdate] = useState(false);
 
+
+    
+
     const like = async () => {
         await likeInPost(id)
         await  remove_dislikeInPost(id)
-        setLikes(1);
-        setDislikes(0);
+        // setLikes(1);
+        // setDislikes(0);
         setAction('liked');
+        dispatch(reloaderAction())
     };
     const dislike = async () => {
         await  dislikeInPost(id)
         await remove_likeInPost(id)
-        setLikes(0);
-        setDislikes(1);
+        // setLikes(0);
+        // setDislikes(1);
         setAction('disliked');
+        dispatch(reloaderAction())
     };
+
+
+
 
     useEffect(() => {
         // dispatch(getPostAll());
@@ -71,6 +80,7 @@ const PostItem = ({
         dispatch(actionCreateComment(data))
         closeModalForm();
         setUpdate(true);
+        dispatch(reloaderAction())
     };
 
 

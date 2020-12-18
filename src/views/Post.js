@@ -30,12 +30,14 @@ const BreadCrumb = ["Home", "Post"];
   const total = useSelector((state) => state.post.total);
   // -----------------------------------
   
+  const reloader = useSelector(state => state.reloader.loading)
+
   useEffect(() => {
     dispatch(getPostAll());
     if (update) {
       setUpdate(false);
     }
-  }, [dispatch, update]);
+  }, [dispatch, update, reloader]);
 
   // const isFinalPage = () => {
   //   const totalPage = Math.ceil(total / limitPerPage);
@@ -91,30 +93,7 @@ const BreadCrumb = ["Home", "Post"];
     return;
   };
 
-  // const changePage = (page) => (page >= 1 ? setPage(page) : false);
-  // const Paginator = () => {
-  //   return !loading && total > limitPerPage ? (
-  //     <PaginatorStyled>
-  //       <Button
-  //         onClick={() => changePage(page - 1)}
-  //         disabled={page === 1}
-  //         type="primary"
-  //       >
-  //         Anterior
-  //       </Button>
-  //       <Button
-  //         disabled={isFinalPage()}
-  //         onClick={() => changePage(page + 1)}
-  //         type="primary"
-  //       >
-  //         Próximo
-  //       </Button>
-  //     </PaginatorStyled>
-  //   ) : (
-  //     ""
-  //   );
-  // };
-
+  
   const handleCancel = () => setModal(false);
 
   const submitPost = (event, data) => {

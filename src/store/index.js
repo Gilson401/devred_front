@@ -11,13 +11,15 @@ import PostReducer from "./Post/post.reducer";
 import UserReducer from "./User/user.reducer";
 import friendshipsReducer from "./Friendship/friendships.reducer";
 import commentsReducer from './Comments/comments.reducer'
+import reloaderReducer from './Reloader/reloader.reducer'
 // modularizações dos reduces
 const reducers = combineReducers({
   auth: SignReducer,
   post: PostReducer,
   user: UserReducer,
   toastr: toastrReducer,
-  friends: friendshipsReducer
+  friends: friendshipsReducer,
+  reloader: reloaderReducer
 });
 
 // middlewares de confifurações do projeto
