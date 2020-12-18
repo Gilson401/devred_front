@@ -17,7 +17,7 @@ const BreadCrumb = ["Home", "Painel"];
 
 const PanelAdmin = () => {
   const Actions = "";
-  const [viewPanel, setViewPanel] = useState(0);
+  const [viewPanel, setViewPanel] = useState(1);
   const dispatch = useDispatch();
 
   const changeViewPanel = (view) => {

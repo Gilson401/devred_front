@@ -10,6 +10,7 @@ import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-d
 import { useDispatch } from 'react-redux';
 import { createPost, getPostAll } from '../../store/Post/post.action';
 import { actionCreateComment } from '../../store/Comments/comments.action';
+import { dislikeInPost, likeInPost } from '../../services/posts';
 
 /**props: author,
   title,
@@ -35,12 +36,18 @@ const PostItem = ({
     const closeModalForm = () => setShowModal(false);
     const [update, setUpdate] = useState(false);
 
-    const like = () => {
+    const like = async () => {
+        await likeInPost(id)
         setLikes(1);
         setDislikes(0);
         setAction('liked');
     };
-
+    const dislike = async () => {
+        await  dislikeInPost(id)
+        setLikes(0);
+        setDislikes(1);
+        setAction('disliked');
+    };
 
     useEffect(() => {
         // dispatch(getPostAll());
@@ -60,11 +67,7 @@ const PostItem = ({
         setUpdate(true);
     };
 
-    const dislike = () => {
-        setLikes(0);
-        setDislikes(1);
-        setAction('disliked');
-    };
+
 
     const openNotification = (msg) => {
         toastr.info(msg);

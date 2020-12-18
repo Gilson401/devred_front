@@ -15,4 +15,12 @@ const createPostService = (data) => {
   return http.post(`/posts`, data);
 };
 
-export { getPostsService, getCountPostsService, createPostService };
+
+/**Manda like para um post */
+const likeInPost = (post) => http.post(`/like/${post}`);
+
+
+/**Manda dislike para um post */
+const dislikeInPost = (post) => http.post(`/dislike/${post}`);
+
+export {likeInPost, dislikeInPost, getPostsService, getCountPostsService, createPostService };

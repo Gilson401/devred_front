@@ -1,5 +1,5 @@
 import { Button, Form, Input, Row, Col, Select, Upload, Progress } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ const FormProfile = () => {
     //No Componente que vai demandar o state
     const dispatch = useDispatch()
     const profile = useSelector(state => state.user.profile)
-
+    const inputEl = useRef(null)
     useEffect(() => {
         dispatch(getProfile())
     }, [dispatch])
@@ -41,9 +41,11 @@ const FormProfile = () => {
 
     /**Handlers específico para picture. */
     const handleSelectPicture = (attr) => {
+
         const { value, name } = attr.target
         console.log("value, name", value, name)
-        console.log("attr.target,", attr.target)
+        console.log("attr.target,", attr.target.files[0].name)
+
         if (name === 'picture') {
             setForm({
                 ...form,
@@ -95,6 +97,10 @@ const FormProfile = () => {
         return e && e.fileList;
     };
 
+
+    const clickopenfile = ()=>{
+        inputEl.current.click()
+    }
 
     return (
         <Row>
@@ -148,11 +154,21 @@ const FormProfile = () => {
 
                     </Form.Item>
                     
-                    <Inputf>
-                        <input name="picture" type="file" onChange={handleSelectPicture} />
+                    
+
+                    <Form.Item>
+                        <Button onClick={clickopenfile} type="primary" htmlType="submit">
+                           Escolher Foto
+                        </Button>
+                        <span>{form.picture?.name}</span>
+                        <Inputf>
+                        <input ref={inputEl} id="inpute" name="picture" type="file" onChange={handleSelectPicture} />
                        {progress > 0 ? <Progress strokeLinecap="square" percent={progress} />:""}
                         <br /><br />
                     </Inputf>
+                    </Form.Item>
+
+
 
                     <Form.Item name="password">
                         <Input.Password 
@@ -184,7 +200,11 @@ const ColStyled = styled(Col)`
 `
 
 const Inputf = styled.div`
+   
+    cursor: pointer;
 
-
+input[type="file"] {
+    display: none; 
+}
 
 `
