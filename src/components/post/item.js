@@ -10,14 +10,15 @@ import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-d
 import { useDispatch } from 'react-redux';
 import { createPost, getPostAll } from '../../store/Post/post.action';
 import { actionCreateComment } from '../../store/Comments/comments.action';
-import { dislikeInPost, likeInPost } from '../../services/posts';
+import { dislikeInPost, likeInPost, remove_likeInPost, remove_dislikeInPost } from '../../services/posts';
 
 /**props: author,
   title,
   description,
   created_at,
   avatar
-  children deve receber um array de posts */
+  children deve receber um array de posts
+  canComment limita a cadeia de comments  */
 const PostItem = ({
     author,
     title,
@@ -25,11 +26,14 @@ const PostItem = ({
     created_at,
     avatar = AvatarNeutro,
     id,
+    count_dislikes,
+    count_likes,
+    canComment = true,
     children = [""]
 }) => {
     const dispatch = useDispatch();
-    const [likes, setLikes] = useState(0);
-    const [dislikes, setDislikes] = useState(0);
+    const [likes, setLikes] = useState(count_likes );
+    const [dislikes, setDislikes] = useState(count_dislikes);
     const [action, setAction] = useState(null);
     const [showModal, setShowModal] = useState(false);
     /**Fecha o modal */
@@ -38,12 +42,14 @@ const PostItem = ({
 
     const like = async () => {
         await likeInPost(id)
+        await  remove_dislikeInPost(id)
         setLikes(1);
         setDislikes(0);
         setAction('liked');
     };
     const dislike = async () => {
         await  dislikeInPost(id)
+        await remove_likeInPost(id)
         setLikes(0);
         setDislikes(1);
         setAction('disliked');
@@ -103,20 +109,21 @@ const PostItem = ({
                 children={children}
                 actions={[
 
-                    <Tooltip key="comment-basic-like" title="Like">
+                    <StyledTooltip visible={canComment} key="comment-basic-like" title="Like">
                         <span onClick={like}>
                             {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
                             <span className="comment-action">{likes}</span>
                         </span>
-                    </Tooltip>,
-                    <Tooltip key="comment-basic-dislike" title="Dislike">
+                    </StyledTooltip>,
+                    <StyledTooltip visible={canComment} key="comment-basic-dislike" title="Dislike">
                         <span onClick={dislike}>
                             {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
                             <span className="comment-action">{dislikes}</span>
                         </span>
-                    </Tooltip>,
-                    <span onClick={() => setShowModal(true)} key="comment-basic-reply-to">Reply to</span>,
-
+                    </StyledTooltip>,
+                    
+                    <StyledSpan visible={canComment} onClick={() => setShowModal(true)} key="comment-basic-reply-to">Reply to</StyledSpan>
+                    
                 ]}
 
             />
@@ -128,6 +135,15 @@ const PostItem = ({
 };
 
 export default PostItem;
+
+const StyledSpan = styled.span`
+display: ${props=> props.visible ? "block" : "none"}
+`
+
+const StyledTooltip = styled.span`
+display: ${props=> props.visible ? "block" : "none"}
+`
+
 
 const Post = styled(Comment)`
   background-image: linear-gradient(180deg, #fff, #eee);

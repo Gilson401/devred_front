@@ -23,4 +23,13 @@ const likeInPost = (post) => http.post(`/like/${post}`);
 /**Manda dislike para um post */
 const dislikeInPost = (post) => http.post(`/dislike/${post}`);
 
-export {likeInPost, dislikeInPost, getPostsService, getCountPostsService, createPostService };
+
+
+/**Manda like para um post */
+const remove_likeInPost = (post) => http.delete(`/like/${post}`);
+
+
+/**Manda dislike para um post */
+const remove_dislikeInPost = (post) => http.delete(`/dislike/${post}`);
+
+export {remove_likeInPost, remove_dislikeInPost, likeInPost, dislikeInPost, getPostsService, getCountPostsService, createPostService };

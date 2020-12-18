@@ -59,6 +59,8 @@ const BreadCrumb = ["Home", "Post"];
           created_at={post.created_at}
           children = {mountPosts2(post.comments)}
           id={post._id}
+          count_likes={post.count_likes}
+          count_dislikes={post.count_dislikes}
         />
       ));
     }
@@ -81,6 +83,7 @@ const BreadCrumb = ["Home", "Post"];
           created_at={post.created_at}
           children = {post.comments || ""}
           id={post._id}
+          canComment={false}
         />
         
       ));
