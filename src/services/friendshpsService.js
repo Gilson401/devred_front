@@ -6,13 +6,15 @@ import http from "../config/http";
 const getFriendship = async () => await http.get(`/friends`);
 
 
-//TODO: Revisar todos abaixo,. não são sobre friendship
-/**Apaga o registro de education na conforme o id informado {data :{ "_id": id }} */
-const deleteEducationService = async (id) => await http.delete(`/education`,{data :{ "_id": id }});
 
+/** Passe no skill o array de skills do user logado */
+const getSugestedFriend = async (data) => await http.post(`/sugestfriends`, data);
+
+
+//TODO: Revisar 
 const createEducationService = (data) => {
     return http.post(`/education`, data);
   };
   
 
-export { getFriendship };
+export { getFriendship, getSugestedFriend };

@@ -1,6 +1,6 @@
 
 import { toastr } from "react-redux-toastr";
-import { getFriendship } from "../../services/friendshpsService";
+import { getFriendship, getSugestedFriend } from "../../services/friendshpsService";
 
 
 /**Chama getFriendships e chama salvamento do Profle na store do user logado */
@@ -12,6 +12,19 @@ const actionGetFriendships = (props) => {
         dispatch({ type: "SET_FRIENDSHIP", friendship: data.data });
     };
 };
+
+
+/** Retorna não amigos com pelo menos uma skill em comum */
+const actionGetNotFriendships = (props) => {
+    // debugger
+    return async (dispatch) => {
+        const data = await getSugestedFriend(props)
+       
+        dispatch({ type: "SET_SUGEST_FRIENDSHIP", sugested_friendship: data.data });
+    };
+};
+
+
 
 // const deleteEducation = (id) => {
 //     return async (dispatch) => {
@@ -41,4 +54,4 @@ const actionGetFriendships = (props) => {
 // };
 
 
-export { actionGetFriendships};
+export { actionGetFriendships, actionGetNotFriendships};

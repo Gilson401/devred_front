@@ -1,7 +1,7 @@
 import { Tooltip, Card } from "antd";
 
 import { toastr } from "react-redux-toastr";
-
+import avatar from '../../../src/assets/img/avatar.png'
 import {
   LikeOutlined,
   UserAddOutlined,
@@ -23,7 +23,7 @@ const CardNetworking = (props) => {
 
   return (
     <CardStyled
-      cover={<img alt="example" src={props.picture } />}
+      cover={<img alt="example" src={props.picture || avatar} />}
     //   cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
       actions={[
         <Tooltip placement="top" title="Curtir">
