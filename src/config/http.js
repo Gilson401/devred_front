@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getToken, removeToken } from './auth';
 import history from './history'
+import { toastr } from "react-redux-toastr";
 
 //TODO
 // const localUrlApi = `http://localhost:3001`
@@ -27,11 +28,9 @@ if (getToken()) {
 http.interceptors.response.use(
     response => response,
     error => {
-
-        // const status = error.response.status
+ 
         const { response: { status } } = error
-        console.log(error.message)
-        
+ 
         if (error.message === 'Network Error' && !error.message) {
             alert('você está sem internet...reconecte !!!!!')
         }
@@ -44,6 +43,12 @@ http.interceptors.response.use(
                 removeToken()
                 history.push('/signin')
                 break;
+
+            case 500:
+
+                toastr.info(`Erro na resposta do servidor. ${http.interceptors.request}`);
+                break;
+
             default:
                 console.log(status, `aconteceu um erro ${status}`)
                 console.log('aconteceu um erro...', getToken())

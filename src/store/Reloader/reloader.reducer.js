@@ -1,13 +1,13 @@
 import { RELOADER_LOADING } from "./reloader.action";
 
 const INITIAL_STATE = {
-  loading: false
+  loading: 0
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case RELOADER_LOADING:
-      state.loading = !state.loading;
+      state.loading = 1 + state.loading;
       return state;
     default:
       return state;

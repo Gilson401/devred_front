@@ -6,15 +6,11 @@ import http from "../config/http";
 const getFriendship = async () => await http.get(`/friends`);
 
 
-
 /** Passe no skill o array de skills do user logado */
 const getSugestedFriend = async (data) => await http.post(`/sugestfriends`, data);
 
-
-//TODO: Revisar 
-const createEducationService = (data) => {
-    return http.post(`/education`, data);
-  };
+/** data deve conter {"id": "ID DO USER QUE QUER ADICIONAR"}*/
+const addFriendship = async (data) => await http.post(`/friends`, data);
   
 
-export { getFriendship, getSugestedFriend };
+export { addFriendship, getFriendship, getSugestedFriend };

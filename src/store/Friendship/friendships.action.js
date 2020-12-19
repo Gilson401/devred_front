@@ -19,10 +19,12 @@ const actionGetNotFriendships = (props) => {
     // debugger
     return async (dispatch) => {
         const data = await getSugestedFriend(props)
-       
+       console.log("actionGetNotFriendships CHAMADA", data.data)
         dispatch({ type: "SET_SUGEST_FRIENDSHIP", sugested_friendship: data.data });
     };
 };
+
+
 
 
 

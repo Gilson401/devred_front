@@ -8,6 +8,10 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
+import { addFriendship } from "../../services/friendshpsService";
+import { useDispatch, useSelector } from "react-redux";
+import { reloaderAction } from '../../store/Reloader/reloader.action';
+import { actionGetNotFriendships } from "../../store/Friendship/friendships.action";
 
 // toastr.error("Cadastro de postagem feito com sucesso.");
 
@@ -21,26 +25,52 @@ const CardNetworking = (props) => {
     toastr.info(msg);
   };
 
+
+  const amigos_id = useSelector(state => state.user.profile.friendships) //|| ['5fdb7c61fdcc8291a4d41850']
+  const userSkills = useSelector(state => state.user.profile.skills)
+ 
+const dispatch = useDispatch()
+  const addFriendship_method = async (id) => {
+
+    if(!id){
+        openNotification("Não tem id")
+        return
+    }else{
+
+    await addFriendship({id})
+    .then((res)  => {
+         toastr.success("Sucesso.", `${props.username} adicionado/a como amigo/a.`) 
+         
+         //O state dos amigos atuais demora um tempo até atualizar. Se chamar notfriends imediatamente não 
+         //considera o amigo que  acabou de adicionar. O Push abaixo resolve isso.
+         amigos_id.push(id)
+
+         const data = {
+            friends: "" || amigos_id,
+            skills: userSkills
+        }
+        dispatch(actionGetNotFriendships(data))
+        dispatch(reloaderAction())
+        })
+    .catch((err) => toastr.error(`Erro na adição de amigo: ${err.message}`))
+    .finally(()  => dispatch(reloaderAction()))
+    }
+  }
+
   return (
     <CardStyled
       cover={<img alt="example" src={props.picture || avatar} />}
     //   cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
       actions={[
-        <Tooltip placement="top" title="Curtir">
-          <LikeOutlined onClick={()=>openNotification("Curtiu")} />
-        </Tooltip>,
         <Tooltip placement="top" title="Adicionar">
-          <UserAddOutlined onClick={()=>openNotification("Adicionou")} />
-        </Tooltip>,
-        <Tooltip placement="top" title="Favoritar">
-          <HeartOutlined onClick={()=>openNotification("Favoritou")} />
-        </Tooltip>,
-      ]}
+          <UserAddOutlined onClick={()=>addFriendship_method(props.id)} />
+        </Tooltip>
+       ]}
     >
       <Title size="18">{props.username}</Title>
       {/* TODO: confirmar o campo que vai puxar abaixo 
       em tese seia o "cargo do usuário" mas este campoi não existe no schema*/}
-      <Title size="12">{props.id}</Title>
+      <Title size="12">{props.skills}</Title>
     </CardStyled>
   );
 };

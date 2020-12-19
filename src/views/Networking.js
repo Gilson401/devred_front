@@ -4,7 +4,7 @@ import avatar from '../../src/assets/img/avatar.png'
 import { Button, Collapse } from "antd";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import {actionGetFriendships, actionGetNotFriendships} from '../store/Friendship/friendships.action'
+import { actionGetFriendships, actionGetNotFriendships  } from '../store/Friendship/friendships.action'
 import { useEffect } from "react";
 import { getSugestedFriend } from "../services/friendshpsService";
 const { Panel } = Collapse;
@@ -15,115 +15,107 @@ const Networking = () => {
 
 
 
-    const sugested_friendship  = useSelector(state => state.friends.sugested_friendship)
+    const sugested_friendship = useSelector(state => state.friends.sugested_friendship)
     const amigos = useSelector(state => state.friends.friendship)
-    const amigos_id = useSelector(state => state.user.profile.friendships) || ["123456789dddd"]
-    const userSkills = useSelector(state => state.user.profile.skills) || ["123456789dddd"]
+
+    //Ao que parece há uma lentidão no redux e como eu disparo uma ação passando dados 
+    //dele preciso de ter um valor inicial a ser passado para esta ação
+    const amigos_id = useSelector(state => state.user.profile.friendships) //|| ['5fdb7c61fdcc8291a4d41850']
+    const userSkills = useSelector(state => state.user.profile.skills) //|| ["java"]
+
+
 
     const Actions = "";
-
+    const reloader = useSelector(state => state.reloader.loading)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(actionGetFriendships())
 
+      
+    }, [reloader])
+
+    useEffect(() => {
+
 
         const data = {
             friends: "" || amigos_id,
-            skills : userSkills
+            skills: userSkills
         }
-// debugger 
-        dispatch(actionGetNotFriendships(data))
+    
+       
+            dispatch(actionGetNotFriendships(data))
+       
+    }, [amigos_id, reloader])
 
-    }, [])
 
 
-    useEffect(() => {
-        // dispatch(actionGetFriendships())
 
-        const data = {
-            friends: amigos_id,
-            skills : userSkills
+    
+
+      //NO componente que precisa ser recarregado
+//      const reloader = useSelector(state => state.reloader.loading)
+//      reloader no array de useefect
+//Na função que precisa disparar a atualização:
+//      dispatch(reloaderAction())
+
+
+
+
+    const stringme = (arr) => {
+        try {
+            var myVar = arr.toString()
+            return myVar
+        } catch {
+            return "Not informed"
         }
-// debugger
-        dispatch(actionGetNotFriendships(data))
-
-    }, [])
-
-
-//TODO: Pegar a lista de amigos sugeridos pata o amigo logado - 13/12/2020 ainda não implementado
-
-const pegasugestao = async () =>{
-
-    const data = {
-        friends: amigos_id,
-        skills : ["c","kof"]
     }
 
-
-    console.log(data)
-
-    await getSugestedFriend(data)
-}
+    return (
+        <LayoutBase breadcrumb={BreadCrumb} title="Minha Rede" actions={Actions}>
 
 
-const stringme =(arr)=>{
-    try{
-    var myVar = arr.toString()
-    return myVar
-    }catch{
-        return "Not informed"
-    }
-}
+            <Collapse defaultActiveKey={["1", "2", "3"]}>
 
-  return (
-    <LayoutBase breadcrumb={BreadCrumb} title="Minha Rede" actions={Actions}>
+                <PanelStyled header="AMIGOS" key="1">
 
-{/* <Form.Item> */}
-        <Button
-          type="primary"
-          htmlType="submit"
-          onClick={pegasugestao }
-        >
-          Publicar
-        </Button>
-      {/* </Form.Item> */}
+                    <BoxCard>
 
-      <Collapse defaultActiveKey={["1","2","3"]}>
+                        {amigos.map((v, i) => (
+                            <Card key={i} picture={v.picture} username={v.username} skills={stringme(v.skills)} />
+                        ))}
 
-        <PanelStyled header="AMIGOS" key="1">
+                    </BoxCard>
 
-          <BoxCard>
-
-            {amigos.map((v, i) => (
-              <Card key={i} picture={v.picture } username={v.username} id={stringme(v.skills)} />
-            ))}
-
-          </BoxCard>
-
-        </PanelStyled>
+                </PanelStyled>
 
 
 
-        <PanelStyled header="SUGESTÃO DE AMIZADE" key="2">
-          <BoxCard>
-          {sugested_friendship.map((v, i) => (
-              <Card key={i} picture={v.picture } username={v.username} id={stringme(v.skills)} />
-            ))}
-          </BoxCard>
-        </PanelStyled>
+                <PanelStyled header="SUGESTÃO DE AMIZADE" key="2">
+                    <BoxCard>
 
-        <PanelStyled header="TODOS OS USUÁRIOS" key="3">
-          <BoxCard>
-            {[...Array(10).keys()].map((v, i) => (
-              <Card key={i} />
-            ))}
-          </BoxCard>
-        </PanelStyled>
+                        {
+                            sugested_friendship.map((v, i) => (
+                                <Card key={i} picture={v.picture} username={v.username} id={v._id} skills={stringme(v.skills)} />
+                            ))
+                           
+                        }
 
-      </Collapse>
-    </LayoutBase>
-  );
+
+                    </BoxCard>
+                </PanelStyled>
+
+                <PanelStyled header="TODOS OS USUÁRIOS" key="3">
+                    <BoxCard>
+                        {[...Array(10).keys()].map((v, i) => (
+                            <Card key={i} />
+                        ))}
+                    </BoxCard>
+                </PanelStyled>
+
+            </Collapse>
+        </LayoutBase>
+    );
 };
 
 export default Networking;
