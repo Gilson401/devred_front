@@ -70,10 +70,11 @@ const Profile = () => {
 
 
             <Div onClick={handleMouseMove}>
-                <h1> TODO: Avaliar conteúdo deste componetne. Parece redundar com painel</h1>
+                <h1 className="classeA"> TODO: Avaliar conteúdo deste componetne. Parece redundar com painel</h1>
 
+<div >
 
-
+</div>
                 {mousePos.map((item) => (
                     diver(item.x, item.y)
                 ))}

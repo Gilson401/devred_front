@@ -1,6 +1,6 @@
 import { Layout, Menu } from "antd";
 import styled from "styled-components";
-import { FaLaptopCode } from "react-icons/fa";
+import { FaLaptopCode, } from "react-icons/fa";
 import { FiPower } from "react-icons/fi";
 import { IoIosGitNetwork } from "react-icons/io";
 import { RiProfileLine } from "react-icons/ri";
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../store/User/user.action";
 import { useEffect } from "react";
 import { removeToken } from "../../config/auth";
+import coders from '../../assets/img/coders_logo.png'
 
 
 const { Header, Content, Footer } = Layout;
@@ -41,12 +42,12 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
         dispatch(getProfile())
     }, [dispatch])
 
-/**Removetoken e vai pra tela de login */
-const logout =() =>{
-    removeToken()
-    history.push('/signin')
-    console.log("vc quer sair")
-}
+    /**Removetoken e vai pra tela de login */
+    const logout = () => {
+        removeToken()
+        history.push('/signin')
+
+    }
 
 
     const getCurrent = MenuList.filter((m) => m.link === history.location.pathname);
@@ -54,9 +55,15 @@ const logout =() =>{
     return (
         <Layout className="layout">
             <HeaderStyled>
+
                 <Logo>
-                    <FaLaptopCode /> Coders{" "}
+
+                <img src={ coders } className="minhaClasse" alt="texto alt"   />
+
+                {` `}Coders{`  `}
+
                 </Logo>
+
                 <MenuStyled
                     theme="dark"
                     mode="horizontal"
