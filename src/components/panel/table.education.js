@@ -5,10 +5,13 @@ import { deleteEducation, getProfile } from "../../store/User/user.action";
 import { AntdConfirmation } from "../../util/util";
 
 
+/**Retorna a tabela que monta o currículo acadêmico do user */
 export default function TableEducation() {
     const dispatch = useDispatch();
     const [refresh, setRefresh] = useState(0)
-const [todelete, setTodelete] = useState(null)
+    const [todelete, setTodelete] = useState(null)
+
+    /**Selector  da education do user */
     const UserEducation = useSelector((state) => state.user.profile.education)
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -35,6 +38,10 @@ const [todelete, setTodelete] = useState(null)
         setIsModalVisible(true)
     };
 
+
+
+
+    /**Parametro da teble do antd para montar uma tabela  */
     const columns = [
         {
             title: "Area de Estudo",

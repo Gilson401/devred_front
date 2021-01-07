@@ -2,6 +2,7 @@ import {
     getProfileUser,
     deleteEducationService,
     createEducationService,
+    getAllUsers
 } from "../../services/userService";
 import { toastr } from "react-redux-toastr";
 import { getUser } from "../../config/auth";
@@ -20,6 +21,14 @@ const getProfile = (props) => {
     };
 };
 
+const actionGetAllUsers = () => {
+    return async (dispatch) => {
+      
+        const data = await getAllUsers();
+        dispatch({ type: "SET_ALL_USERS", allUsers: data.data });
+        
+    };
+};
 const deleteEducation = (id) => {
     return async (dispatch) => {
         // dispatch({ type: "DELETE_EDUCATIOn", profile: data });
@@ -48,4 +57,4 @@ const AddEducation = (id) => {
 };
 
 
-export { getProfile, deleteEducation, AddEducation };
+export { getProfile, deleteEducation, AddEducation, actionGetAllUsers };

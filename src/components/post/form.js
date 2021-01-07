@@ -39,7 +39,7 @@ const FormPost = (props) => {
                 rules={[{ required: true, message: "Favor insira um titulo" }]}
             >
                 <Input
-                    placeholder="Titulo da postagemh"
+                    placeholder="Titulo da postagem"
                     name="title"
                     onChange={handleChange}
                 />

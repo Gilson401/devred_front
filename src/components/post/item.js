@@ -110,10 +110,12 @@ const PostItem = ({
                 author={author}
                 avatar={<img src={avatar} alt={title} />}
                 content={
-                    <React.Fragment>
-                        <h4>{title}</h4>
+                     <React.Fragment>
+                        <div>
+                        <h4>title</h4>
                         <p>{description}</p>
-                    </React.Fragment>
+                        </div>
+                     </React.Fragment>
                 }
                 datetime={created_at}
                 children={children}

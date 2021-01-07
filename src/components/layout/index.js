@@ -99,7 +99,8 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
                 </div>
             </ContentStyled>
             <Footer style={{ textAlign: "center" }}>
-                Todos os Direitos Reservados Dev Connector | 2020
+                Todos os Direitos Reservados Coders | 2021 
+                <p>Site desenvolvido por <a href='https://gilsonpaulo.com.br/'> GPWEB</a> </p>
       </Footer>
         </Layout>
     );

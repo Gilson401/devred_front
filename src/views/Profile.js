@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import LayoutBase from "../components/layout";
-import {objetao} from './c'
+import { objetao } from './c'
+import TableBasicData from "../components/panel/table.basicdata";
 const BreadCrumb = ["Home", "Perfil"];
 
 const Profile = () => {
@@ -23,7 +24,7 @@ const Profile = () => {
         //     y: event.pageY +add 
         // };
 
-        
+
         // mousePos.push(mousePosi)
         // setUpdate(!update)
         // event = event || window.event; // IE-ism
@@ -31,36 +32,36 @@ const Profile = () => {
 
 
 
-    function deepSearch(objeto = objetao, keyProcurada= "picture", addValue = "ADD_VALUE") {
+    function deepSearch(objeto = objetao, keyProcurada = "picture", addValue = "ADD_VALUE") {
         // console.log(objeto)
         //  let objetoInterior = {}   
         //  objetoInterior = objeto
         //  console.log(Object.keys(objeto._doc))
-        
+
         Object.keys(objeto).forEach(key => {
             // debugger
-            if (key === keyProcurada) { 
-                if(!objeto[key].includes(addValue)){           
+            if (key === keyProcurada) {
+                if (!objeto[key].includes(addValue)) {
                     objeto[key] = `${addValue}${objeto[key]}`
                 }
             }
-    
-            if(typeof objeto[key] === "object" ){
+
+            if (typeof objeto[key] === "object") {
                 try {
                     deepSearch(objeto[key])
                 } catch (error) {
-                    
+
                 }
-                            
-            }         
-    
+
+            }
+
         }
         )
-        
+
         return objeto
-    
+
     }
-    
+
     useEffect(() => {
         console.log("mousePos")
     }, [update])
@@ -68,19 +69,8 @@ const Profile = () => {
     return (
         <LayoutBase breadcrumb={BreadCrumb} title="Perfil" actions={Actions}>
 
-
-            <Div onClick={handleMouseMove}>
-                <h1 className="classeA"> TODO: Avaliar conteúdo deste componetne. Parece redundar com painel</h1>
-
-<div >
-
-</div>
-                {mousePos.map((item) => (
-                    diver(item.x, item.y)
-                ))}
-
-
-            </Div>
+            <TableBasicData />
+            
 
         </LayoutBase>
     );

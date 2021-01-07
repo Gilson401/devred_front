@@ -5,8 +5,9 @@ import { Button, Collapse } from "antd";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionGetFriendships, actionGetNotFriendships  } from '../store/Friendship/friendships.action'
+import {actionGetAllUsers} from '../store/User/user.action'
 import { useEffect } from "react";
-import { getSugestedFriend } from "../services/friendshpsService";
+
 const { Panel } = Collapse;
 const BreadCrumb = ["Home", "Minha Rede"];
 
@@ -17,6 +18,7 @@ const Networking = () => {
 
     const sugested_friendship = useSelector(state => state.friends.sugested_friendship)
     const amigos = useSelector(state => state.friends.friendship)
+    const allUsers = useSelector(state => state.user.allUsers)
 
     //Ao que parece há uma lentidão no redux e como eu disparo uma ação passando dados 
     //dele preciso de ter um valor inicial a ser passado para esta ação
@@ -31,7 +33,7 @@ const Networking = () => {
 
     useEffect(() => {
         dispatch(actionGetFriendships())
-
+        dispatch(actionGetAllUsers())
       
     }, [reloader])
 
@@ -107,9 +109,12 @@ const Networking = () => {
 
                 <PanelStyled header="TODOS OS USUÁRIOS" key="3">
                     <BoxCard>
-                        {[...Array(10).keys()].map((v, i) => (
-                            <Card key={i} />
+
+                        {allUsers.map((v, i) => (
+                             <Card key={i} picture={v.picture} username={v.username} id={v._id} skills={stringme(v.skills)} />
+                            
                         ))}
+
                     </BoxCard>
                 </PanelStyled>
 

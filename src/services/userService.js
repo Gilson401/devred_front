@@ -4,7 +4,10 @@ import http from "../config/http";
 /**Get User by id */
 const getProfileUser = async (id) => await http.get(`/user/${id}`);
 
+/**Get All Users*/
+const getAllUsers = async () => await http.get(`/user`);
 
+/**Atualiza o user com o Id fornecido */
 const updateUserService = (id, data, config = {}) => http.patch(`/user/${id}`, data, config)
 
 
@@ -17,4 +20,5 @@ const createEducationService = (data) => {
   
 
 
-export {updateUserService, getProfileUser, deleteEducationService, createEducationService };
+export {updateUserService, getProfileUser, deleteEducationService, createEducationService,
+    getAllUsers };
