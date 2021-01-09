@@ -1,101 +1,79 @@
-import { Button, Form, Input, Row, Col, Select, Upload, Progress } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Button, Form, Row, Col, Select } from "antd";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
-import { getProfile } from "../../store/User/user.action";
-import { AntdConfirmation } from "../../util/util";
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { updateUserService } from "../../services/userService";
+
+import { actionGetTopic } from '../../store/Topics/topics.action'
+import {
+    actionAddUserInterestTopic,
+    actionGetUserInterestTopic,
+    actionDeleteUserInterestTopic
+} from '../../store/Interests/interests.action'
+
+// 
 
 const { Option } = Select;
 
+// em Userschema o topics_of_interest é um FK de topic assim, se for seguir ao pé da letra o que foi pensado
+// o cadastro de topics_of_interest deve ser restrito aos tópicos existentes na rede. 
+// Mas o user poderá cadastrar um novo topico?
+
+
 const FormInterest = () => {
-    const [form, setForm] = useState({
-    });
-
+    const [form, setForm] = useState({});
     const dispatch = useDispatch()
-    const profile = useSelector(state => state.user.profile)
+    const topicsList = useSelector((state) => state.topics.topic)
 
-    const handleChange = (props) => {
-        const { value, name } = props.target;
-        setForm({
-            ...form,
-            [name]: value,
-        });
-    };
+    useEffect(() => {
+        dispatch(actionGetTopic())
+    }, [dispatch])
+
 
     /**Handlers específico para gender. */
-    const handleSelectGender = (value) => {
+    const handleSelectInterest = (value) => {
         setForm({
             ...form,
-            gender: value,
+            topics_of_interest: value,
         });
     }
 
     const submitForm = async () => {
-
-
-        let data = new FormData()
-        Object.keys(form).forEach(key => data.append(key, form[key]))
-        
-        const config = {
-           
-            headers: {
-                'Content-type': 'multipart/form-data'
-            }
-        }
-
-        //todo: colocar em redux
-        const content = await  updateUserService(profile._id, data, config)
-               .then((res) => {
-
+        await dispatch(actionAddUserInterestTopic(form))
+            .then((res) => {
                 toastr.success("Sucesso.", "Cadastro feito com sucesso.");
-
             })
             .catch((err) => toastr.error(`Erro no cadastro: ${err.message}`))
-            
-        
     }
 
-        //import { reloaderAction } from '../../store/Reloader/reloader.action';
-//const dispatch = useDispatch()
-//dispatch(reloaderAction())
-
+   
 
     return (
         <Row>
 
-            <ColStyled span={12} >
-                <Form
-                    initialValues={{
-                        
-                    }}
-                >
-                    <Form.Item name="skills">
-                        <Input
-                            name="skills"
-                            value={form.skills || ""}
-                            onChange={handleChange}
-                            placeholder="Informe um interesse"
-                        />
-                    </Form.Item>
+            <ColStyled span={24} >
 
-                    <Form.Item name="gender" >
-                        <Select style={{ width: 120 }} name="gender" onChange={handleSelectGender} placeholder="TODO INTERESTs">
-                            <Option value="Male">Masculino</Option>
-                            <Option value="Female">Feminino</Option>
-                            <Option value="NaN">NaN</Option>
-                            <Option value="No coments">No coments</Option>
-                        </Select>
-
-                    </Form.Item>                    
-
-                    <Form.Item>
-                        <Button onClick={submitForm} type="primary" htmlType="submit">
-                            Atualizar
+                {/* <Complete/> */}
+                <br /><br /><br />
+                <Form initialValues={{}} >
+                    <Form.Item span={12}>
+                        <Button disabled={!form.topics_of_interest} onClick={submitForm} type="primary" htmlType="submit">
+                            Adicionar
                         </Button>
                     </Form.Item>
+
+                    <Form.Item name="topics_of_interest" span={12} >
+                        <Select style={{ width: 500 }} name="topics_of_interest" onChange={handleSelectInterest} placeholder="TODO INTERESTs">
+
+                            {topicsList.map((item) => <Option value={item._id || ""}>{item.title || ""}</Option>)}
+
+                        </Select>
+
+                    </Form.Item>
+
+
+
                 </Form>
             </ColStyled>
         </Row>

@@ -10,8 +10,10 @@ import SignReducer from "./Sign/sign.reducer";
 import PostReducer from "./Post/post.reducer";
 import UserReducer from "./User/user.reducer";
 import friendshipsReducer from "./Friendship/friendships.reducer";
-import commentsReducer from './Comments/comments.reducer'
+import topicReducer from './Topics/topics.reducer'
 import reloaderReducer from './Reloader/reloader.reducer'
+import interestsReducer from './Interests/interests.reducer'
+
 // modularizações dos reduces
 const reducers = combineReducers({
   auth: SignReducer,
@@ -19,7 +21,9 @@ const reducers = combineReducers({
   user: UserReducer,
   toastr: toastrReducer,
   friends: friendshipsReducer,
-  reloader: reloaderReducer
+  reloader: reloaderReducer,
+  topics: topicReducer,
+  interests : interestsReducer
 });
 
 // middlewares de confifurações do projeto
