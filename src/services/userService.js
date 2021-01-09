@@ -18,7 +18,11 @@ const createEducationService = (data) => {
     return http.post(`/education`, data);
   };
   
+  /**Adiciona uma Skill  */
+  const addSkillService = (data) => {
+    return http.post(`/skill`, data);
+  };
+  
 
-
-export {updateUserService, getProfileUser, deleteEducationService, createEducationService,
+export {addSkillService, updateUserService, getProfileUser, deleteEducationService, createEducationService,
     getAllUsers };

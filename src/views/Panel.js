@@ -62,7 +62,7 @@ const PanelAdmin = () => {
           <MdDashboard /> DashBoard
         </Button>
         <Button size="medium" onClick={() => changeViewPanel(1)}>
-          <ImProfile /> Editar Perfil
+          <ImProfile /> Dados Básicos
         </Button>
         <Button size="medium" onClick={() => changeViewPanel(2)}>
           <FaGraduationCap /> Adicionar Educação
