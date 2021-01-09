@@ -3,7 +3,8 @@ import { Descriptions, Badge } from 'antd';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../store/User/user.action";
-
+import { AiFillDelete } from "react-icons/ai";
+import styled from 'styled-components';
 
 
 export default function TableBasicData() {
@@ -17,17 +18,19 @@ export default function TableBasicData() {
 
     }, [dispatch, refresh])
 
+    /**Retorna <li> com o interesse da pessa */
     const interests = () => {
         if (UserProfile.topics_of_interest) {
-            return UserProfile.topics_of_interest.map((item, index) => (<li key={index}>{item.title}</li>))
+            return UserProfile.topics_of_interest.map((item, index) => (<li key={index}><AiFillDeleteStyled onClick={()=> console.log("Deletar", item._id)}/> {item.title} </li>))
         } else {
             return ""
         }
     }
 
+        /**Retorna <li> com o skill do user */
     const habilidades = () => {
         if (UserProfile.skills) {
-            return UserProfile.skills.map((item, index) => (<li key={index}>{item}</li>))
+            return UserProfile.skills.map((item, index) => (<li key={index}> <AiFillDeleteStyled onClick={()=> console.log("Deletar", item)}/> {item}</li>))
         } else {
             return ""
         }
@@ -35,8 +38,6 @@ export default function TableBasicData() {
 
     return (
         <>
-
-
             <Descriptions title="" layout="vertical" bordered>
                 <Descriptions.Item label="Username">{UserProfile.username}</Descriptions.Item>
                 <Descriptions.Item label="Name">{UserProfile.name}</Descriptions.Item>
@@ -45,11 +46,20 @@ export default function TableBasicData() {
                 <Descriptions.Item label="Localização" span={2}>     {UserProfile.place}    </Descriptions.Item>
 
                 <Descriptions.Item label="Tópicos de interesse" span={3}>
-                    <ul > {interests()} </ul>
+                    <UlStyled > {interests()} </UlStyled>
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Skills" span={3}><ul > {habilidades()} </ul></Descriptions.Item>
+                <Descriptions.Item label="Skills" span={3}><UlStyled > {habilidades()} </UlStyled></Descriptions.Item>
             </Descriptions>
         </>
     );
 }
+
+const UlStyled = styled.ul`
+list-style:none;
+`
+
+const AiFillDeleteStyled = styled(AiFillDelete)`
+cursor: pointer;
+margin-right:10px;
+`
