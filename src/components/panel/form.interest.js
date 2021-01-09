@@ -77,7 +77,6 @@ const FormInterest = () => {
                         />
                     </Form.Item>
 
-
                     <Form.Item name="gender" >
                         <Select style={{ width: 120 }} name="gender" onChange={handleSelectGender} placeholder="TODO INTERESTs">
                             <Option value="Male">Masculino</Option>
@@ -86,10 +85,7 @@ const FormInterest = () => {
                             <Option value="No coments">No coments</Option>
                         </Select>
 
-                    </Form.Item>
-                    
- 
-
+                    </Form.Item>                    
 
                     <Form.Item>
                         <Button onClick={submitForm} type="primary" htmlType="submit">

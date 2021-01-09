@@ -1,6 +1,6 @@
 
 import { toastr } from "react-redux-toastr";
-import { getFriendship, getSugestedFriend } from "../../services/friendshpsService";
+import { getFriendship, getSugestedFriend, deleteFriendship } from "../../services/friendshpsService";
 
 
 /**Chama getFriendships e chama salvamento do Profle na store do user logado */
@@ -14,7 +14,7 @@ const actionGetFriendships = (props) => {
 };
 
 
-/** Retorna não amigos com pelo menos uma skill em comum */
+/** Retorna não amigos com pelo menos uma skill em comum através do getSugestedFriend */
 const actionGetNotFriendships = (props) => {
     // debugger
     return async (dispatch) => {
@@ -28,17 +28,17 @@ const actionGetNotFriendships = (props) => {
 
 
 
-// const deleteEducation = (id) => {
-//     return async (dispatch) => {
-//         // dispatch({ type: "DELETE_EDUCATIOn", profile: data });
+const actionDeleteFriendship = (id) => {
+    return async (dispatch) => {
 
-//         const del = await deleteEducationService(id);
-//         if (del) {
-//             toastr.success("SUCESSO !", "Cadastro de postagem feito com sucesso.");
-//             getProfile();
-//         }
-//     };
-// };
+        const del = await deleteFriendship(id);
+        if (del) {
+            toastr.success("SUCESSO !", "Amizade removida com sucesso.");
+            //depois que remove uma amizade dever atualizar a listade amigos...
+            dispatch(actionGetFriendships());
+        }
+    };
+};
 
 
 
@@ -56,4 +56,4 @@ const actionGetNotFriendships = (props) => {
 // };
 
 
-export { actionGetFriendships, actionGetNotFriendships};
+export { actionGetFriendships, actionGetNotFriendships, actionDeleteFriendship};

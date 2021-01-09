@@ -5,10 +5,10 @@ import avatar from '../../../src/assets/img/avatar.png'
 import {
   LikeOutlined,
   UserAddOutlined,
-  HeartOutlined,
+  HeartOutlined, UserDeleteOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { addFriendship } from "../../services/friendshpsService";
+import { addFriendship , actionDeleteFriendship, deleteFriendship} from "../../services/friendshpsService";
 import { useDispatch, useSelector } from "react-redux";
 import { reloaderAction } from '../../store/Reloader/reloader.action';
 import { actionGetNotFriendships } from "../../store/Friendship/friendships.action";
@@ -30,14 +30,16 @@ const CardNetworking = (props) => {
   const userSkills = useSelector(state => state.user.profile.skills)
  
 const dispatch = useDispatch()
-  const addFriendship_method = async (id) => {
 
+/**Adiciona uma amizade */
+  const addFriendship_method = async (id) => {
+    
     if(!id){
         openNotification("Não tem id")
         return
     }else{
 
-    await addFriendship({id})
+    await addFriendship({id}) 
     .then((res)  => {
          toastr.success("Sucesso.", `${props.username} adicionado/a como amigo/a.`) 
          
@@ -50,12 +52,47 @@ const dispatch = useDispatch()
             skills: userSkills
         }
         dispatch(actionGetNotFriendships(data))
-        dispatch(reloaderAction())
         })
     .catch((err) => toastr.error(`Erro na adição de amigo: ${err.message}`))
     .finally(()  => dispatch(reloaderAction()))
     }
   }
+
+
+  /**Remove uma amizade */
+  const removeFriendship_method = async (id) => {
+//debugger
+    if(!id){
+        openNotification("Não tem id")
+        return
+    }else{
+/**TODO:*/
+    await deleteFriendship(id)
+    .then((res)  => {
+         toastr.success("Sucesso.", `${props.username} removido/a como amigo/a.`) 
+         
+         //O state dos amigos atuais demora um tempo até atualizar. Se chamar notfriends imediatamente não 
+         //considera o amigo que  acabou de adicionar. O Push abaixo resolve isso.
+        //  amigos_id.pull(id)
+
+         const index  = amigos_id.indexOf(id);
+if (index > -1) {
+    amigos_id.splice(index, 1);
+}
+
+         const data = {
+            friends: "" || amigos_id,
+            skills: userSkills
+        }
+        dispatch(actionGetNotFriendships(data))
+       
+        })
+    .catch((err) => toastr.error(`Erro na remoção de amigo: ${err.message}`))
+    .finally(()  => dispatch(reloaderAction()))
+    }
+  }
+
+
 
   return (
     <CardStyled
@@ -64,7 +101,12 @@ const dispatch = useDispatch()
       actions={[
         <Tooltip placement="top" title="Adicionar">
           <UserAddOutlined onClick={()=>addFriendship_method(props.id)} />
-        </Tooltip>
+        </Tooltip>,
+
+<Tooltip placement="top" title="Remover">
+<UserDeleteOutlined onClick={()=>removeFriendship_method(props.id)} />
+</Tooltip>
+
        ]}
     >
       <Title size="18">{props.username}</Title>

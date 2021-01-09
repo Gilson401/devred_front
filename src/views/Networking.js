@@ -1,7 +1,7 @@
 import LayoutBase from "../components/layout";
 import Card from "../components/Networking/card";
 import avatar from '../../src/assets/img/avatar.png'
-import { Button, Collapse } from "antd";
+import { Button, Collapse, Tooltip } from "antd";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionGetFriendships, actionGetNotFriendships  } from '../store/Friendship/friendships.action'
@@ -84,7 +84,7 @@ const Networking = () => {
                     <BoxCard>
 
                         {amigos.map((v, i) => (
-                            <Card key={i} picture={v.picture} username={v.username} skills={stringme(v.skills)} />
+                            <Card key={i} picture={v.picture} username={v.username} id={v._id} skills={stringme(v.skills)} />
                         ))}
 
                     </BoxCard>
@@ -92,20 +92,24 @@ const Networking = () => {
                 </PanelStyled>
 
 
-
-                <PanelStyled header="SUGESTÃO DE AMIZADE" key="2">
+    
+                
+                <PanelStyled header= {
+                <Tooltip placement="topLeft" title="Com pelo menos uma skill em comum e ainda não amigo.">
+                <div> SUGESTÃO DE AMIZADE</div>
+                </Tooltip>
+                } key="2">
                     <BoxCard>
 
                         {
                             sugested_friendship.map((v, i) => (
                                 <Card key={i} picture={v.picture} username={v.username} id={v._id} skills={stringme(v.skills)} />
-                            ))
-                           
+                            ))                           
                         }
-
-
                     </BoxCard>
                 </PanelStyled>
+
+
 
                 <PanelStyled header="TODOS OS USUÁRIOS" key="3">
                     <BoxCard>
