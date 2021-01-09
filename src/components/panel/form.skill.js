@@ -1,12 +1,9 @@
 import { Button, Form, Input, Row, Col, Select, Upload, Progress } from "antd";
-import { useEffect, useRef, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
-import { getProfile } from "../../store/User/user.action";
-import { AntdConfirmation } from "../../util/util";
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
-import { updateUserService } from "../../services/userService";
+import { addSkillService } from "../../services/userService";
 
 const { Option } = Select;
 
@@ -27,48 +24,29 @@ const FormSkill = () => {
         });
     };
 
-    /**Handlers específico para gender. */
-    const handleSelectGender = (value) => {
-        setForm({
-            ...form,
-            gender: value,
-        });
-    }
 
     
     const submitForm = async () => {
 
-
-        let data = new FormData()
-        Object.keys(form).forEach(key => data.append(key, form[key]))
-        
-        const config = {
-
-            headers: {
-                'Content-type': 'multipart/form-data'
-            }
-        }
-
-        //todo: colocar em redux
-        const content = await  updateUserService(profile._id, data, config)
+         await  addSkillService( form)
                .then((res) => {
 
-                toastr.success("Sucesso.", "Cadastro feito com sucesso.");
+                toastr.success("Sucesso.", "Cadastro de Skill feito com sucesso.");
    
             })
-            .catch((err) => toastr.error(`Erro no cadastro: ${err.message}`))
-            
+            .catch((err) => toastr.error(`Erro no cadastro de Skill: ${err.message}`))
         
     }
 
     return (
         <Row>
 
+            
+
             <ColStyled span={12} >
+            <h3>Adiconar Skill</h3>
                 <Form
-                    initialValues={{
-                        
-                    }}
+                    initialValues={{}}
                 >
                     <Form.Item name="skills">
                         <Input
@@ -80,22 +58,9 @@ const FormSkill = () => {
                     </Form.Item>
 
 
-                    <Form.Item name="gender" >
-                        <Select style={{ width: 120 }} name="gender" onChange={handleSelectGender} placeholder="Select Skill">
-                            <Option value="Male">Java</Option>
-                            <Option value="Female">C++</Option>
-                            <Option value="NaN">NaN</Option>
-                            <Option value="No coments">No coments</Option>
-                        </Select>
-
-                    </Form.Item>
-                    
- 
-
-
                     <Form.Item>
                         <Button onClick={submitForm} type="primary" htmlType="submit">
-                            Atualizar
+                            Adicionar
                         </Button>
                     </Form.Item>
                 </Form>

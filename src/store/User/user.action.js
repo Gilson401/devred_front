@@ -8,8 +8,8 @@ import { toastr } from "react-redux-toastr";
 import { getUser } from "../../config/auth";
 
 
-/**Chama GetUser e chama salvamento do Profle na store do user logado */
-const getProfile = (props) => {
+/**Action que Chama GetUser e chama salvamento do Profle na store do user logado */
+const actionGetProfile = (props) => {
     return async (dispatch, getState) => {
         //   const { auth } = getState();
         const user = getUser()
@@ -36,7 +36,7 @@ const deleteEducation = (id) => {
         const del = await deleteEducationService(id);
         if (del) {
             toastr.success("SUCESSO !", "Cadastro de postagem feito com sucesso.");
-            getProfile();
+            actionGetProfile();
         }
     };
 };
@@ -51,10 +51,10 @@ const AddEducation = (id) => {
         const education = await createEducationService(id);
         if (education) {
             toastr.success("SUCESSO !", "Cadastro de education feito com sucesso.");
-            getProfile();
+            actionGetProfile();
         }
     };
 };
 
 
-export { getProfile, deleteEducation, AddEducation, actionGetAllUsers };
+export { actionGetProfile as getProfile, deleteEducation, AddEducation, actionGetAllUsers };

@@ -58,6 +58,10 @@ const FormInterest = () => {
         
     }
 
+        //import { reloaderAction } from '../../store/Reloader/reloader.action';
+//const dispatch = useDispatch()
+//dispatch(reloaderAction())
+
 
     return (
         <Row>
@@ -73,7 +77,7 @@ const FormInterest = () => {
                             name="skills"
                             value={form.skills || ""}
                             onChange={handleChange}
-                            placeholder="Informe uma skill"
+                            placeholder="Informe um interesse"
                         />
                     </Form.Item>
 

@@ -58,6 +58,9 @@ const dispatch = useDispatch()
     }
   }
 
+//import { reloaderAction } from '../../store/Reloader/reloader.action';
+//const dispatch = useDispatch()
+//dispatch(reloaderAction())
 
   /**Remove uma amizade */
   const removeFriendship_method = async (id) => {

@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../store/User/user.action";
 import { AiFillDelete } from "react-icons/ai";
 import styled from 'styled-components';
+import { removeSkillService } from "../../services/userService";
+
+
 
 
 export default function TableBasicData() {
@@ -18,6 +21,12 @@ export default function TableBasicData() {
 
     }, [dispatch, refresh])
 
+
+const deleteSkill =(param)=>{
+    removeSkillService(param)
+    setRefresh(refresh + 1)
+}
+
     /**Retorna <li> com o interesse da pessa */
     const interests = () => {
         if (UserProfile.topics_of_interest) {
@@ -30,7 +39,7 @@ export default function TableBasicData() {
         /**Retorna <li> com o skill do user */
     const habilidades = () => {
         if (UserProfile.skills) {
-            return UserProfile.skills.map((item, index) => (<li key={index}> <AiFillDeleteStyled onClick={()=> console.log("Deletar", item)}/> {item}</li>))
+            return UserProfile.skills.map((item, index) => (<li key={index}> <AiFillDeleteStyled onClick={()=> deleteSkill(item)}/> {item}</li>))
         } else {
             return ""
         }

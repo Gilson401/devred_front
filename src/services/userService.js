@@ -24,5 +24,12 @@ const createEducationService = (data) => {
   };
   
 
-export {addSkillService, updateUserService, getProfileUser, deleteEducationService, createEducationService,
+    /**Remove uma Skill  */
+    const removeSkillService = (param) => {
+        const data = {skills : param}
+        return http.delete(`/skill`, {data});
+    };
+      
+
+export {addSkillService, removeSkillService, updateUserService, getProfileUser, deleteEducationService, createEducationService,
     getAllUsers };
