@@ -7,39 +7,44 @@ import { AiFillDelete } from "react-icons/ai";
 import styled from 'styled-components';
 import { removeSkillService } from "../../services/userService";
 import { actionDeleteUserInterestTopic, actionGetUserInterestTopic } from "../../store/Interests/interests.action";
-import { reloaderAction } from '../../store/Reloader/reloader.action';
 
 
 export default function TableBasicData() {
     const dispatch = useDispatch();
+
     const [refresh, setRefresh] = useState(2)
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
+
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
-    const reloader = useSelector(state => state.reloader.loading)
-    const interestsTopics = useSelector(state => state.interests.userInterests)
+    // const reloader = useSelector(state => state.reloader.loading)
+    // const interestsTopics = useSelector(state => state.interests.userInterests)
 
     useEffect(() => {
         dispatch(getProfile())
         dispatch(actionGetUserInterestTopic());
-    }, [dispatch, refresh, reloader])
+    }, [dispatch , refresh ])
 
-    useEffect(() => {
-        setRefresh(interestsTopics.length)
-    }, [interestsTopics.length])
+    // useEffect(() => {
+    //     setRefresh(interestsTopics.length)
+    // }, [interestsTopics.length])
 
     //O delete de interesses funciona mas a atualização da tela eatava randomica
     //Só passou a funcionar sempre qdo adicionei este esquema
-    useEffect(() => {   }, [refresh])
+    // useEffect(() => { }, [refresh])
 
-    const deleteSkill = (param) => {
-        removeSkillService(param)
-        setRefresh(refresh + 1)
+
+
+    const callactionDeleteUserInterestTopic = async (item) => {
+         await dispatch(actionDeleteUserInterestTopic({ topics_of_interest: item }))
+            .then(() => {
+                 setRefresh(refresh + 1)
+             })
     }
 
-    const callactionDeleteUserInterestTopic = (item) => {
-        dispatch(actionDeleteUserInterestTopic({ topics_of_interest: item }))
-        setRefresh(refresh + 1)
-        forceUpdate()
+    const deleteSkill = async (param) => {
+        await removeSkillService(param)
+            .then(() => {
+                setRefresh(refresh + 1)
+            })
     }
 
     /**Retorna <li> com o interesse da pessa */

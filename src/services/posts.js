@@ -10,7 +10,7 @@ const getCountPostsService = async (page = 1) => {
 };
 
 
-/**13/12/2020 - Rota post ainda não foi subida */
+/**Rota post ainda não foi subida */
 const createPostService = (data) => {
   return http.post(`/posts`, data);
 };

@@ -30,8 +30,8 @@ const actionDeleteUserInterestTopic = (id) => {
         const del = await deleteUserInterestsTopic(id);
         if (del) {
             dispatch({ type: "GET_USER_INTERESTS", userInterests: del.data });
-            debugger
-            toastr.success("SUCESSO !", "Tópico de Interesse removid com sucesso.");
+          
+            toastr.success("SUCESSO !", "Tópico de Interesse removido.");
             //depois que remove uma amizade dever atualizar a listade amigos...            
         }
     };

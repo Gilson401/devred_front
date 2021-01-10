@@ -8,7 +8,7 @@ import { addSkillService } from "../../services/userService";
 const { Option } = Select;
 
 const FormSkill = () => {
-
+    const [antForm] = Form.useForm()
     const [form, setForm] = useState({
     });
 
@@ -32,10 +32,10 @@ const FormSkill = () => {
                .then((res) => {
 
                 toastr.success("Sucesso.", "Cadastro de Skill feito com sucesso.");
-   
+                
             })
             .catch((err) => toastr.error(`Erro no cadastro de Skill: ${err.message}`))
-        
+            antForm.resetFields()
     }
 
     return (
@@ -47,9 +47,11 @@ const FormSkill = () => {
             <h3>Adiconar Skill</h3>
                 <Form
                     initialValues={{}}
+                    form={antForm}
                 >
                     <Form.Item name="skills">
                         <Input
+                        
                             name="skills"
                             value={form.skills || ""}
                             onChange={handleChange}

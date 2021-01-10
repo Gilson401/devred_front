@@ -31,7 +31,7 @@ const FormInterest = () => {
     }, [dispatch])
 
 
-    /**Handlers específico para gender. */
+    /**Handlers específico para select. */
     const handleSelectInterest = (value) => {
         setForm({
             ...form,
@@ -43,6 +43,7 @@ const FormInterest = () => {
         await dispatch(actionAddUserInterestTopic(form))
             .then((res) => {
                 toastr.success("Sucesso.", "Cadastro feito com sucesso.");
+                setForm({  });
             })
             .catch((err) => toastr.error(`Erro no cadastro: ${err.message}`))
     }
@@ -64,7 +65,7 @@ const FormInterest = () => {
                     </Form.Item>
 
                     <Form.Item name="topics_of_interest" span={12} >
-                        <Select style={{ width: 500 }} name="topics_of_interest" onChange={handleSelectInterest} placeholder="TODO INTERESTs">
+                        <Select style={{ width: 500 }} name="topics_of_interest" onChange={handleSelectInterest} placeholder="Pesquise tópicos de interesse">
 
                             {topicsList.map((item) => <Option value={item._id || ""}>{item.title || ""}</Option>)}
 

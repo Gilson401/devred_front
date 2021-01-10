@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import LayoutBase from "../components/layout";
 
-import PostItem from "../components/post/item";
+import PostItem from "../components/post/postItem";
 
 import Loading from "../components/loading/index";
 
-import {FormPost} from "../components/post/form";
+import {FormPost} from "../components/post/formPost";
 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -97,6 +97,7 @@ const BreadCrumb = ["Home", "Post"];
   const handleCancel = () => setModal(false);
 
   const submitPost = (event, data) => {
+      debugger
     event.preventDefault();
     dispatch(createPost(data));
     handleCancel();
@@ -108,9 +109,14 @@ const BreadCrumb = ["Home", "Post"];
       title="Nova Postagem"
       visible={modal}
       footer={false}
-      onCancel={handleCancel}
+      onCancel={handleCancel}      
     >
-      <FormPost submit={submitPost} />
+      <FormPost 
+      showTitleInput = {true} //mosta o input de title
+      showTopics = {true}     //mostra o select de topics
+      submit={submitPost}     //função de submeter post
+      />
+    
     </Modal>
   );
 

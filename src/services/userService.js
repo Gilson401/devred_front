@@ -24,7 +24,7 @@ const createEducationService = (data) => {
   };
   
 
-    /**Remove uma Skill  */
+    /**Remove uma Skill chamando http.delete(`/skill`, {data}) */
     const removeSkillService = (param) => {
         const data = {skills : param}
         return http.delete(`/skill`, {data});

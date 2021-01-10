@@ -5,13 +5,14 @@ import AvatarNeutro from "../../assets/img/avatar.png";
 import { Tooltip } from "antd";
 import { Button, Modal } from "antd";
 import { toastr } from "react-redux-toastr";
-import {FormPost} from "../../components/post/form";
+import {FormPost} from "./formPost";
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, getPostAll } from '../../store/Post/post.action';
 import { actionCreateComment } from '../../store/Comments/comments.action';
 import { dislikeInPost, likeInPost, remove_likeInPost, remove_dislikeInPost } from '../../services/posts';
 import { reloaderAction } from '../../store/Reloader/reloader.action';
+import moment from 'moment'
 
 /**props: author,
   title,
@@ -98,7 +99,12 @@ const PostItem = ({
             footer={false}
             onCancel={closeModalForm}
         >
-            <FormPost post={id} submit={submitComment} />
+            <FormPost
+             post={id}  //COmo é um reply faz referencia a um id de post existente
+                        //Não exibe título e não exibe select de topic/
+             submit={submitComment}
+            />
+
         </Modal>
     );
 
@@ -108,16 +114,16 @@ const PostItem = ({
             <ModalForm />
             <Post
                 author={author}
-                avatar={<img src={avatar} alt={title} />}
+                avatar={<img src={avatar} alt={'foto'} />}
                 content={
                      <React.Fragment>
                         <div>
-                        <h4>title</h4>
+                        <h4>{title || ""}</h4>
                         <p>{description}</p>
                         </div>
                      </React.Fragment>
                 }
-                datetime={created_at}
+                datetime={ created_at ? moment( created_at).format('DD/MM/YYYY, h:mm:ss a') : ""}
                 children={children}
                 actions={[
 
