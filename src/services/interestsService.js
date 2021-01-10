@@ -12,8 +12,8 @@ const createUserInterestsTopic = (data) => {
 };
 
 /** chama http.delete(`/interests`, data)*/
-const deleteUserInterestsTopic = (data) => {
-    return http.post(`/interests`, data);
+const deleteUserInterestsTopic = (datai) => {
+    return http.delete(`/interests`, {data :datai});
   };
   
 

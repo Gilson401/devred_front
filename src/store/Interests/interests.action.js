@@ -8,17 +8,18 @@ import {getUserInterestsTopics , createUserInterestsTopic, deleteUserInterestsTo
 const actionGetUserInterestTopic = (props) => {
     return async (dispatch) => {        
         const data = await getUserInterestsTopics()  
-        dispatch({ type: "GET_USER_INTERESTS", topic: data.data });
+        dispatch({ type: "GET_USER_INTERESTS", userInterests: data.data });
     };
 };
 
 
 /**Adiciona um tópico de interesse no perfil do user */
 const actionAddUserInterestTopic = (props) => {
-    // debugger
+ 
     return async (dispatch) => {
+       // debugger
         const data = await createUserInterestsTopic(props)       
-        dispatch({ type: "SET_USER_INTERESTS", userInterests: data.data });
+        dispatch({ type: "ADD_USER_INTERESTS", userInterests: props });
     };
 };
 
@@ -28,9 +29,10 @@ const actionDeleteUserInterestTopic = (id) => {
     return async (dispatch) => {
         const del = await deleteUserInterestsTopic(id);
         if (del) {
+            dispatch({ type: "GET_USER_INTERESTS", userInterests: del.data });
+            debugger
             toastr.success("SUCESSO !", "Tópico de Interesse removid com sucesso.");
-            //depois que remove uma amizade dever atualizar a listade amigos...
-            dispatch(actionGetUserInterestTopic());
+            //depois que remove uma amizade dever atualizar a listade amigos...            
         }
     };
 };

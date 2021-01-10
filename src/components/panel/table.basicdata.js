@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Descriptions, Badge } from 'antd';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,40 +6,59 @@ import { getProfile } from "../../store/User/user.action";
 import { AiFillDelete } from "react-icons/ai";
 import styled from 'styled-components';
 import { removeSkillService } from "../../services/userService";
-
-
+import { actionDeleteUserInterestTopic, actionGetUserInterestTopic } from "../../store/Interests/interests.action";
+import { reloaderAction } from '../../store/Reloader/reloader.action';
 
 
 export default function TableBasicData() {
     const dispatch = useDispatch();
-    const [refresh, setRefresh] = useState(0)
+    const [refresh, setRefresh] = useState(2)
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
+    const reloader = useSelector(state => state.reloader.loading)
+    const interestsTopics = useSelector(state => state.interests.userInterests)
 
     useEffect(() => {
-
         dispatch(getProfile())
+        dispatch(actionGetUserInterestTopic());
+    }, [dispatch, refresh, reloader])
 
-    }, [dispatch, refresh])
+    useEffect(() => {
+        setRefresh(interestsTopics.length)
+    }, [interestsTopics.length])
 
+    //O delete de interesses funciona mas a atualização da tela eatava randomica
+    //Só passou a funcionar sempre qdo adicionei este esquema
+    useEffect(() => {   }, [refresh])
 
-const deleteSkill =(param)=>{
-    removeSkillService(param)
-    setRefresh(refresh + 1)
-}
+    const deleteSkill = (param) => {
+        removeSkillService(param)
+        setRefresh(refresh + 1)
+    }
+
+    const callactionDeleteUserInterestTopic = (item) => {
+        dispatch(actionDeleteUserInterestTopic({ topics_of_interest: item }))
+        setRefresh(refresh + 1)
+        forceUpdate()
+    }
 
     /**Retorna <li> com o interesse da pessa */
     const interests = () => {
         if (UserProfile.topics_of_interest) {
-            return UserProfile.topics_of_interest.map((item, index) => (<li key={index}><AiFillDeleteStyled onClick={()=> console.log("Deletar", item._id)}/> {item.title} </li>))
+            return UserProfile.topics_of_interest.map((item, index) =>
+            (<li key={index}>
+                <AiFillDeleteStyled onClick={() => callactionDeleteUserInterestTopic(item._id)} />
+                {item.title}
+            </li>))
         } else {
             return ""
         }
     }
 
-        /**Retorna <li> com o skill do user */
+    /**Retorna <li> com o skill do user */
     const habilidades = () => {
         if (UserProfile.skills) {
-            return UserProfile.skills.map((item, index) => (<li key={index}> <AiFillDeleteStyled onClick={()=> deleteSkill(item)}/> {item}</li>))
+            return UserProfile.skills.map((item, index) => (<li key={index}> <AiFillDeleteStyled onClick={() => deleteSkill(item)} /> {item}</li>))
         } else {
             return ""
         }

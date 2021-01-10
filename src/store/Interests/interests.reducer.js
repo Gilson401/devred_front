@@ -1,6 +1,5 @@
 const INITIAL_STATE = {
-    userInterests: [{
-    }]
+    userInterests: []
 };
 
 
@@ -8,8 +7,13 @@ const INITIAL_STATE = {
 const interestsReducer = (state = INITIAL_STATE, action) => {
     // debugger
     switch (action.type) {
-        case "SET_USER_INTERESTS":
+        case "GET_USER_INTERESTS":
             state.userInterests = action.userInterests;
+            return state;
+
+        case "ADD_USER_INTERESTS":
+            //debugger
+            state.userInterests.push(action.userInterests);
             return state;
         default:
             return state;
