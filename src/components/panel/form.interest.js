@@ -58,11 +58,7 @@ const FormInterest = () => {
                 {/* <Complete/> */}
                 <br /><br /><br />
                 <Form initialValues={{}} >
-                    <Form.Item span={12}>
-                        <Button disabled={!form.topics_of_interest} onClick={submitForm} type="primary" htmlType="submit">
-                            Adicionar
-                        </Button>
-                    </Form.Item>
+
 
                     <Form.Item name="topics_of_interest" span={12} >
                         <Select style={{ width: 500 }} name="topics_of_interest" onChange={handleSelectInterest} placeholder="Pesquise tópicos de interesse">
@@ -72,7 +68,11 @@ const FormInterest = () => {
                         </Select>
 
                     </Form.Item>
-
+                    <Form.Item span={12}>
+                        <Button disabled={!form.topics_of_interest} onClick={submitForm} type="primary" htmlType="submit">
+                            Adicionar
+                        </Button>
+                    </Form.Item>
 
 
                 </Form>

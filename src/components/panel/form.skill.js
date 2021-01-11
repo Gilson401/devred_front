@@ -44,7 +44,7 @@ const FormSkill = () => {
             
 
             <ColStyled span={12} >
-            <h3>Adiconar Skill</h3>
+            <h3>Adicionar Skill</h3>
                 <Form
                     initialValues={{}}
                     form={antForm}
@@ -61,7 +61,7 @@ const FormSkill = () => {
 
 
                     <Form.Item>
-                        <Button onClick={submitForm} type="primary" htmlType="submit">
+                        <Button disabled={!form.skills} onClick={submitForm} type="primary" htmlType="submit">
                             Adicionar
                         </Button>
                     </Form.Item>

@@ -3,12 +3,12 @@ import { Tooltip, Card } from "antd";
 import { toastr } from "react-redux-toastr";
 import avatar from '../../../src/assets/img/avatar.png'
 import {
-  LikeOutlined,
-  UserAddOutlined,
-  HeartOutlined, UserDeleteOutlined,
+    LikeOutlined,
+    UserAddOutlined,
+    HeartFilled, UserDeleteOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { addFriendship , actionDeleteFriendship, deleteFriendship} from "../../services/friendshpsService";
+import { addFriendship, actionDeleteFriendship, deleteFriendship } from "../../services/friendshpsService";
 import { useDispatch, useSelector } from "react-redux";
 import { reloaderAction } from '../../store/Reloader/reloader.action';
 import { actionGetNotFriendships } from "../../store/Friendship/friendships.action";
@@ -21,103 +21,107 @@ const key = "updatable";
  */
 const CardNetworking = (props) => {
 
-  const openNotification = (msg) => {
-    toastr.info(msg);
-  };
+    const openNotification = (msg) => {
+        toastr.info(msg);
+    };
 
 
-  const amigos_id = useSelector(state => state.user.profile.friendships) //|| ['5fdb7c61fdcc8291a4d41850']
-  const userSkills = useSelector(state => state.user.profile.skills)
- 
-const dispatch = useDispatch()
+    const amigos_id = useSelector(state => state.user.profile.friendships) //|| ['5fdb7c61fdcc8291a4d41850']
+    const userSkills = useSelector(state => state.user.profile.skills)
 
-/**Adiciona uma amizade */
-  const addFriendship_method = async (id) => {
-    
-    if(!id){
-        openNotification("Não tem id")
-        return
-    }else{
+    const dispatch = useDispatch()
 
-    await addFriendship({id}) 
-    .then((res)  => {
-         toastr.success("Sucesso.", `${props.username} adicionado/a como amigo/a.`) 
-         
-         //O state dos amigos atuais demora um tempo até atualizar. Se chamar notfriends imediatamente não 
-         //considera o amigo que  acabou de adicionar. O Push abaixo resolve isso.
-         amigos_id.push(id)
+    /**Adiciona uma amizade */
+    const addFriendship_method = async (id) => {
+        debugger
+        const jae = amigos_id.some((e) => e === props.id)
 
-         const data = {
-            friends: "" || amigos_id,
-            skills: userSkills
+        if (!id) {
+            openNotification("Não tem id")
+            return
+        } else {
+
+            await addFriendship({ id })
+                .then((res) => {
+                    toastr.success("Sucesso.", `${props.username} adicionado/a como amigo/a.`)
+
+                    //O state dos amigos atuais demora um tempo até atualizar. Se chamar notfriends imediatamente não 
+                    //considera o amigo que  acabou de adicionar. O Push abaixo resolve isso.
+                    amigos_id.push(id)
+
+                    const data = {
+                        friends: "" || amigos_id,
+                        skills: userSkills
+                    }
+                    dispatch(actionGetNotFriendships(data))
+                })
+                .catch((err) => toastr.error(`Erro na adição de amigo: ${err.message}`))
+                .finally(() => dispatch(reloaderAction()))
         }
-        dispatch(actionGetNotFriendships(data))
-        })
-    .catch((err) => toastr.error(`Erro na adição de amigo: ${err.message}`))
-    .finally(()  => dispatch(reloaderAction()))
     }
-  }
 
-//import { reloaderAction } from '../../store/Reloader/reloader.action';
-//const dispatch = useDispatch()
-//dispatch(reloaderAction())
+    //import { reloaderAction } from '../../store/Reloader/reloader.action';
+    //const dispatch = useDispatch()
+    //dispatch(reloaderAction())
 
-  /**Remove uma amizade */
-  const removeFriendship_method = async (id) => {
-//debugger
-    if(!id){
-        openNotification("Não tem id")
-        return
-    }else{
-/**TODO:*/
-    await deleteFriendship(id)
-    .then((res)  => {
-         toastr.success("Sucesso.", `${props.username} removido/a como amigo/a.`) 
-         
-         //O state dos amigos atuais demora um tempo até atualizar. Se chamar notfriends imediatamente não 
-         //considera o amigo que  acabou de adicionar. O Push abaixo resolve isso.
-        //  amigos_id.pull(id)
+    /**Remove uma amizade */
+    const removeFriendship_method = async (id) => {
+        //debugger
+        if (!id) {
+            openNotification("Não tem id")
+            return
+        } else {
+            /**TODO:*/
+            await deleteFriendship(id)
+                .then((res) => {
+                    toastr.success("Sucesso.", `${props.username} removido/a como amigo/a.`)
 
-         const index  = amigos_id.indexOf(id);
-if (index > -1) {
-    amigos_id.splice(index, 1);
-}
+                    //O state dos amigos atuais demora um tempo até atualizar. Se chamar notfriends imediatamente não 
+                    //considera o amigo que  acabou de adicionar. O Push abaixo resolve isso.
+                    //  amigos_id.pull(id)
 
-         const data = {
-            friends: "" || amigos_id,
-            skills: userSkills
+                    const index = amigos_id.indexOf(id);
+                    if (index > -1) {
+                        amigos_id.splice(index, 1);
+                    }
+
+                    const data = {
+                        friends: "" || amigos_id,
+                        skills: userSkills
+                    }
+                    dispatch(actionGetNotFriendships(data))
+
+                })
+                .catch((err) => toastr.error(`Erro na remoção de amigo: ${err.message}`))
+                .finally(() => dispatch(reloaderAction()))
         }
-        dispatch(actionGetNotFriendships(data))
-       
-        })
-    .catch((err) => toastr.error(`Erro na remoção de amigo: ${err.message}`))
-    .finally(()  => dispatch(reloaderAction()))
     }
-  }
 
 
+    const none = () => {
+        //style={{ display: `${amigos_id.some((e)=> e === props.id) ? "none" : "auto"}` }}
+        return "auto" || amigos_id.some((e) => e === props.id) ? "none" : "auto"
+    }
 
-  return (
-    <CardStyled
-      cover={<img alt="example" src={props.picture || avatar} />}
-    //   cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-      actions={[
-        <Tooltip placement="top" title="Adicionar">
-          <UserAddOutlined onClick={()=>addFriendship_method(props.id)} />
-        </Tooltip>,
+    return (
+        <CardStyled
+            cover={<img alt="example" src={props.picture || avatar} />}
+            //   cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+            actions={[
 
-<Tooltip placement="top" title="Remover">
-<UserDeleteOutlined onClick={()=>removeFriendship_method(props.id)} />
-</Tooltip>
-
-       ]}
-    >
-      <Title size="18">{props.username}</Title>
-      {/* TODO: confirmar o campo que vai puxar abaixo 
+                <Tooltip placement="top" title= {amigos_id.some((e) => e === props.id) ? "Remover" : "Adicionar"}>
+                    <HeartFilled
+                        style={{ color: `${amigos_id.some((e) => e === props.id) ? "red" : "blue"}` }}
+                        onClick={() => amigos_id.some((e) => e === props.id) ? removeFriendship_method(props.id) : addFriendship_method(props.id) } />
+                </Tooltip>
+            ]}
+        >
+            <Title size="18">{props.username}</Title>
+            {/* TODO: confirmar o campo que vai puxar abaixo 
       em tese seia o "cargo do usuário" mas este campoi não existe no schema*/}
-      <Title size="12">{props.skills}</Title>
-    </CardStyled>
-  );
+            <Title size="12">{props.skills}</Title>
+        </CardStyled>
+    );
 };
 
 export default CardNetworking;

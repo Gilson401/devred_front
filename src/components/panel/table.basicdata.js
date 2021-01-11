@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react';
-import { Descriptions, Badge } from 'antd';
+import React from 'react';
+import { Descriptions} from 'antd';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../store/User/user.action";
@@ -7,7 +7,7 @@ import { AiFillDelete } from "react-icons/ai";
 import styled from 'styled-components';
 import { removeSkillService } from "../../services/userService";
 import { actionDeleteUserInterestTopic, actionGetUserInterestTopic } from "../../store/Interests/interests.action";
-
+import { toastr } from "react-redux-toastr";
 
 export default function TableBasicData() {
     const dispatch = useDispatch();
@@ -15,36 +15,57 @@ export default function TableBasicData() {
     const [refresh, setRefresh] = useState(2)
 
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
-    // const reloader = useSelector(state => state.reloader.loading)
-    // const interestsTopics = useSelector(state => state.interests.userInterests)
+
 
     useEffect(() => {
         dispatch(getProfile())
         dispatch(actionGetUserInterestTopic());
     }, [dispatch , refresh ])
 
-    // useEffect(() => {
-    //     setRefresh(interestsTopics.length)
-    // }, [interestsTopics.length])
 
     //O delete de interesses funciona mas a atualização da tela eatava randomica
-    //Só passou a funcionar sempre qdo adicionei este esquema
-    // useEffect(() => { }, [refresh])
-
 
 
     const callactionDeleteUserInterestTopic = async (item) => {
-         await dispatch(actionDeleteUserInterestTopic({ topics_of_interest: item }))
-            .then(() => {
-                 setRefresh(refresh + 1)
-             })
+
+        const toastrConfirmOptions = {
+            onOk: async() => {
+                await dispatch(actionDeleteUserInterestTopic({ topics_of_interest: item }))
+                .then(() => {
+                     setRefresh(refresh + 1)
+                 })
+            },
+
+            onCancel: () => console.log('CANCEL: clicked'),
+            okText: 'Sim, excluir',
+            cancelText: 'Cancelar',
+            closeOnShadowClick: true
+          };
+
+          toastr.confirm("Excluir Tópico de interesse?", toastrConfirmOptions)
     }
 
     const deleteSkill = async (param) => {
-        await removeSkillService(param)
-            .then(() => {
-                setRefresh(refresh + 1)
-            })
+
+        const toastrConfirmOptions = {
+            onOk: async() => {
+                await removeSkillService(param)
+                .then(() => {
+                    setRefresh(refresh + 1)
+                })
+            },
+
+            onCancel: () => console.log('CANCEL: clicked'),
+            okText: 'Sim, excluir',
+            cancelText: 'Cancelar',
+            closeOnShadowClick: true
+          };
+
+        toastr.confirm("Excluir skill?", toastrConfirmOptions)
+
+        
+        
+
     }
 
     /**Retorna <li> com o interesse da pessa */
@@ -71,6 +92,7 @@ export default function TableBasicData() {
 
     return (
         <>
+        
             <Descriptions title="" layout="vertical" bordered>
                 <Descriptions.Item label="Username">{UserProfile.username}</Descriptions.Item>
                 <Descriptions.Item label="Name">{UserProfile.name}</Descriptions.Item>
@@ -96,3 +118,4 @@ const AiFillDeleteStyled = styled(AiFillDelete)`
 cursor: pointer;
 margin-right:10px;
 `
+

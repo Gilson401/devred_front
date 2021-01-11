@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Collapse, Layout, Menu } from "antd";
 import styled from "styled-components";
 import { FaLaptopCode, } from "react-icons/fa";
 import { FiPower } from "react-icons/fi";
@@ -15,7 +15,7 @@ import { getProfile } from "../../store/User/user.action";
 import { useEffect } from "react";
 import { removeToken } from "../../config/auth";
 import coders from '../../assets/img/coders_logo.png'
-
+const { Panel } = Collapse;
 
 const { Header, Content, Footer } = Layout;
 
@@ -52,18 +52,21 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
 
     const getCurrent = MenuList.filter((m) => m.link === history.location.pathname);
 
+ 
+
     return (
         <Layout className="layout">
             <HeaderStyled>
 
                 <Logo>
 
-                <img src={ coders } className="minhaClasse" alt="texto alt"   />
+                    <img src={coders} className="minhaClasse" alt="texto alt" />
 
-                {` `}Coders{`  `}
+                    {` `}Coders{`  `}
 
                 </Logo>
-
+            
+                {/* ..COMEÇA O MENU DE NAV */}
                 <MenuStyled
                     theme="dark"
                     mode="horizontal"
@@ -80,8 +83,14 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
                     <Menu.Item onClick={logout} key={10}>
                         <FiPower /> Sair
           </Menu.Item>
+
                 </MenuStyled>
+
+                {/* ..COMEÇA O MENU DE NAV */}
+
+
             </HeaderStyled>
+
             <ContentStyled>
                 <BreadcrumbStyled>
                     {breadcrumb.map((b, i) => (
@@ -99,9 +108,9 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
                 </div>
             </ContentStyled>
             <Footer style={{ textAlign: "center" }}>
-                Todos os Direitos Reservados Coders | 2021 
+                Todos os Direitos Reservados Coders | 2021
                 <p>Site desenvolvido por <a href='https://gilsonpaulo.com.br/'> GPWEB</a> </p>
-      </Footer>
+            </Footer>
         </Layout>
     );
 };
@@ -141,6 +150,7 @@ const Logo = styled.div`
 
 const MenuStyled = styled(Menu)`
   display: flex;
+  
   justify-content: flex-end;
   svg {
     position: relative;

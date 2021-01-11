@@ -66,12 +66,15 @@ const Networking = () => {
 
     const stringme = (arr) => {
         try {
-            var myVar = arr.toString()
+            var myVar = arr.join(', ')
             return myVar
         } catch {
             return "Not informed"
         }
     }
+
+
+
 
     return (
         <LayoutBase breadcrumb={BreadCrumb} title="Minha Rede" actions={Actions}>
