@@ -150,8 +150,9 @@ const PostItem = ({
                             <span className="comment-action">{dislikes}</span>
                         </span>
                     </StyledTooltip>,
-
-                    <StyledSpan visible={canComment} onClick={() => setShowModal(true)} key="comment-basic-reply-to">Reply to</StyledSpan>
+                    
+                    <StyledSpan visible={canComment} onClick={() => setShowModal(true)} key="comment-basic-reply-to">Reply to</StyledSpan>,
+                    
 
                 ]}
 

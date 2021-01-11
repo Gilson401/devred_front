@@ -16,6 +16,8 @@ const createPostService = (data) => {
 };
 
 
+
+
 /**Manda like para um post */
 const likeInPost = (post) => http.post(`/like/${post}`);
 
