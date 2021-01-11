@@ -17,8 +17,8 @@ const actionGetUserInterestTopic = (props) => {
 const actionAddUserInterestTopic = (props) => {
  
     return async (dispatch) => {
-       // debugger
-        const data = await createUserInterestsTopic(props)       
+ 
+        await createUserInterestsTopic(props)       
         dispatch({ type: "ADD_USER_INTERESTS", userInterests: props });
     };
 };
@@ -39,17 +39,6 @@ const actionDeleteUserInterestTopic = (id) => {
 
 
 
-/**TODO */
-// const AddEducation = (id) => {
-//     return async (dispatch) => {
-//         // dispatch({ type: "DELETE_EDUCATIOn", profile: data });
-//         const education = await createEducationService(id);
-//         if (education) {
-//             toastr.success("SUCESSO !", "Cadastro de education feito com sucesso.");
-//             getProfile();
-//         }
-//     };
-// };
 
 
 export { actionAddUserInterestTopic, actionGetUserInterestTopic, actionDeleteUserInterestTopic  };

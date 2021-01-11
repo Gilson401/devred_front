@@ -3,7 +3,6 @@ import { Layout, Col, Form, Input, Button, Modal } from "antd";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
-import { toastr } from "react-redux-toastr";
 import { signIn } from "../../store/Sign/sign.action";
 
 const { Content } = Layout;

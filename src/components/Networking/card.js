@@ -3,19 +3,15 @@ import { Tooltip, Card } from "antd";
 import { toastr } from "react-redux-toastr";
 import avatar from '../../../src/assets/img/avatar.png'
 import {
-    LikeOutlined,
-    UserAddOutlined,
-    HeartFilled, UserDeleteOutlined,
+    HeartFilled
 } from "@ant-design/icons";
 import styled from "styled-components";
-import { addFriendship, actionDeleteFriendship, deleteFriendship } from "../../services/friendshpsService";
+import { addFriendship,  deleteFriendship } from "../../services/friendshpsService";
 import { useDispatch, useSelector } from "react-redux";
 import { reloaderAction } from '../../store/Reloader/reloader.action';
 import { actionGetNotFriendships } from "../../store/Friendship/friendships.action";
 
-// toastr.error("Cadastro de postagem feito com sucesso.");
 
-const key = "updatable";
 /**Card com fotos dos amigos e sugestões de amigos
  * props: cover(imagem), username, id
  */
@@ -26,15 +22,13 @@ const CardNetworking = (props) => {
     };
 
 
-    const amigos_id = useSelector(state => state.user.profile.friendships) //|| ['5fdb7c61fdcc8291a4d41850']
+    const amigos_id = useSelector(state => state.user.profile.friendships) || ['5fdb7c61fdcc8291a4d41850']
     const userSkills = useSelector(state => state.user.profile.skills)
 
     const dispatch = useDispatch()
 
     /**Adiciona uma amizade */
     const addFriendship_method = async (id) => {
-        debugger
-        const jae = amigos_id.some((e) => e === props.id)
 
         if (!id) {
             openNotification("Não tem id")
@@ -97,16 +91,9 @@ const CardNetworking = (props) => {
         }
     }
 
-
-    const none = () => {
-        //style={{ display: `${amigos_id.some((e)=> e === props.id) ? "none" : "auto"}` }}
-        return "auto" || amigos_id.some((e) => e === props.id) ? "none" : "auto"
-    }
-
     return (
         <CardStyled
             cover={<img alt="example" src={props.picture || avatar} />}
-            //   cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
             actions={[
 
                 <Tooltip placement="top" title= {amigos_id.some((e) => e === props.id) ? "Remover" : "Adicionar"}>

@@ -1,7 +1,7 @@
 import LayoutBase from "../components/layout";
 import Card from "../components/Networking/card";
-import avatar from '../../src/assets/img/avatar.png'
-import { Button, Collapse, Tooltip } from "antd";
+// import avatar from '../../src/assets/img/avatar.png'
+import {  Collapse, Tooltip } from "antd";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionGetFriendships, actionGetNotFriendships  } from '../store/Friendship/friendships.action'
@@ -13,8 +13,6 @@ const BreadCrumb = ["Home", "Minha Rede"];
 
 /**Componente que lista as amizades e sugestões de amizada */
 const Networking = () => {
-
-
 
     const sugested_friendship = useSelector(state => state.friends.sugested_friendship)
     const amigos = useSelector(state => state.friends.friendship)
@@ -35,7 +33,7 @@ const Networking = () => {
         dispatch(actionGetFriendships())
         dispatch(actionGetAllUsers())
       
-    }, [reloader])
+    }, [reloader, dispatch])
 
     useEffect(() => {
 
@@ -48,21 +46,7 @@ const Networking = () => {
        
             dispatch(actionGetNotFriendships(data))
        
-    }, [amigos_id, reloader])
-
-
-
-
-    
-
-      //NO componente que precisa ser recarregado
-//      const reloader = useSelector(state => state.reloader.loading)
-//      reloader no array de useefect
-//Na função que precisa disparar a atualização:
-//      dispatch(reloaderAction())
-
-
-
+    }, [amigos_id, reloader, dispatch, userSkills])
 
     const stringme = (arr) => {
         try {
@@ -72,9 +56,6 @@ const Networking = () => {
             return "Not informed"
         }
     }
-
-
-
 
     return (
         <LayoutBase breadcrumb={BreadCrumb} title="Minha Rede" actions={Actions}>

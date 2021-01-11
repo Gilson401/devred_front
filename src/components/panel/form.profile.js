@@ -1,11 +1,9 @@
-import { Button, Form, Input, Row, Col, Select, Upload, Progress } from "antd";
+import { Button, Form, Input, Row, Col, Select,  Progress } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
 import { getProfile } from "../../store/User/user.action";
-import { AntdConfirmation } from "../../util/util";
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { updateUserService } from "../../services/userService";
 
 const { Option } = Select;
@@ -72,30 +70,14 @@ const FormProfile = () => {
             }
         }
 
-        //todo: colocar em redux
-        const content = await  updateUserService(profile._id, data, config)
+        await  updateUserService(profile._id, data, config)
                .then((res) => {
-                // clearForm()
                 toastr.success("Sucesso.", "Cadastro feito com sucesso.");
-                // setisProcessando(false)  
-                // window.location.reload()  
             })
             .catch((err) => toastr.error(`Erro no cadastro: ${err.message}`))
             .finally(()=>setProgress(0))
         
     }
-
-    const submitForm2 = () => {
-        console.log("form")
-    };
-
-    const normFile = e => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e && e.fileList;
-    };
 
 
     const clickopenfile = ()=>{

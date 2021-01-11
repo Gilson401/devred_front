@@ -25,6 +25,7 @@ const FormPost = (props) => {
 
   });
 
+  
   const handleSubmit = (v) => {
     dispatch(AddEducation(v));
     props.changeViewPanel(0)

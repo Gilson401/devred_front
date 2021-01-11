@@ -2,7 +2,7 @@ import { Button } from "antd";
 import LayoutBase from "../components/layout";
 import styled from "styled-components";
 import { ImProfile } from "react-icons/im";
-import { FaUserAlt, FaGraduationCap, FaBlackTie } from "react-icons/fa";
+import { FaUserAlt, FaGraduationCap } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { GiSkills } from "react-icons/gi";
 import { TiPointOfInterest } from "react-icons/ti";

@@ -2,7 +2,6 @@ import { Button, Table, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEducation, getProfile } from "../../store/User/user.action";
-import { AntdConfirmation } from "../../util/util";
 
 
 /**Retorna a tabela que monta o currículo acadêmico do user */
@@ -18,12 +17,12 @@ export default function TableEducation() {
     useEffect(() => {
 
         dispatch(getProfile())
-
+console.log("Dipatch em Table education")
     }, [dispatch, refresh])
 
-    const handleOk = () => {
+    const handleOk = async () => {
         setIsModalVisible(false);
-        dispatch(deleteEducation(todelete));
+        dispatch(deleteEducation(todelete))
         setRefresh(refresh + 1)
         setTodelete(null)
 

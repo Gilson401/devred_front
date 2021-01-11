@@ -31,19 +31,17 @@ const actionGetAllUsers = () => {
 };
 const deleteEducation = (id) => {
     return async (dispatch) => {
-        // dispatch({ type: "DELETE_EDUCATIOn", profile: data });
-
-        const del = await deleteEducationService(id);
-        if (del) {
+        await deleteEducationService(id)
+        .then(() => {
             toastr.success("SUCESSO !", "Cadastro de postagem feito com sucesso.");
-            actionGetProfile();
-        }
+           dispatch( actionGetProfile());
+        })
     };
 };
 
 
 
-/**TODO */
+
 const AddEducation = (id) => {
     return async (dispatch) => {
         // dispatch({ type: "DELETE_EDUCATIOn", profile: data });

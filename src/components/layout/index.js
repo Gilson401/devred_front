@@ -1,6 +1,5 @@
-import { Collapse, Layout, Menu } from "antd";
+import {  Layout, Menu } from "antd";
 import styled from "styled-components";
-import { FaLaptopCode, } from "react-icons/fa";
 import { FiPower } from "react-icons/fi";
 import { IoIosGitNetwork } from "react-icons/io";
 import { RiProfileLine } from "react-icons/ri";
@@ -10,12 +9,11 @@ import { CgProfile } from "react-icons/cg";
 import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 import history from "../../config/history";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getProfile } from "../../store/User/user.action";
 import { useEffect } from "react";
 import { removeToken } from "../../config/auth";
 import coders from '../../assets/img/coders_logo.png'
-const { Panel } = Collapse;
 
 const { Header, Content, Footer } = Layout;
 
@@ -35,7 +33,6 @@ const MenuList = [
 const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
 
     const dispatch = useDispatch()
-    const profile = useSelector(state => state.user.profile)
 
     useEffect(() => {
 

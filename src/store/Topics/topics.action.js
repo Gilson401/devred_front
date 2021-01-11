@@ -1,6 +1,3 @@
-
-import { toastr } from "react-redux-toastr";
-
 import { getTopic, createTopic } from "../../services/topicService";
 
 
@@ -24,32 +21,8 @@ const actionAddTopic = (props) => {
 
 
 
-// const actionDeleteFriendship = (id) => {
-//     return async (dispatch) => {
-
-//         const del = await deleteFriendship(id);
-//         if (del) {
-//             toastr.success("SUCESSO !", "Amizade removida com sucesso.");
-//             //depois que remove uma amizade dever atualizar a listade amigos...
-//             dispatch(actionGetFriendships());
-//         }
-//     };
-// };
 
 
-
-/**TODO */
-// const AddEducation = (id) => {
-//     return async (dispatch) => {
-//         // dispatch({ type: "DELETE_EDUCATIOn", profile: data });
-
-//         const education = await createEducationService(id);
-//         if (education) {
-//             toastr.success("SUCESSO !", "Cadastro de education feito com sucesso.");
-//             getProfile();
-//         }
-//     };
-// };
 
 
 export { actionAddTopic, actionGetTopic};

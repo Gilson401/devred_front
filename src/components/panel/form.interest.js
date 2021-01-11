@@ -3,20 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
-import { updateUserService } from "../../services/userService";
-
 import { actionGetTopic } from '../../store/Topics/topics.action'
 import {
     actionAddUserInterestTopic,
-    actionGetUserInterestTopic,
-    actionDeleteUserInterestTopic
 } from '../../store/Interests/interests.action'
 
-// 
 
 const { Option } = Select;
 
-// em Userschema o topics_of_interest é um FK de topic assim, se for seguir ao pé da letra o que foi pensado
+// em Userschema o topics_of_interest é um FK de topic assim, se for seguir ao pé da letra o que foi pensado,
 // o cadastro de topics_of_interest deve ser restrito aos tópicos existentes na rede. 
 // Mas o user poderá cadastrar um novo topico?
 
@@ -89,12 +84,3 @@ const ColStyled = styled(Col)`
     min-width: 500px !important;
 `
 
-const Inputf = styled.div`
-   
-    cursor: pointer;
-
-input[type="file"] {
-    display: none; 
-}
-
-`

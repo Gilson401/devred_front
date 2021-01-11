@@ -1,20 +1,14 @@
-import { Button, Form, Input, Row, Col, Select, Upload, Progress } from "antd";
+import { Button, Form, Input, Row, Col } from "antd";
 import {  useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
 import { addSkillService } from "../../services/userService";
-
-const { Option } = Select;
 
 const FormSkill = () => {
     const [antForm] = Form.useForm()
     const [form, setForm] = useState({
     });
-
-    const dispatch = useDispatch()
-    const profile = useSelector(state => state.user.profile)
-
+ 
 
     const handleChange = (props) => {
         const { value, name } = props.target;
@@ -79,12 +73,3 @@ const ColStyled = styled(Col)`
     min-width: 500px !important;
 `
 
-const Inputf = styled.div`
-   
-    cursor: pointer;
-
-input[type="file"] {
-    display: none; 
-}
-
-`
