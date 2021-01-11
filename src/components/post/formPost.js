@@ -54,7 +54,17 @@ const FormPost = ({showTitleInput ,  showTopics,  submit, post}) => {
             onFinishFailed={() => { }}
         >
 
-            {showTitleInput ?
+
+
+            {showTopics ?
+                <Form.Item name="topic" span={12} >
+                    <Select style={{ width: '100%' }} name="topic" onChange={handleSelectInterest} placeholder="Pesquise tópicos de interesse">
+                        {topicsList.map((item) => <Option value={item._id || ""}>{item.title || ""}</Option>)}
+                    </Select>
+                </Form.Item>
+                : ""}
+
+{showTitleInput ?
                 <Form.Item
                     name="title"
                     rules={[{ required: true, message: "Favor insira um titulo" }]}
@@ -64,13 +74,6 @@ const FormPost = ({showTitleInput ,  showTopics,  submit, post}) => {
                         name="title"
                         onChange={handleChange}
                     />
-                </Form.Item>
-                : ""}
-            {showTopics ?
-                <Form.Item name="topic" span={12} >
-                    <Select style={{ width: '100%' }} name="topic" onChange={handleSelectInterest} placeholder="Pesquise tópicos de interesse">
-                        {topicsList.map((item) => <Option value={item._id || ""}>{item.title || ""}</Option>)}
-                    </Select>
                 </Form.Item>
                 : ""}
 

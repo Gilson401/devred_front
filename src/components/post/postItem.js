@@ -2,13 +2,11 @@ import React, { createElement, useEffect, useState } from 'react';
 import { Comment } from "antd";
 import styled from "styled-components";
 import AvatarNeutro from "../../assets/img/avatar.png";
-import { Tooltip } from "antd";
-import { Button, Modal } from "antd";
+import {Modal } from "antd";
 import { toastr } from "react-redux-toastr";
-import {FormPost} from "./formPost";
+import { FormPost } from "./formPost";
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { createPost, getPostAll } from '../../store/Post/post.action';
+import { useDispatch } from 'react-redux';
 import { actionCreateComment } from '../../store/Comments/comments.action';
 import { dislikeInPost, likeInPost, remove_likeInPost, remove_dislikeInPost } from '../../services/posts';
 import { reloaderAction } from '../../store/Reloader/reloader.action';
@@ -34,7 +32,7 @@ const PostItem = ({
     children = [""]
 }) => {
     const dispatch = useDispatch();
-    const [likes, setLikes] = useState(count_likes );
+    const [likes, setLikes] = useState(count_likes);
     const [dislikes, setDislikes] = useState(count_dislikes);
     const [action, setAction] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -43,21 +41,17 @@ const PostItem = ({
     const [update, setUpdate] = useState(false);
 
 
-    
+
 
     const like = async () => {
         await likeInPost(id)
-        await  remove_dislikeInPost(id)
-        // setLikes(1);
-        // setDislikes(0);
+        await remove_dislikeInPost(id)
         setAction('liked');
         dispatch(reloaderAction())
     };
     const dislike = async () => {
-        await  dislikeInPost(id)
+        await dislikeInPost(id)
         await remove_likeInPost(id)
-        // setLikes(0);
-        // setDislikes(1);
         setAction('disliked');
         dispatch(reloaderAction())
     };
@@ -66,7 +60,6 @@ const PostItem = ({
 
 
     useEffect(() => {
-        // dispatch(getPostAll());
         if (update) {
             setUpdate(false);
         }
@@ -77,13 +70,31 @@ const PostItem = ({
     const submitComment = (event, data) => {
         event.preventDefault();
 
-        openNotification("//TODO: Post de comentário")
-        dispatch(actionCreateComment(data))
-        closeModalForm();
-        setUpdate(true);
-        dispatch(reloaderAction())
+        if (postVerificador(data)) {
+            dispatch(actionCreateComment(data))
+            closeModalForm();
+            setUpdate(true);
+            dispatch(reloaderAction())
+        } else {
+            openNotification("Preencher campos")
+        }
+
     };
 
+
+    const postVerificador = (data) => {
+        if (!data.content) {
+            return false
+        }
+
+        //Se não tem post é post novo e deve ter tópico e título
+        if (!data.post) {
+            if (!data.topic || !data.title) {
+                return false
+            }
+        }
+        return true
+    }
 
 
     const openNotification = (msg) => {
@@ -94,15 +105,15 @@ const PostItem = ({
     /** É um encapsulador de forms.  Chama createComment  */
     const ModalForm = () => (
         <Modal
-            title= {`Responder post. ${id}`}
+            title={`Responder post. ${id}`}
             visible={showModal}
             footer={false}
             onCancel={closeModalForm}
         >
             <FormPost
-             post={id}  //COmo é um reply faz referencia a um id de post existente
-                        //Não exibe título e não exibe select de topic/
-             submit={submitComment}
+                post={id}  //COmo é um reply faz referencia a um id de post existente
+                //Não exibe título e não exibe select de topic/
+                submit={submitComment}
             />
 
         </Modal>
@@ -116,14 +127,14 @@ const PostItem = ({
                 author={author}
                 avatar={<img src={avatar} alt={'foto'} />}
                 content={
-                     <React.Fragment>
+                    <React.Fragment>
                         <div>
-                        <h4>{title || ""}</h4>
-                        <p>{description}</p>
+                            <h4>{title || ""}</h4>
+                            <p>{description}</p>
                         </div>
-                     </React.Fragment>
+                    </React.Fragment>
                 }
-                datetime={ created_at ? moment( created_at).format('DD/MM/YYYY, h:mm:ss a') : ""}
+                datetime={created_at ? moment(created_at).format('DD/MM/YYYY, h:mm:ss a') : ""}
                 children={children}
                 actions={[
 
@@ -139,9 +150,9 @@ const PostItem = ({
                             <span className="comment-action">{dislikes}</span>
                         </span>
                     </StyledTooltip>,
-                    
+
                     <StyledSpan visible={canComment} onClick={() => setShowModal(true)} key="comment-basic-reply-to">Reply to</StyledSpan>
-                    
+
                 ]}
 
             />
@@ -155,11 +166,11 @@ const PostItem = ({
 export default PostItem;
 
 const StyledSpan = styled.span`
-display: ${props=> props.visible ? "block" : "none"}
+display: ${props => props.visible ? "block" : "none"}
 `
 
 const StyledTooltip = styled.span`
-display: ${props=> props.visible ? "block" : "none"}
+display: ${props => props.visible ? "block" : "none"}
 `
 
 
