@@ -43,8 +43,7 @@ const LogIn = () => {
     /** chama dispatch(registrar-se(form)) */
     const registerSubmitForm = () => {
         setShowModal(true)
-        
-        // dispatch(signIn(form));
+
     };
 
 
@@ -78,13 +77,8 @@ const LogIn = () => {
                 <Form.Item>
                     <Button onClick={submitForm} type="primary" htmlType="submit">
                         Enviar
-        </Button>
-                    <br /><br />
-
-                    <hr />
-                    <br />
-
-
+                </Button>
+                
                 </Form.Item>
             </Form>
         </FormLogin>
@@ -130,13 +124,6 @@ const LogIn = () => {
                     />
                 </Form.Item>
 
-                {/* <Form.Item name="password">
-                    <Input.Password
-                        value={form.password || ""}
-                        name="password"
-                        onChange={handleChange}
-                        placeholder="Entre com sua senha" />
-                </Form.Item> */}
 
                 <Form.Item>
                     <Button onClick={registerSubmitForm} type="primary" htmlType="submit">
@@ -176,6 +163,7 @@ const LogIn = () => {
                     <FormLogin>
                     <Styledh>Entrar</Styledh>
                         {login}
+                        <hr />
 
                             <Styledh>Nova conta</Styledh>
                         {newAccount}
@@ -198,7 +186,7 @@ const Main = styled(Content)`
 
 
 const Styledh = styled.p`
-margin-left: 15px;
+margin-left: 10px;
   font-size: 2rem;
   font-weight: 10;
   color: white;

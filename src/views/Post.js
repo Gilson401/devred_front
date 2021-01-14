@@ -51,9 +51,29 @@ const PostView = () => {
       }, [efcontrol, dispatch, UserProfile.topics_of_interest]);//
 
 
+      useEffect( () => {
+        console.log("post UF55 - efcontrol", efcontrol)
+
+      }, [efcontrol]);//
 
 
-    const mountPosts = () => {
+
+const iLiked = (likesArray) =>  likesArray.some((item) => item === UserProfile._id)
+
+const iDisLiked = (dislikesArray) => dislikesArray.some((item) => item === UserProfile._id)
+
+const likeDislikeVerify = ( likesArray, dislikesArray ) => {
+
+    if (iLiked(likesArray) ){
+        return 'liked'
+    }else if (iDisLiked(dislikesArray)){
+        return 'disliked'
+    }else{
+        return null
+    }
+}
+
+const mountPosts = () => {
 
         if (postAll) {
             return postAll.map((post, i) => (
@@ -68,7 +88,10 @@ const PostView = () => {
                     children={mountPosts2(post.comments)}
                     id={post._id}
                     count_likes={post.count_likes}
-                    count_dislikes={post.count_dislikes}
+                    count_dislikes={post.count_dislikes} 
+                    iLikedOrDisliked = {likeDislikeVerify( post.likes, post.dislikes  )}
+                    // setEfcontrol = {tryreloadEvents}
+                    efcontrol = {efcontrol}
                 />
             ));
         }
@@ -105,21 +128,25 @@ const PostView = () => {
     /** */
     const submitPost = (event, data) => {
        
-
         event.preventDefault();
 
         if (postVerificador(data)) {
             dispatch(createPost(data))
-            const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
-            dispatch(getPostAll(topicss2,  'submitPostjs L111'));
-            setEfcontrol(0)
-            handleCancel();
+            tryreloadEvents()
             setUpdate(true);
         } else {
             toastr.error("Completar campos");
             
         }
     };
+
+const tryreloadEvents = ()=>{
+    const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
+    dispatch(getPostAll(topicss2,  'submitPostjs L111'));
+    setEfcontrol(0)
+    handleCancel();
+}
+
 
     /**avalia se os dados necessários para submeter um post estão preenchidos */
     const postVerificador = (data) => {
@@ -157,6 +184,7 @@ const PostView = () => {
     return (
         <LayoutBase breadcrumb={BreadCrumb} title="Postagens" actions={Actions}>
             <ModalForm />
+            <p>$$$$$$$$$$$ {efcontrol}</p>
             {loading ? <Loading /> : mountPosts()}
             {/* {Paginator()} */}
         </LayoutBase>

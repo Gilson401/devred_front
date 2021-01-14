@@ -30,31 +30,55 @@ const PostItem = ({
     count_dislikes,
     count_likes,
     canComment = true,
-    children = [""]
+    iLikedOrDisliked,
+    children = [""],
+    setEfcontrol,
+    efcontrol 
 }) => {
     const dispatch = useDispatch();
     const [likes, setLikes] = useState(count_likes);
     const [dislikes, setDislikes] = useState(count_dislikes);
-    const [action, setAction] = useState(null);
+
+    const [action, setAction] = useState( iLikedOrDisliked);
+
+    /**se o user fez like ou dislike */
+    const [initial, setInicial] = useState({
+        like: iLikedOrDisliked === 'liked' ? 1 : 0,
+        dislike: iLikedOrDisliked === 'disliked' ? 1 : 0
+    })
+
+   
+    
     const [showModal, setShowModal] = useState(false);
     /**Fecha o modal */
     const closeModalForm = () => setShowModal(false);
     const [update, setUpdate] = useState(false);
-    const [efcontrol, setEfcontrol] = useState(0);
+    // const [efcontrol, setEfcontrol] = useState(0);
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
     const reloader = useSelector(state => state.reloader.loading)
 
+    /**Registra um like num post mas antes remove um dislike caso do usuário caso exista  */
     const like = async () => {
         await likeInPost(id)
         await remove_dislikeInPost(id)
-        setAction('liked');
+        .then((res) =>{ 
+            setDislikes(res.data.dislikes.length)
+            setLikes(res.data.likes.length)
+            setAction('liked');
+        })
         dispatch(reloaderAction())
     };
+
+/**registra um like no post mas antes remove um like, caso exista */
     const dislike = async () => {
         await dislikeInPost(id)
         await remove_likeInPost(id)
-        setAction('disliked');
-        dispatch(reloaderAction())
+        .then((res) =>{ 
+            setDislikes(res.data.dislikes.length)
+            setLikes(res.data.likes.length)
+            setAction('disliked')
+        })        
+        dispatch(reloaderAction())       
     };
 
 //const topicss2 = UserProfile.topics_of_interest.map(item => item._id)
@@ -66,7 +90,7 @@ const PostItem = ({
 
 
    useEffect(() => {
-       console.log("post coment - efcontrol e reloader", efcontrol)
+       //console.log("post coment - efcontrol e reloader", efcontrol)
     // if(UserProfile.topics_of_interest && efcontrol === 0 ){
     //     const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
     //     dispatch(getPostAll(topicss2, 'useefectPostjsL46', efcontrol)); 
@@ -158,14 +182,14 @@ const PostItem = ({
 
                     <StyledTooltip visible={canComment} key="comment-basic-like" title="Like">
                         <span onClick={like}>
-                            {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
+                            {React.createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
                             <span className="comment-action">{likes}</span>
                         </span>
                     </StyledTooltip>,
                     <StyledTooltip visible={canComment} key="comment-basic-dislike" title="Dislike">
                         <span onClick={dislike}>
                             {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-                            <span className="comment-action">{dislikes}</span>
+                            <span className="comment-action">{dislikes }</span>
                         </span>
                     </StyledTooltip>,
                     

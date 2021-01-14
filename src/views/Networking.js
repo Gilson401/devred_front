@@ -63,7 +63,7 @@ const Networking = () => {
 
             <Collapse defaultActiveKey={["1", "2", "3"]}>
 
-                <PanelStyled header="AMIGOS" key="1">
+                <PanelStyled header="SEGUINDO" key="1">
 
                     <BoxCard>
 
@@ -74,17 +74,14 @@ const Networking = () => {
                     </BoxCard>
 
                 </PanelStyled>
-
-
     
                 
                 <PanelStyled header= {
-                <Tooltip placement="topLeft" title="Com pelo menos uma skill em comum e ainda não amigo.">
-                <div> SUGESTÃO DE AMIZADE</div>
+                <Tooltip placement="topLeft" title="Com pelo menos uma skill em comum e ainda não seguindo.">
+                <div> SUGESTÃO PARA SEGUIR</div>
                 </Tooltip>
                 } key="2">
                     <BoxCard>
-
                         {
                             sugested_friendship.map((v, i) => (
                                 <Card key={i} picture={v.picture} username={v.username} id={v._id} skills={stringme(v.skills)} />
