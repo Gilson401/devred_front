@@ -3,8 +3,6 @@ import http from "../config/http";
 
 /**Carrega os posts coonforme query. Query é o array de topics de interesse do user */
 const getPostsService = async (query, solicitante) => {
-    console.log("QUERY", query, solicitante)
-
     return await http.get(`/posts`, { params: query });
 };
 

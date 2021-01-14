@@ -41,7 +41,6 @@ const PostView = () => {
     }, [dispatch, update]); //dispatch, update, reloader
 
     useEffect( () => {
-        console.log("post UF43 - efcontrol", efcontrol)
         if(UserProfile.topics_of_interest && efcontrol === 0 ){
             const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
             dispatch(getPostAll(topicss2, 'useefectPostjsL46', efcontrol)); 
@@ -52,7 +51,6 @@ const PostView = () => {
 
 
       useEffect( () => {
-        console.log("post UF55 - efcontrol", efcontrol)
 
       }, [efcontrol]);//
 
@@ -90,7 +88,6 @@ const mountPosts = () => {
                     count_likes={post.count_likes}
                     count_dislikes={post.count_dislikes} 
                     iLikedOrDisliked = {likeDislikeVerify( post.likes, post.dislikes  )}
-                    // setEfcontrol = {tryreloadEvents}
                     efcontrol = {efcontrol}
                 />
             ));
@@ -184,9 +181,7 @@ const tryreloadEvents = ()=>{
     return (
         <LayoutBase breadcrumb={BreadCrumb} title="Postagens" actions={Actions}>
             <ModalForm />
-            <p>$$$$$$$$$$$ {efcontrol}</p>
             {loading ? <Loading /> : mountPosts()}
-            {/* {Paginator()} */}
         </LayoutBase>
     );
 };

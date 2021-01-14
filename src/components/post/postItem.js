@@ -31,9 +31,7 @@ const PostItem = ({
     count_likes,
     canComment = true,
     iLikedOrDisliked,
-    children = [""],
-    setEfcontrol,
-    efcontrol 
+    children = [""]
 }) => {
     const dispatch = useDispatch();
     const [likes, setLikes] = useState(count_likes);
@@ -52,8 +50,6 @@ const PostItem = ({
     const [showModal, setShowModal] = useState(false);
     /**Fecha o modal */
     const closeModalForm = () => setShowModal(false);
-    const [update, setUpdate] = useState(false);
-    // const [efcontrol, setEfcontrol] = useState(0);
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
     const reloader = useSelector(state => state.reloader.loading)
 
@@ -81,22 +77,9 @@ const PostItem = ({
         dispatch(reloaderAction())       
     };
 
-//const topicss2 = UserProfile.topics_of_interest.map(item => item._id)
+
 //    useEffect(() => {
- //console.log("effect com dispatc")
- // 
- // dispatch(getPostAll(topicss2,  'submitPostjs L111'));
- //  }, [dispatch, reloader]);
-
-
-   useEffect(() => {
-       //console.log("post coment - efcontrol e reloader", efcontrol)
-    // if(UserProfile.topics_of_interest && efcontrol === 0 ){
-    //     const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
-    //     dispatch(getPostAll(topicss2, 'useefectPostjsL46', efcontrol)); 
-    //     setEfcontrol(efcontrol+1)
-    //  }
-    }, [efcontrol, reloader]);//UserProfile.topics_of_interest
+//     }, [efcontrol, reloader]);
 
 
 
@@ -111,9 +94,8 @@ const PostItem = ({
             closeModalForm();
             const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
             dispatch(getPostAll(topicss2,  'submitComment/postItemjs L85'));
-            // setEfcontrol(0)
-
-            setEfcontrol(efcontrol+1)
+   
+           
 
             dispatch(reloaderAction())
 
