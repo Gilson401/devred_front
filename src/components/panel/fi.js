@@ -32,7 +32,7 @@ var filtrado = topicsList.filter((item) => item.title.includes(query))
 return filtrado.map((item, idx) => {
       const itemValue = `${item.title}`;
       const itemLabel = `${item.title}`;
-     // debugger
+     
       return {
         value: itemValue,
         label: ( <div  style={{ display: 'flex',  justifyContent: 'space-between',  }} >
@@ -48,7 +48,7 @@ return filtrado.map((item, idx) => {
   
 
   const handleSearch = (value) => {
-    //  debugger
+
     setOptions(value ? searchResult(value) : []);
   };
 

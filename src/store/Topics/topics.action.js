@@ -12,7 +12,7 @@ const actionGetTopic = (props) => {
 
 /**Adiciona um tópico de interesse no perfil do user */
 const actionAddTopic = (props) => {
-    // debugger
+ 
     return async (dispatch) => {
         const data = await createTopic(props)       
         dispatch({ type: "CREATE_TOPIC", topics: data.data });

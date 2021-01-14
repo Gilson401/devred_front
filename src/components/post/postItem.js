@@ -6,11 +6,12 @@ import {Modal } from "antd";
 import { toastr } from "react-redux-toastr";
 import { FormPost } from "./formPost";
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actionCreateComment } from '../../store/Comments/comments.action';
 import { dislikeInPost, likeInPost, remove_likeInPost, remove_dislikeInPost } from '../../services/posts';
 import { reloaderAction } from '../../store/Reloader/reloader.action';
 import moment from 'moment'
+import { getPostAll } from '../../store/Post/post.action';
 
 /**props: author,
   title,
@@ -39,9 +40,9 @@ const PostItem = ({
     /**Fecha o modal */
     const closeModalForm = () => setShowModal(false);
     const [update, setUpdate] = useState(false);
-
-
-
+    const [efcontrol, setEfcontrol] = useState(0);
+    const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
+    const reloader = useSelector(state => state.reloader.loading)
 
     const like = async () => {
         await likeInPost(id)
@@ -56,25 +57,42 @@ const PostItem = ({
         dispatch(reloaderAction())
     };
 
+//const topicss2 = UserProfile.topics_of_interest.map(item => item._id)
+//    useEffect(() => {
+ //console.log("effect com dispatc")
+ // 
+ // dispatch(getPostAll(topicss2,  'submitPostjs L111'));
+ //  }, [dispatch, reloader]);
 
 
+   useEffect(() => {
+       console.log("post coment - efcontrol e reloader", efcontrol)
+    // if(UserProfile.topics_of_interest && efcontrol === 0 ){
+    //     const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
+    //     dispatch(getPostAll(topicss2, 'useefectPostjsL46', efcontrol)); 
+    //     setEfcontrol(efcontrol+1)
+    //  }
+    }, [efcontrol, reloader]);//UserProfile.topics_of_interest
 
-    useEffect(() => {
-        if (update) {
-            setUpdate(false);
-        }
-    }, [dispatch, update]);
+
 
     /**Aqui estou dentro de um POST. 
      * Logo aqui é uma resposta de um post, ou seja um comment */
-    const submitComment = (event, data) => {
+    const submitComment = async (event, data) => {
         event.preventDefault();
 
         if (postVerificador(data)) {
             dispatch(actionCreateComment(data))
+            
             closeModalForm();
-            setUpdate(true);
+            const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
+            dispatch(getPostAll(topicss2,  'submitComment/postItemjs L85'));
+            // setEfcontrol(0)
+
+            setEfcontrol(efcontrol+1)
+
             dispatch(reloaderAction())
+
         } else {
             openNotification("Preencher campos")
         }

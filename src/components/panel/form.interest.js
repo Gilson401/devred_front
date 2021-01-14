@@ -7,6 +7,7 @@ import { actionGetTopic } from '../../store/Topics/topics.action'
 import {
     actionAddUserInterestTopic,
 } from '../../store/Interests/interests.action'
+import {addCodersPref, setCodersPref} from '../../config/auth'
 
 
 const { Option } = Select;
@@ -38,9 +39,11 @@ const FormInterest = () => {
         await dispatch(actionAddUserInterestTopic(form))
             .then((res) => {
                 toastr.success("Sucesso.", "Cadastro feito com sucesso.");
+                addCodersPref(form.topics_of_interest)
+                dispatch({ type: "ADD_IN_USER_INTERESTS", userInterests: form });
                 setForm({  });
             })
-            .catch((err) => toastr.error(`Erro no cadastro: ${err.message}`))
+            .catch((err) => toastr.error(`add interest error : ${err.message}`))
     }
 
    

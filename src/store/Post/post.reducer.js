@@ -3,7 +3,7 @@ import { GET_POSTS, POST_LOADING, CREATE_POST } from "./post.action";
 const INITIAL_STATE = {
   all: [],
   loading: false,
-  total: 0,
+//   total: 0,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -13,7 +13,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return state;
     case GET_POSTS:
       state.all = action.data;
-      state.total = action.total;
+    //   state.total = action.total;
       state.loading = false;
       return state;
     case CREATE_POST:

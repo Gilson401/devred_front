@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { removeSkillService } from "../../services/userService";
 import { actionDeleteUserInterestTopic, actionGetUserInterestTopic } from "../../store/Interests/interests.action";
 import { toastr } from "react-redux-toastr";
+import { addCodersPref, removeCodersPref, setCodersPref } from '../../config/auth';
 
 export default function TableBasicData() {
     const dispatch = useDispatch();
@@ -33,10 +34,12 @@ export default function TableBasicData() {
                 await dispatch(actionDeleteUserInterestTopic({ topics_of_interest: item }))
                 .then(() => {
                      setRefresh(refresh + 1)
+                 
+                     removeCodersPref(item)
                  })
             },
 
-            onCancel: () => console.log('CANCEL: clicked'),
+            onCancel: () => {},
             okText: 'Sim, excluir',
             cancelText: 'Cancelar',
             closeOnShadowClick: true
@@ -55,7 +58,7 @@ export default function TableBasicData() {
                 })
             },
 
-            onCancel: () => console.log('CANCEL: clicked'),
+            onCancel: () => {},
             okText: 'Sim, excluir',
             cancelText: 'Cancelar',
             closeOnShadowClick: true

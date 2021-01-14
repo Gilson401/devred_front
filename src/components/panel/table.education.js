@@ -17,7 +17,7 @@ export default function TableEducation() {
     useEffect(() => {
 
         dispatch(getProfile())
-console.log("Dipatch em Table education")
+
     }, [dispatch, refresh])
 
     const handleOk = async () => {

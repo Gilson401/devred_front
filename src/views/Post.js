@@ -8,11 +8,15 @@ import { createPost, getPostAll } from "../store/Post/post.action";
 import { Button, Modal } from "antd";
 
 import { toastr } from "react-redux-toastr";
+import { getProfile } from "../store/User/user.action";
+import { getUser } from "../config/auth";
+import { actionGetUserInterestTopic } from "../store/Interests/interests.action";
 
 
 /**View de post (lista de posts e modal de cadastro de post) */
 const PostView = () => {
 
+    const [efcontrol, setEfcontrol] = useState(0);
     const BreadCrumb = ["Home", "Post"];
 
     const Actions = <Button onClick={() => setModal(true)}>Novo</Button>;
@@ -25,23 +29,31 @@ const PostView = () => {
     // -----------------------------------
 
     const reloader = useSelector(state => state.reloader.loading)
+    const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
 
-    useEffect(() => {
-        dispatch(getPostAll());
-        if (update) {
+    useEffect(  () => {
+      
+        dispatch(getProfile())  
+        dispatch(actionGetUserInterestTopic())      
+       if (update) {
             setUpdate(false);
         }
-    }, [dispatch, update, reloader]);
+    }, [dispatch, update]); //dispatch, update, reloader
 
-    // const isFinalPage = () => {
-    //   const totalPage = Math.ceil(total / limitPerPage);
-    //   return page === totalPage;
-    //   // return total % limitPerPage === 0;
-    // };
+    useEffect( () => {
+        console.log("post UF43 - efcontrol", efcontrol)
+        if(UserProfile.topics_of_interest && efcontrol === 0 ){
+            const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
+            dispatch(getPostAll(topicss2, 'useefectPostjsL46', efcontrol)); 
+            setEfcontrol(efcontrol+1)
+         }
+
+      }, [efcontrol, dispatch, UserProfile.topics_of_interest]);//
+
+
+
 
     const mountPosts = () => {
-
-
 
         if (postAll) {
             return postAll.map((post, i) => (
@@ -50,7 +62,7 @@ const PostView = () => {
                     key={i}
                     avatar={post.author.picture}
                     author={post.author.username}
-                    title={post.title}
+                    title= { ` ${post.title || ""} ${post.topic?.title || ""}`  }
                     description={post.content}
                     created_at={post.createdAt}
                     children={mountPosts2(post.comments)}
@@ -92,12 +104,15 @@ const PostView = () => {
 
     /** */
     const submitPost = (event, data) => {
-        debugger
+       
 
         event.preventDefault();
 
         if (postVerificador(data)) {
-            dispatch(createPost(data));
+            dispatch(createPost(data))
+            const topicss2 = { lista : UserProfile.topics_of_interest.map(item => item._id)}
+            dispatch(getPostAll(topicss2,  'submitPostjs L111'));
+            setEfcontrol(0)
             handleCancel();
             setUpdate(true);
         } else {
@@ -106,16 +121,15 @@ const PostView = () => {
         }
     };
 
+    /**avalia se os dados necessários para submeter um post estão preenchidos */
     const postVerificador = (data) => {
         if (!data.content) {
-            console.log("Não tem conteúdo")
-            return false
+             return false
         }
 
         //Se não tem post é tópico novo e deve ter ttópico e título
         if (!data.post) {
             if (!data.topic || !data.title) {
-                console.log("É um post novo. Precisa ter topic e title")
                 return false
             }
         }

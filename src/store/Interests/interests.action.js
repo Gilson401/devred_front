@@ -2,7 +2,7 @@
 import { toastr } from "react-redux-toastr";
 
 import {getUserInterestsTopics , createUserInterestsTopic, deleteUserInterestsTopic} from "../../services/interestsService";
-
+//setCodersPref()
 
 /**Chama getTopic e chama salvamento do Topic */
 const actionGetUserInterestTopic = (props) => {

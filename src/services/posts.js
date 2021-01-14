@@ -1,18 +1,22 @@
 import http from "../config/http";
 
-const getPostsService = (page = 1, limit = 5) => {
-  return http.get(`/posts?_page=${page}&_limit=${limit}&_sort=id,views&_order=desc,asc`);
+
+/**Carrega os posts coonforme query. Query é o array de topics de interesse do user */
+const getPostsService = async (query, solicitante) => {
+    console.log("QUERY", query, solicitante)
+
+    return await http.get(`/posts`, { params: query });
 };
 
 const getCountPostsService = async (page = 1) => {
-  const { data } = await http.get(`/posts`);
-  return data.length;
+    const { data } = await http.get(`/posts`);
+    return data.length;
 };
 
 
 /**Rota post ainda não foi subida */
 const createPostService = (data) => {
-  return http.post(`/posts`, data);
+    return http.post(`/posts`, data);
 };
 
 
@@ -32,6 +36,7 @@ const remove_likeInPost = (post) => http.delete(`/like/${post}`);
 
 
 /**Manda dislike para um post */
-const remove_dislikeInPost = (post) => http.delete(`/dislike/${post}`);
+const remove_dislikeInPost = (post) =>
+    http.delete(`/dislike/${post}`);
 
-export {remove_likeInPost, remove_dislikeInPost, likeInPost, dislikeInPost, getPostsService, getCountPostsService, createPostService };
+export { remove_likeInPost, remove_dislikeInPost, likeInPost, dislikeInPost, getPostsService, getCountPostsService, createPostService };

@@ -19,6 +19,7 @@ export const signIn = (props) => {
             const { data } = await authService(props);
             dispatch({ type: SIGN, data: data });
             saveLocalStorage(data);
+            
             http.defaults.headers["x-auth-token"] = data.token;
             history.push("/");
         } catch (error) {

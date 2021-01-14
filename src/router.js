@@ -21,7 +21,7 @@ const Routers = () => {
   const dispatch = useDispatch();
   // Autenticação através de REDUX com REHYDRATE PERSIST
    const isAutheticated_redux  = useSelector((state) => !!state.auth.token);
-  // console.log("isAutheticated", isAutheticated);
+
 
   useEffect(() => {
     dispatch(getProfile());
@@ -29,7 +29,7 @@ const Routers = () => {
 
 
   const AdminRoute = ({ ...rest }) => {
-    //TODO
+ 
   if (!isAuthenticated() || !isAutheticated_redux) {
     return <Redirect to="/signin" />;
   }

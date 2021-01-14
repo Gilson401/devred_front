@@ -32,7 +32,7 @@ const FormPost = (props) => {
   };
 
   useEffect(() => {
-    console.log("mudou");
+ 
   }, [profile]);
 
   return (
@@ -85,7 +85,7 @@ const FormPost = (props) => {
             </Col>
           </Row>
           <Form.Item name="description">
-            <TextArea name="description" showCount maxLength={100} />
+            <TextArea name="description" showCount maxLength={150} />
           </Form.Item>
           <br />
           <Form.Item>

@@ -84,7 +84,7 @@ const FormPost = ({showTitleInput ,  showTopics,  submit, post}) => {
                 <TextArea
                     placeholder="content"
                     showCount
-                    maxLength={50}
+                    maxLength={150}
                     name="content"
                     onChange={handleChange}
                 />

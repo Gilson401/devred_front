@@ -41,10 +41,7 @@ const FormProfile = () => {
     const handleSelectPicture = (attr) => {
 
         const { value, name } = attr.target
-        console.log("value, name", value, name)
-        console.log("attr.target,", attr.target.files[0].name)
-
-        if (name === 'picture') {
+         if (name === 'picture') {
             setForm({
                 ...form,
                 'picture': attr.target.files[0]

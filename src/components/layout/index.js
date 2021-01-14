@@ -35,7 +35,6 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-
         dispatch(getProfile())
     }, [dispatch])
 
@@ -43,7 +42,6 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
     const logout = () => {
         removeToken()
         history.push('/signin')
-
     }
 
 

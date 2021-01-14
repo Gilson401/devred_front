@@ -60,12 +60,12 @@ const CardNetworking = (props) => {
 
     /**Remove uma amizade */
     const removeFriendship_method = async (id) => {
-        //debugger
+        
         if (!id) {
             openNotification("Não tem id")
             return
         } else {
-            /**TODO:*/
+        
             await deleteFriendship(id)
                 .then((res) => {
                     toastr.success("Sucesso.", `${props.username} removido/a como amigo/a.`)
@@ -104,8 +104,7 @@ const CardNetworking = (props) => {
             ]}
         >
             <Title size="18">{props.username}</Title>
-            {/* TODO: confirmar o campo que vai puxar abaixo 
-      em tese seia o "cargo do usuário" mas este campoi não existe no schema*/}
+
             <Title size="12">{props.skills}</Title>
         </CardStyled>
     );

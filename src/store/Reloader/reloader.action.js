@@ -4,7 +4,8 @@ export const RELOADER_LOADING = "RELOADER_LOADING";
 
 
 
-/**Action que pega os posts */
+/**Intenta ser um disparador geral de atualizações. 
+ * É uma int que aumenta 1 toda vez que é chamada */
 export const reloaderAction = () => {
   return async (dispatch) => {
     dispatch({ type: RELOADER_LOADING});
