@@ -38,7 +38,7 @@ const PostView = () => {
        if (update) {
             setUpdate(false);
         }
-    }, [dispatch, update]); //dispatch, update, reloader
+    }, [dispatch, update]); 
 
     useEffect( () => {
         if(UserProfile.topics_of_interest && efcontrol === 0 ){
