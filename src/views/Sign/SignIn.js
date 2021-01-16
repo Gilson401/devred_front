@@ -5,13 +5,21 @@ import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
 import { signIn } from "../../store/Sign/sign.action";
 import { Tabs } from 'antd';
+
+import { Radio } from 'antd';
 import { userConfirm } from "../../services/authService";
+
+
 const { TabPane } = Tabs;
 
 const { Content } = Layout;
 
+
+
 const LogIn = () => {
     const [showModal, setShowModal] = useState(false);
+    const [modeLogar, setModeLogar] = useState(true);
+    const [isLoading, setIsloading] = useState(false);
     const dispatch = useDispatch();
     const [form, setForm] = useState({});
     const [form2, setForm2] = useState({});
@@ -36,21 +44,22 @@ const LogIn = () => {
     };
 
     /**Login de user cadastrado chama dispatch(signIn(form)) */
-    const submitForm = () => {
+    const submitForm = async () => {
+        setIsloading(true)
+        await dispatch(signIn(form))
+        .then((r)=> setIsloading(false))
+        .finally((r)=> setIsloading(false))
 
-        dispatch(signIn(form));
     };
-
-
 
     /** chama dispatch(registrar-se(form)) */
     const registerSubmitForm = async () => {
-
+        setIsloading(true)
         await userConfirm(form2)
-        .then((res) =>{
-            setShowModal(true)
-        } )
-
+            .then((res) => {
+                setShowModal(true)
+                setIsloading(false)
+            })
     };
 
     const login = (
@@ -78,7 +87,7 @@ const LogIn = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button onClick={submitForm} type="primary" htmlType="submit">
+                    <Button loading={isLoading} onClick={submitForm} type="primary" htmlType="submit">
                         Enviar
                 </Button>
 
@@ -88,7 +97,7 @@ const LogIn = () => {
     )
 
 
-/**Form para cadastro denovo usuário */
+    /**Form para cadastro denovo usuário */
     const newAccount = (
         <FormLogin>
 
@@ -129,7 +138,7 @@ const LogIn = () => {
 
 
                 <Form.Item>
-                    <Button onClick={registerSubmitForm} type="primary" htmlType="submit">
+                    <Button loading={isLoading} onClick={registerSubmitForm} type="primary" htmlType="submit">
                         Enviar
                     </Button>
                 </Form.Item>
@@ -150,34 +159,45 @@ const LogIn = () => {
         </Modal>
     );
 
-  
+
+
     return (
         <Layout className="layout">
             <ModalForm />
             <Main>
                 <BgImg />
-                <br/><br/>
+                <br /><br />
                 <SliceBg >
                     Coders
                   <span>The Coders Network</span>
                 </SliceBg>
-                <br/>
-                <br/>
+                <br />
+                <br />
+
+
 
                 <FormLogin>
-                <Tabs  type="card">
-                    <TabPane  tab={<Styledh>Entrar</Styledh>} key="1">
-                        
-                        {login}
-                    </TabPane>
 
-                    <TabPane tab={<Styledh>Nova conta</Styledh>} key="2">
+                    <Row>
                         
-                        {newAccount}
-                    </TabPane>
-                </Tabs>
+                        <Col span="12">
+                            <Button onClick={() => setModeLogar(true)} ghost={!modeLogar} type="primary" block htmlType="submit">
+                                ENTRAR
+                        </Button>
+                        </Col>
+
+                        <Col span="12">
+                            <Button onClick={() => setModeLogar(false)} ghost={modeLogar} type="primary" block htmlType="submit">
+                                CADASTRAR-SE
+                        </Button>
+
+                        </Col>
+</Row>
+                        
+                    
+
                 </FormLogin>
-
+{modeLogar ? login : newAccount}
 
             </Main>
         </Layout>
@@ -187,29 +207,15 @@ const LogIn = () => {
 export default LogIn;
 
 
-
 const Main = styled(Content)`
   display: flex;
   flex-direction:column;
   height: 100vh;
- 
- .ant-tabs-tab{
-    background-color: rgba(10,10,10,0.9);
- }
+  
 `;
-// background
 
 
-const Styledh = styled.p`
-margin: 10px;
-width:100%;
-  font-size: 2rem;
-  font-weight: 10;
-  color: black;
-  font-family: "Goldman",Arial, Helvetica, sans-serif,  cursive;
-  /* text-shadow: 4px 4px 2px #43949e; */
-  /* background-color: rgba(10,10,10,0.7); */
-`
+
 
 
 const SliceBg = styled.div`
@@ -242,15 +248,18 @@ const BgImg = styled.div`
   width: 100%;
   background-color: #fff;
   background-image: url(${imgSignIn});
-  background-size: auto 100%;
+  background-size: cover;
   background-position: center;
   opacity: 0.4;
 `;
 
 
 const FormLogin = styled.div`
-  padding: 20px;
+  padding: 20px ;
   /* width: 100%; */
   align-self: center;
-  background-color: rgba(10,10,10,1.9);
+  width: 95vw;
+  max-width: 600px;
+  
+  background-color: black;  
 `;
