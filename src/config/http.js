@@ -4,6 +4,7 @@ import history from './history'
 import { toastr } from "react-redux-toastr";
 
 
+
 const http = axios.create({
 //https://codersrede.herokuapp.com/
     baseURL:  process.env.NODE_ENV === 'development'
@@ -23,12 +24,11 @@ http.interceptors.response.use(
     error => {
  
         const { response: { status } } = error
- 
+
         if (error.message === 'Network Error' && !error.message) {
             alert('você está sem internet...reconecte !!!!!')
         }
 
-       
         switch (status) {
             case 401:
              
@@ -41,9 +41,12 @@ http.interceptors.response.use(
                 toastr.info(`Erro na resposta do servidor. ${http.interceptors.request}`);
                 break;
 
+                case 404:
+
+                    break;
             default:
 
-                toastr.info(`Aconteceu um erro ${status}`)
+                console.log(`Aconteceu um erro ${status}`)
                 // removeToken()
                 // history.push('/signin') 
               

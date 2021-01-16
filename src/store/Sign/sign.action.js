@@ -8,7 +8,7 @@ export const SIGN = "SIGN";
 export const SIGN_LOADING = "SIGN_LOADING";
 
 
-/** Action que chama authService(props);*/
+/**  Login de user cadastrado. Action que chama authService(props);*/
 export const signIn = (props) => {
 
     return async (dispatch) => {
@@ -23,7 +23,13 @@ export const signIn = (props) => {
             http.defaults.headers["x-auth-token"] = data.token;
             history.push("/");
         } catch (error) {
-            toastr.error("ERROR !", `Não foi possível fazer o login, verifique login e senha`);
+            const options = {
+                position: 'top-center',
+                transitionIn: 'bounceIn',
+                transitionOut: 'bounceOut'
+              }
+        toastr.error(`Não foi possível fazer login. Verificar usuário e senha.`, options);
+           
         }
 
     };

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
 import { signIn } from "../../store/Sign/sign.action";
 import { Tabs } from 'antd';
+import { userConfirm } from "../../services/authService";
 const { TabPane } = Tabs;
 
 const { Content } = Layout;
@@ -34,7 +35,7 @@ const LogIn = () => {
         });
     };
 
-    /** chama dispatch(signIn(form)) */
+    /**Login de user cadastrado chama dispatch(signIn(form)) */
     const submitForm = () => {
 
         dispatch(signIn(form));
@@ -43,14 +44,14 @@ const LogIn = () => {
 
 
     /** chama dispatch(registrar-se(form)) */
-    const registerSubmitForm = () => {
-        setShowModal(true)
+    const registerSubmitForm = async () => {
+
+        await userConfirm(form2)
+        .then((res) =>{
+            setShowModal(true)
+        } )
 
     };
-
-
-
-
 
     const login = (
         <FormLogin>
@@ -87,7 +88,7 @@ const LogIn = () => {
     )
 
 
-
+/**Form para cadastro denovo usuário */
     const newAccount = (
         <FormLogin>
 
@@ -136,6 +137,7 @@ const LogIn = () => {
         </FormLogin>
     )
 
+    /**popup de confirmação de envio de email para novo user */
     const ModalForm = () => (
         <Modal
             title={`Confirmar Email`}
@@ -148,10 +150,7 @@ const LogIn = () => {
         </Modal>
     );
 
-    function callback(key) {
-        console.log(key);
-    }
-
+  
     return (
         <Layout className="layout">
             <ModalForm />
@@ -166,7 +165,7 @@ const LogIn = () => {
                 <br/>
 
                 <FormLogin>
-                <Tabs onChange={callback} type="card">
+                <Tabs  type="card">
                     <TabPane  tab={<Styledh>Entrar</Styledh>} key="1">
                         
                         {login}
