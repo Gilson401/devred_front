@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Layout, Col, Form, Input, Button, Modal } from "antd";
+import { Layout, Col, Row, Form, Input, Button, Modal } from "antd";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
 import { signIn } from "../../store/Sign/sign.action";
+import { Tabs } from 'antd';
+const { TabPane } = Tabs;
 
 const { Content } = Layout;
 
@@ -48,7 +50,7 @@ const LogIn = () => {
 
 
 
-    
+
 
     const login = (
         <FormLogin>
@@ -78,7 +80,7 @@ const LogIn = () => {
                     <Button onClick={submitForm} type="primary" htmlType="submit">
                         Enviar
                 </Button>
-                
+
                 </Form.Item>
             </Form>
         </FormLogin>
@@ -88,7 +90,7 @@ const LogIn = () => {
 
     const newAccount = (
         <FormLogin>
-            
+
             <Form
                 initialValues={{
                     ...form2,
@@ -146,31 +148,38 @@ const LogIn = () => {
         </Modal>
     );
 
+    function callback(key) {
+        console.log(key);
+    }
 
     return (
         <Layout className="layout">
-            <ModalForm  />
+            <ModalForm />
             <Main>
-                <SliceBg span={16}>
+                <BgImg />
+                <br/><br/>
+                <SliceBg >
                     Coders
-          <span>The Coders Network</span>
-                    <BgImg />
+                  <span>The Coders Network</span>
                 </SliceBg>
+                <br/>
+                <br/>
 
-
-                <SliceForm span={8}>
-
-                    <FormLogin>
-                    <Styledh>Entrar</Styledh>
+                <FormLogin>
+                <Tabs onChange={callback} type="card">
+                    <TabPane  tab={<Styledh>Entrar</Styledh>} key="1">
+                        
                         {login}
-                        <hr />
+                    </TabPane>
 
-                            <Styledh>Nova conta</Styledh>
+                    <TabPane tab={<Styledh>Nova conta</Styledh>} key="2">
+                        
                         {newAccount}
+                    </TabPane>
+                </Tabs>
+                </FormLogin>
 
-                    </FormLogin>
 
-                </SliceForm>
             </Main>
         </Layout>
     );
@@ -178,25 +187,34 @@ const LogIn = () => {
 
 export default LogIn;
 
+
+
 const Main = styled(Content)`
   display: flex;
+  flex-direction:column;
   height: 100vh;
+ 
+ .ant-tabs-tab{
+    background-color: rgba(10,10,10,0.9);
+ }
 `;
 // background
 
 
 const Styledh = styled.p`
-margin-left: 10px;
+margin: 10px;
+width:100%;
   font-size: 2rem;
   font-weight: 10;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif, "Goldman", cursive;
-  text-shadow: 4px 4px 2px #43949e;
+  color: black;
+  font-family: "Goldman",Arial, Helvetica, sans-serif,  cursive;
+  /* text-shadow: 4px 4px 2px #43949e; */
+  /* background-color: rgba(10,10,10,0.7); */
 `
 
 
-const SliceBg = styled(Col)`
-  height: 100vh;
+const SliceBg = styled.div`
+  /* height: 100vh; */
   display: flex;
   position: relative;
   flex-direction: column;
@@ -230,16 +248,10 @@ const BgImg = styled.div`
   opacity: 0.4;
 `;
 
-// form
-const SliceForm = styled(Col)`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background-image: linear-gradient(90deg, grey, black);
-  padding: 20px;
-`;
+
 const FormLogin = styled.div`
   padding: 20px;
-  width: 100%;
+  /* width: 100%; */
   align-self: center;
+  background-color: rgba(10,10,10,1.9);
 `;

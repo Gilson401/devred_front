@@ -5,12 +5,10 @@ import { toastr } from "react-redux-toastr";
 
 
 const http = axios.create({
-
-    baseURL:  process.env.NODE_ENV==='development'
+//https://codersrede.herokuapp.com/
+    baseURL:  process.env.NODE_ENV === 'development'
     ? `http://localhost:3005/`
     : process.env.REACT_APP_API
-
-
 })
 
 http.defaults.headers['Content-type'] = 'application/json'
