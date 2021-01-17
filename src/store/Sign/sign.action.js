@@ -17,22 +17,17 @@ export const signIn = (props) => {
 
             dispatch({ type: SIGN_LOADING, loading: true });
             await authService(props)
-                .then((res) => {
-                   
+                .then((res) => {                   
                     const  data  = res.data
                     dispatch({ type: SIGN, data: data });
                     saveLocalStorage(data);
                     http.defaults.headers["x-auth-token"] = data.token;
-                    history.push("/");
-                })
+                    history.push("/") })
                 .catch((err) => {
                     const options = {
-                        position: 'top-center',
-                        transitionIn: 'bounceIn',
-                        transitionOut: 'bounceOut'
+                        position: 'top-center', transitionIn: 'bounceIn', transitionOut: 'bounceOut'
                     }
-                    toastr.error(`Não foi possível fazer login. ${err.response.data.msg}`, options);
-                    
+                    toastr.error(`Não foi possível fazer login. ${err.response.data.msg}`, options);                    
                 })
 
         } catch (error) {

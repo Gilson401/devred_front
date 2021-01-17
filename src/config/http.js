@@ -7,7 +7,7 @@ import { toastr } from "react-redux-toastr";
 
 const http = axios.create({
 //https://codersrede.herokuapp.com/
-    responseType: 'json', 
+    
     baseURL:  process.env.NODE_ENV === 'development'
     ? `http://localhost:3005/`
     : process.env.REACT_APP_API

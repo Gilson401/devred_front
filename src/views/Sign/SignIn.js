@@ -8,6 +8,7 @@ import { Tabs } from 'antd';
 
 import { Radio } from 'antd';
 import { userConfirm } from "../../services/authService";
+import { toastr } from "react-redux-toastr";
 
 
 const { TabPane } = Tabs;
@@ -59,6 +60,13 @@ const LogIn = () => {
             .then((res) => {
                 setShowModal(true)
                 setIsloading(false)
+            })
+            .catch((err)=> {
+                setIsloading(false)
+                const options = {
+                    position: 'top-center', transitionIn: 'bounceIn', transitionOut: 'bounceOut'
+                }
+                toastr.error(`Não foi possível fazer a solicitação. ${err.response.data.msg}`, options);  
             })
     };
 
