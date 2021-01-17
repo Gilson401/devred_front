@@ -16,20 +16,27 @@ export const signIn = (props) => {
         try {
 
             dispatch({ type: SIGN_LOADING, loading: true });
-            const { data } = await authService(props);
-            dispatch({ type: SIGN, data: data });
-            saveLocalStorage(data);
-            
-            http.defaults.headers["x-auth-token"] = data.token;
-            history.push("/");
+            await authService(props)
+                .then((res) => {
+                   
+                    const  data  = res.data
+                    dispatch({ type: SIGN, data: data });
+                    saveLocalStorage(data);
+                    http.defaults.headers["x-auth-token"] = data.token;
+                    history.push("/");
+                })
+                .catch((err) => {
+                    const options = {
+                        position: 'top-center',
+                        transitionIn: 'bounceIn',
+                        transitionOut: 'bounceOut'
+                    }
+                    toastr.error(`Não foi possível fazer login. ${err.response.data.msg}`, options);
+                    
+                })
+
         } catch (error) {
-            const options = {
-                position: 'top-center',
-                transitionIn: 'bounceIn',
-                transitionOut: 'bounceOut'
-              }
-        toastr.error(`Não foi possível fazer login. Verificar usuário e senha.`, options);
-           
+            console.log("CATCH EM 40", error.response)
         }
 
     };

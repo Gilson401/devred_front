@@ -7,6 +7,7 @@ import { toastr } from "react-redux-toastr";
 
 const http = axios.create({
 //https://codersrede.herokuapp.com/
+    responseType: 'json', 
     baseURL:  process.env.NODE_ENV === 'development'
     ? `http://localhost:3005/`
     : process.env.REACT_APP_API
@@ -41,7 +42,7 @@ http.interceptors.response.use(
                 toastr.info(`Erro na resposta do servidor. ${http.interceptors.request}`);
                 break;
 
-                case 404:
+            case 404:
 
                     break;
             default:
