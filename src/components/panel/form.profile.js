@@ -40,7 +40,7 @@ const FormProfile = () => {
     /**Handlers específico para picture. */
     const handleSelectPicture = (attr) => {
 
-        const { value, name } = attr.target
+        const { name } = attr.target
          if (name === 'picture') {
             setForm({
                 ...form,
@@ -175,7 +175,7 @@ export default FormProfile
 
 const ColStyled = styled(Col)`
     margin: 20px;
-    min-width: 500px !important;
+    min-width: 290px !important;
 `
 
 const Inputf = styled.div`

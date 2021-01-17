@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { removeSkillService } from "../../services/userService";
 import { actionDeleteUserInterestTopic, actionGetUserInterestTopic } from "../../store/Interests/interests.action";
 import { toastr } from "react-redux-toastr";
-import { addCodersPref, removeCodersPref, setCodersPref } from '../../config/auth';
+import {  removeCodersPref } from '../../config/auth';
 
 export default function TableBasicData() {
     const dispatch = useDispatch();

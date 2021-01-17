@@ -1,7 +1,6 @@
 
 import { toastr } from "react-redux-toastr";
 import { createCommnentService } from "../../services/commentService";
-import { getCountPostsService, getPostsService } from "../../services/posts";
 import { getPostAll } from "../Post/post.action";
 
 export const COMMENTS_LOADING = "COMMENTS_LOADING";

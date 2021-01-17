@@ -21,9 +21,7 @@ const { Option } = Select;
 const FormPost = (props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
-  const [form, setform] = useState({
-
-  });
+  const [form, setform] = useState({errr:'ddd'  });
 
   
   const handleSubmit = (v) => {

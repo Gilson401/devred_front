@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Comment } from "antd";
 import styled from "styled-components";
 import AvatarNeutro from "../../assets/img/avatar.png";
@@ -36,22 +36,12 @@ const PostItem = ({
     const dispatch = useDispatch();
     const [likes, setLikes] = useState(count_likes);
     const [dislikes, setDislikes] = useState(count_dislikes);
-
-    const [action, setAction] = useState( iLikedOrDisliked);
-
-    /**se o user fez like ou dislike */
-    const [initial, setInicial] = useState({
-        like: iLikedOrDisliked === 'liked' ? 1 : 0,
-        dislike: iLikedOrDisliked === 'disliked' ? 1 : 0
-    })
-
-   
+    const [action, setAction] = useState( iLikedOrDisliked); 
     
     const [showModal, setShowModal] = useState(false);
     /**Fecha o modal */
     const closeModalForm = () => setShowModal(false);
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
-    const reloader = useSelector(state => state.reloader.loading)
 
     /**Registra um like num post mas antes remove um dislike caso do usuário caso exista  */
     const like = async () => {

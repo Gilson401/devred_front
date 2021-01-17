@@ -4,14 +4,8 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import imgSignIn from "../../assets/img/signIn.jpg";
 import { signIn } from "../../store/Sign/sign.action";
-import { Tabs } from 'antd';
-
-import { Radio } from 'antd';
 import { userConfirm } from "../../services/authService";
 import { toastr } from "react-redux-toastr";
-
-
-const { TabPane } = Tabs;
 
 const { Content } = Layout;
 

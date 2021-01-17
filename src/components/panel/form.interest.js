@@ -7,7 +7,7 @@ import { actionGetTopic } from '../../store/Topics/topics.action'
 import {
     actionAddUserInterestTopic,
 } from '../../store/Interests/interests.action'
-import {addCodersPref, setCodersPref} from '../../config/auth'
+import {addCodersPref} from '../../config/auth'
 
 
 const { Option } = Select;

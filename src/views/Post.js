@@ -9,7 +9,7 @@ import { Button, Modal } from "antd";
 
 import { toastr } from "react-redux-toastr";
 import { getProfile } from "../store/User/user.action";
-import { getUser } from "../config/auth";
+
 import { actionGetUserInterestTopic } from "../store/Interests/interests.action";
 
 
@@ -28,7 +28,7 @@ const PostView = () => {
     const postAll = useSelector((state) => state.post.all);
     // -----------------------------------
 
-    const reloader = useSelector(state => state.reloader.loading)
+
     const UserProfile = useSelector((state) => state.user.profile) || [{ title: "" }]
 
     useEffect(  () => {

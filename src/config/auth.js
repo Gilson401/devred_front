@@ -62,7 +62,7 @@ const saveLocalStorage = (data) => {
     let dataJSONStringfy = JSON.stringify(data)
     localStorage.setItem(TOKEN_KEY, dataJSONStringfy);
     const du = data.user.topics_of_interest
-    const sf = setCodersPref(du)
+    setCodersPref(du)
 }
 const removeToken = () => {
     localStorage.removeItem(TOKEN_KEY);
