@@ -47,7 +47,7 @@ const LogIn = () => {
 
     };
 
-    /** chama dispatch(registrar-se(form)) */
+    /** chama dispatch(registrar-se(form)) New User */
     const registerSubmitForm = async () => {
         setIsloading(true)
         await userConfirm(form2)
@@ -60,7 +60,8 @@ const LogIn = () => {
                 const options = {
                     position: 'top-center', transitionIn: 'bounceIn', transitionOut: 'bounceOut'
                 }
-                toastr.error(`Não foi possível fazer a solicitação. ${err.response.data.msg}`, options);  
+                console.log(err)
+                // toastr.error(`Não foi possível fazer a solicitação. ${erdr.response.data.msg}`, options);  
             })
     };
 
@@ -89,7 +90,7 @@ const LogIn = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button loading={isLoading} onClick={submitForm} type="primary" htmlType="submit">
+                    <Button loading={isLoading} onClick={()=>submitForm()} type="primary" htmlType="submit">
                         Enviar
                 </Button>
 
@@ -140,7 +141,7 @@ const LogIn = () => {
 
 
                 <Form.Item>
-                    <Button loading={isLoading} onClick={registerSubmitForm} type="primary" htmlType="submit">
+                    <Button loading={isLoading} onClick={()=>registerSubmitForm()} type="primary" htmlType="submit">
                         Enviar
                     </Button>
                 </Form.Item>
