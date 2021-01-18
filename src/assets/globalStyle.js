@@ -89,7 +89,7 @@ color:white;
         color:white;
     }
 }
-}
+
 
 `
 
