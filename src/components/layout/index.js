@@ -121,7 +121,7 @@ const LayoutBase = ({ children, breadcrumb, actions, title = "" }) => {
 
                 <Logo >
                     <img src={userpicture || coders} className="minhaClasse" alt="texto alt" />
-                    <div className="hidesmall">
+                    <div className="">
                         {`   `} Coders
                     </div>
                 </Logo>
