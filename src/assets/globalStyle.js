@@ -30,6 +30,12 @@ const GlobalStyle = createGlobalStyle`
 .ant-menu-vertical{
     background-image: linear-gradient(black, grey);
     border:none;
+    padding-right:-12px;
+}
+
+
+.ant-menu-submenu-title{
+    padding-right: 0px !important;
 }
 
 .ant-menu-item-group-title{
@@ -63,6 +69,15 @@ color:white;
     }
 }
 
+.ant-menu-submenu-arrow{
+    display:none;
+}
+
+.ant-menu {
+    background: linear-gradient(black, grey );
+    
+}
+
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-item, .ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu {
     top: 0;
     margin-top: 0;
@@ -76,7 +91,7 @@ color:white;
 }
 }
 
-`;
+`
 
 export default GlobalStyle;
 

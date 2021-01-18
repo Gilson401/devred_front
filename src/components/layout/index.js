@@ -14,7 +14,7 @@ import { getProfile } from "../../store/User/user.action";
 import { useEffect, useState } from "react";
 import { removeToken } from "../../config/auth";
 import coders from '../../assets/img/coders_logo.png'
-import { CaretDownFilled } from '@ant-design/icons';
+import { CaretDownFilled , MenuOutlined} from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
@@ -166,7 +166,7 @@ export default LayoutBase;
 
 // styles ----------------------------------------------------
 
-const CaretDownFilledst = styled(CaretDownFilled)`
+const CaretDownFilledst = styled(MenuOutlined)`
 svg {
     position: relative;
     margin-bottom: -5px;
@@ -190,7 +190,8 @@ const HeaderStyled = styled(Header)`
  
   @media screen and (max-width: 800px) {
         .hidesmall { display: none; } 
-        .hidelarge {display : flex; }        
+        .hidelarge {display : flex;
+            justify-content: flex-end; }        
      }
 
 `;
@@ -234,6 +235,7 @@ const MenuStyledV = styled(Menu)`
   display: block;
   height: 100%;
   justify-content: flex-end;
+  
   svg {
     position: relative;
     margin-bottom: -2px;
